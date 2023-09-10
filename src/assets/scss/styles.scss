@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import "src/assets/scss/general/reset";
+@import "src/assets/scss/general/variables";
+@import "src/assets/scss/general/mixins";
+@import "src/assets/scss/general/base";
+@import "src/assets/scss/more/more";
+@import "src/assets/scss/ui/ui";
+@import "src/assets/scss/@media/@media";
+// PrimeNg
+@import "src/assets/scss/theme/theme-lara-light-blue";
+@import "primeng/resources/primeng.css";

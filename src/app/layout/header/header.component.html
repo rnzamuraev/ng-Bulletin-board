@@ -1,0 +1,40 @@
+<div class="header br-b-white-dark">
+  <div class="header__top bg-color-dark">
+    <div class="container">
+      <div class="header__wrap">
+        <p-button *ngIf="!isLogin" styleClass="b-icon b-icon__auth" label="Войти" (click)="onGoTo('login')"></p-button>
+        <p-button *ngIf="!isLogin" label="Войти" (click)="onGoTo('login')"></p-button>
+        <!-- <a *ngIf="!isLogin" class="btn btn__auth" (click)="onGoTo('login')"> -->
+        <!-- <span class="material-icons m-r-8">person_outline</span> -->
+        <!-- Войти -->
+        <!-- </a> -->
+        <!-- <a *ngIf="isLogin" class="btn btn__auth btn__icon-arrow-down" [matMenuTriggerFor]="menu">
+          <span class="material-icons m-r-8">person_outline</span>{{userName}}</a>
+          <mat-menu #menu="matMenu">
+            <a mat-menu-item>Настройки</a>
+            <a mat-menu-item (click)="onGoTo('logout')">Выход</a>
+          </mat-menu> -->
+
+        <p-button label="Новое объявление" styleClass="b-icon b-icon__plus">
+
+          <!-- <img class="m-l-4" src="../../assets/img/icons/plus.svg" alt="плюс"> -->
+        </p-button>
+        <a class="btn btn__plus">
+          Новое объявление
+          <!-- <img class="m-l-4" src="./img/icons/plus.svg" alt="плюс"> -->
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="header__bottom">
+      <h3>Доска объявлений</h3>
+      <button class="btn btn__white">
+        <!-- <img class="m-r-8" src="./img/icons/list-nested.svg" alt="меню категорий"> -->
+        Все категории
+      </button>
+      <app-search (searchText)="getSearchTextProps($event)"></app-search>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+@function size($px) {
+  $result: calc($px / 16);
+  @return $result;
+}
+
+@mixin SizePx($property, $startSize, $minSize, $maxWidthContainer, $minWidth) {
+  #{$property}: calc(
+    #{size($minSize) + px} + #{size($startSize) - size($minSize)} *
+      ((100vw - #{size($minWidth) + px}) / #{size($maxWidthContainer) - size($minWidth)})
+  );
+}
+@mixin GridTemplate($property, $n, $startSize, $minSize, $maxWidthContainer, $minWidth) {
+  #{$property}: repeat(
+    $n,
+    calc(
+      #{size($minSize) + px} + #{size($startSize) - size($minSize)} *
+        ((100vw - #{size($minWidth) + px}) / #{size($maxWidthContainer) - size($minWidth)})
+    )
+  );
+}

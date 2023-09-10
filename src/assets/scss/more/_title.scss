@@ -1,0 +1,37 @@
+h1 {
+  font-size: $h1;
+  line-height: $lh-h1;
+  font-weight: $fw-h1;
+}
+h2 {
+  font-size: $h2;
+  line-height: $lh-h2;
+  font-weight: $fw-h2;
+}
+h3 {
+  font-size: $h3;
+  line-height: $lh-h3;
+  font-weight: $fw-h3;
+}
+h4 {
+  font-size: $h4;
+  line-height: $lh-h4;
+  font-weight: $fw-h4;
+}
+h5 {
+  font-size: $h5;
+  line-height: $lh-h5;
+  font-weight: $fw-h5;
+}
+h6 {
+  font-size: $h6;
+  line-height: $lh-h6;
+  font-weight: $fw-h6;
+}
+
+// @media (max-width: $media-md) {
+//   h3 {
+//     font-size: 26px;
+//     line-height: 32px;
+//   }
+// }

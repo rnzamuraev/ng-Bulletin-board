@@ -1,0 +1,18 @@
+.d-flex {
+  display: flex;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+}
+.content-start {
+  justify-content: flex-start;
+  align-items: center;
+}
+.content-end {
+  justify-content: flex-end;
+  align-items: center;
+}
+.col {
+  flex-direction: column;
+}

@@ -1,0 +1,35 @@
+// font
+.text-xs {
+  font-size: $text-xs;
+  line-height: $lh-xs;
+}
+.text-sm {
+  font-size: $text-sm;
+  line-height: $lh-sm;
+}
+// color
+.text-white {
+  color: $white;
+}
+.text-secondary{
+  color: $secondary;
+}
+.text-primary {
+  color: $primary;
+}
+.text-danger {
+  color: $danger;
+}
+// position
+.text-center {
+  text-align: center;
+}
+.text-end {
+  text-align: right;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

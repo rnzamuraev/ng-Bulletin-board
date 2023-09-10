@@ -1,0 +1,17 @@
+// Color
+.bg-color-white {
+  background-color: $white;
+}
+.bg-color-dark {
+  background-color: $dark;
+}
+.bg-color-primary {
+  background-color: $primary;
+}
+// Gradient
+.bg-gradient-dark {
+  background-image: $bg-gradient-dark;
+}
+.bg-gradient-primary {
+  background-image: $bg-gradient-primary;
+}

@@ -1,0 +1,7 @@
+.link {
+  color: $primary;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
+}

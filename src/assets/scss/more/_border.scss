@@ -1,0 +1,19 @@
+.br-base {
+  border: 1px solid $primary;
+  border-radius: 4px;
+}
+.br-t-base {
+  border-top: 1px solid $primary;
+}
+.br-l-base {
+  border-left: 1px solid $primary;
+}
+.br-b-base {
+  border-bottom: 1px solid $primary;
+}
+.br-r-base {
+  border-right: 1px solid $primary;
+}
+.br-b-white-dark {
+  border-bottom: 1px solid $white-dark;
+}

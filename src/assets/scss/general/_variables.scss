@@ -1,0 +1,110 @@
+// *** Color
+$white: #ffffff;
+$white-dark: #e2dbfc;
+$dark: #1e293b;
+$secondary: #64748b;
+$primary: #3b82f6;
+$primary-dark: #2266dd;
+$danger: #ef4444;
+
+// *** Shadow
+$shadow-dark: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgb(30, 41, 59, 0.4);
+$shadow-secondary: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgb(100, 116, 139, 0.4);
+$shadow-primary: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgb(59, 130, 246, 0.4);
+$shadow-danger: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgb(239, 68, 68, 0.4);
+
+// *** Gradient
+$bg-gradient-dark: linear-gradient(195deg, #42424a 0%, $dark 100%);
+$bg-gradient-primary: linear-gradient(195deg, #80b0fe 0%, $primary 100%);
+$bg-gradient-white: linear-gradient(
+  90deg,
+  rgba(255, 255, 255, 0),
+  rgba(255, 255, 255, 1),
+  rgba(255, 255, 255, 0)
+);
+
+// *** Font-Weight
+$fw-xxl: 900;
+$fw-xl: 800;
+$fw-lg: 700;
+$fw-md: 600;
+$fw-sm: 500;
+$fw-xs: 400;
+
+// *** Text
+$text-xl: 20px;
+$lh-xl: 32px;
+$text-lg: 18px;
+$lh-lg: 28px;
+$text-md: 16px;
+$lh-md: 24px;
+$text-sm: 14px;
+$lh-sm: 20px;
+$text-xs: 12px;
+$lh-xs: 18px;
+
+// *** Title
+$h1: 48px;
+$lh-h1: 57px;
+$fw-h1: $fw-lg;
+$h2: 36px;
+$lh-h2: 40px;
+$fw-h2: $fw-lg;
+$h3: 30px;
+$lh-h3: 36px;
+$fw-h3: $fw-lg;
+$h4: 24px;
+$lh-h4: 32px;
+$fw-h4: $fw-md;
+$h5: 20px;
+$lh-h5: 28px;
+$fw-h5: $fw-md;
+$h6: 18px;
+$lh-h6: 24px;
+$fw-h6: $fw-md;
+
+// *** Media
+$media-xl: 1400px;
+$media-lg: 1200px;
+$media-md: 992px;
+$media-sm: 768px;
+$media-xs: 576px;
+
+// *** Container
+$container-xxl: 1296px;
+$container-xl: 1140px;
+$container-lg: 940px;
+$container-md: 718px;
+$container-sm: 540px;
+$container-xs: 280px;
+
+// *** Header
+$header-height: 139px;
+
+// *** Footer
+$footer-height: 60px;
+
+// *** Body-Base
+$ff-base: "Inter";
+$text-base: $text-md;
+$lh-base: $lh-md;
+$fw-base: $fw-xs;
+$color-base: $dark;
+$bg-base: $white;
+$br-base: 1px solid $primary;
+$shadow-base: $shadow-primary;
+
+// *** Btn
+$btn-p: 8px 12px;
+$btn-text: $text-xs;
+$btn-lh: $lh-xs;
+$btn-fw: $fw-sm;
+$btn-color: $color-base;
+$btn-bg-color: $white;
+$btn-border: 1px solid $color-base;
+$btn-border-r: 4px;
+$animate: all 0.2s;
+
+// *** Disabled
+$disabled-color: $secondary;
+$disabled-opacity: 0.4;

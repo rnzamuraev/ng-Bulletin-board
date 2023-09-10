@@ -1,0 +1,170 @@
+.btn {
+  padding: 8px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $text-sm;
+  font-weight: 500;
+  line-height: $lh-sm;
+  color: $white;
+  background-color: $primary;
+  border: none;
+  border-radius: 4px;
+  transition: $animate;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    background-color: $primary-dark;
+  }
+  &__plus {
+    &::after {
+      content: "";
+      margin-left: 4px;
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      background: center / contain no-repeat url("../../img/icons/plus.svg");
+    }
+  }
+  &__search {
+    // padding: 8px 12px;
+    margin-left: -1px;
+    border-radius: 0 4px 4px 0;
+    &::after {
+      content: "";
+      margin-left: 8px;
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      background: center / contain no-repeat url("../../img/icons/search.svg");
+    }
+  }
+  &__form {
+    padding: 12px 40px;
+  }
+  &__white {
+    padding: 8px 12px;
+    color: $primary;
+    background-color: $white;
+    border: 1px solid $primary;
+    &:hover {
+      background-color: $white-dark;
+    }
+    &::before {
+      content: "";
+      margin-right: 8px;
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      background: center / contain no-repeat url("../../img/icons/list-nested.svg");
+    }
+  }
+  &__auth {
+    margin-right: 24px;
+    padding: 8px 0;
+    color: $white;
+    background-color: transparent;
+    border: none;
+    border-radius: none;
+    &:hover {
+      background-color: transparent;
+    }
+    &::before {
+      content: "";
+      margin-right: 8px;
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      background: center / contain no-repeat url("../../img/icons/person.svg");
+    }
+  }
+  // &__icon::before {
+  //   content: "";
+  //   margin-right: 8px;
+  //   width: 20px;
+  //   height: 20px;
+  //   display: inline-block;
+  //   background: center / contain no-repeat url("../img/icons/person.svg");
+  // }
+  // &__icon::after {
+  //   content: "";
+  //   margin-left: 8px;
+  //   width: 10px;
+  //   height: 10px;
+  //   display: inline-block;
+  //   background: center / contain no-repeat url("../../img/icons/chevron-down.svg");
+  // }
+  // &__icon-arrow-down::after {
+  //   content: "";
+  //   margin-left: 8px;
+  //   width: 10px;
+  //   height: 10px;
+  //   display: inline-block;
+  //   background: center / contain no-repeat url("../../img/icons/chevron-down.svg");
+  // }
+}
+
+.btn-icon {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  line-height: 18px;
+  color: $secondary;
+  border: none;
+  overflow: hidden;
+  &__pass {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    z-index: 10;
+  }
+}
+
+.btn-icon {
+  // padding: 5px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // font-size: 20px;
+  // line-height: 14px;
+  color: $white;
+  background-color: transparent;
+  border: none;
+  transition: $animate;
+  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  * {
+    font-size: 20px;
+    line-height: 20px;
+  }
+  &__add {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 50%;
+    * {
+      font-size: 30px;
+      line-height: 30px;
+    }
+  }
+  // &__before {
+  //   position: absolute;
+  //   top: 50%;
+  //   transform: translateY(-50%);
+  //   left: 10px;
+  //   z-index: 10;
+  // }
+  // &__after {
+  //   position: absolute;
+  //   top: 50%;
+  //   transform: translateY(-50%);
+  //   right: 10px;
+  //   z-index: 10;
+  // }
+}
