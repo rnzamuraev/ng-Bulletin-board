@@ -12,6 +12,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isLogin!: boolean;
   public userName!: string;
   public searchText!: string;
+  public menuCategory = [
+    "Транспорт",
+    "Недвижимость",
+    "Работа",
+    "Услуги",
+    "Личные вещи",
+    "Для дома",
+    "Автозапчасти и аксессуары",
+    "Электроника",
+    "Хобби и отдых",
+    "Животные",
+    "Бизнес и оборудование",
+  ];
 
   constructor(
     private router: Router, //

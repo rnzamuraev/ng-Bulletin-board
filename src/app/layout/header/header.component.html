@@ -15,14 +15,12 @@
             <a mat-menu-item (click)="onGoTo('logout')">Выход</a>
           </mat-menu> -->
 
-        <p-button label="Новое объявление" styleClass="b-icon b-icon__plus">
-
-          <!-- <img class="m-l-4" src="../../assets/img/icons/plus.svg" alt="плюс"> -->
-        </p-button>
-        <a class="btn btn__plus">
-          Новое объявление
-          <!-- <img class="m-l-4" src="./img/icons/plus.svg" alt="плюс"> -->
-        </a>
+        <p-button routerLink="/profile/new-announcement" label="Новое объявление" styleClass="b-icon b-icon__plus"
+          (click)="onGoTo('profile/new-announcement')"></p-button>
+        <!-- <a class="btn btn__plus"> -->
+        <!-- Новое объявление -->
+        <!-- <img class="m-l-4" src="./img/icons/plus.svg" alt="плюс"> -->
+        <!-- </a> -->
       </div>
     </div>
   </div>
@@ -30,10 +28,11 @@
   <div class="container">
     <div class="header__bottom">
       <h3>Доска объявлений</h3>
-      <button class="btn btn__white">
-        <!-- <img class="m-r-8" src="./img/icons/list-nested.svg" alt="меню категорий"> -->
-        Все категории
-      </button>
+      <!-- <button class="btn btn__white"> -->
+      <!-- <img class="m-r-8" src="./img/icons/list-nested.svg" alt="меню категорий"> -->
+      <!-- Все категории -->
+      <!-- </button> -->
+      <app-all-categories (searchText)="getSearchTextProps($event)"></app-all-categories>
       <app-search (searchText)="getSearchTextProps($event)"></app-search>
     </div>
   </div>

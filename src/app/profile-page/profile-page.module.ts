@@ -1,17 +1,18 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { SettingsPageComponent } from "./settings-page/settings-page.component";
-import { NewAnnouncementPageComponent } from "./new-announcement-page/new-announcement-page.component";
-import { MyAnnouncementsPageComponent } from "./my-announcements-page/my-announcements-page.component";
+import { SettingsPageComponent } from "./components/settings-page/settings-page.component";
+import { NewAnnouncementPageComponent } from "./components/new-announcement-page/new-announcement-page.component";
+import { MyAnnouncementsPageComponent } from "./components/my-announcements-page/my-announcements-page.component";
 import { ProfilePageComponent } from "./profile-page.component";
+import { RouterModule } from "@angular/router";
+import { SharedModule } from "src/app/shared/shared.module";
 
 @NgModule({
   declarations: [
+    ProfilePageComponent,
     SettingsPageComponent,
     NewAnnouncementPageComponent,
     MyAnnouncementsPageComponent,
-    ProfilePageComponent,
   ],
-  imports: [CommonModule],
+  imports: [SharedModule, RouterModule],
 })
 export class ProfilePageModule {}
