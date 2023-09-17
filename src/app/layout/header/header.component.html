@@ -2,25 +2,10 @@
   <div class="header__top bg-color-dark">
     <div class="container">
       <div class="header__wrap">
-        <p-button *ngIf="!isLogin" styleClass="b-icon b-icon__auth" label="Войти" (click)="onGoTo('login')"></p-button>
-        <p-button *ngIf="!isLogin" label="Войти" (click)="onGoTo('login')"></p-button>
-        <!-- <a *ngIf="!isLogin" class="btn btn__auth" (click)="onGoTo('login')"> -->
-        <!-- <span class="material-icons m-r-8">person_outline</span> -->
-        <!-- Войти -->
-        <!-- </a> -->
-        <!-- <a *ngIf="isLogin" class="btn btn__auth btn__icon-arrow-down" [matMenuTriggerFor]="menu">
-          <span class="material-icons m-r-8">person_outline</span>{{userName}}</a>
-          <mat-menu #menu="matMenu">
-            <a mat-menu-item>Настройки</a>
-            <a mat-menu-item (click)="onGoTo('logout')">Выход</a>
-          </mat-menu> -->
-
-        <p-button routerLink="/profile/new-announcement" label="Новое объявление" styleClass="b-icon b-icon__plus"
-          (click)="onGoTo('profile/new-announcement')"></p-button>
-        <!-- <a class="btn btn__plus"> -->
-        <!-- Новое объявление -->
-        <!-- <img class="m-l-4" src="./img/icons/plus.svg" alt="плюс"> -->
-        <!-- </a> -->
+        <a class="btn icon icon-left icon-auth" [ngClass]="{'icon-right': isUser, 'icon-arrow-down': isUser}"
+          (click)="onGoTo('login')">Войти</a>
+        <a routerLink="/profile/new-announcement" class="btn icon icon-right icon-plus"
+          (click)="onGoTo('profile/new-announcement')">Новое объявление</a>
       </div>
     </div>
   </div>
@@ -28,12 +13,15 @@
   <div class="container">
     <div class="header__bottom">
       <h3>Доска объявлений</h3>
-      <!-- <button class="btn btn__white"> -->
-      <!-- <img class="m-r-8" src="./img/icons/list-nested.svg" alt="меню категорий"> -->
-      <!-- Все категории -->
-      <!-- </button> -->
-      <app-all-categories (searchText)="getSearchTextProps($event)"></app-all-categories>
-      <app-search (searchText)="getSearchTextProps($event)"></app-search>
+      <a class="btn icon icon-left icon-white" [class.icon-menu-close]="isOpenMenu" (click)="onToggleMenu()">Все
+        категории</a>
+      <app-search (getSearchText)="getSearchTextProps($event)"></app-search>
     </div>
   </div>
+
+  <div class="header__menu">
+    <app-categories-menu *ngIf="isOpenMenu" class="bg-color-white" [categoriesProps]="categories"
+      (closeMenu)="onCloseMenuProps($event)"></app-categories-menu>
+  </div>
+
 </div>

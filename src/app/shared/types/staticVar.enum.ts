@@ -3,6 +3,8 @@ export enum EStaticVar {
   POSTS_TOKEN_KEY = "__posts-token__",
   USER_TOKEN = "sdlkv3emsmlvi.oef3n.asoucn34asnoc.dfd.ee3r53fsaf",
   TOKEN_KEY = "__is_user_token__",
+  LOCATION_CITY_KEY = "__location-city__",
   LOGIN = "Авторизация",
   REGISTER = "Регистрация",
+  PATH_CITY = "city",
 }

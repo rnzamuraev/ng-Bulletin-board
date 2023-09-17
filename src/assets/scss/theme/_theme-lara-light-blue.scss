@@ -8,7 +8,7 @@
   font-size: $text-sm;
   border-radius: 4px;
   line-height: $lh-sm;
-
+  outline: none;
   &-label {
     font-weight: $fw-sm;
   }
@@ -31,7 +31,7 @@
   //   }
   // }
 }
-.b-icon {
+.b-icon-right {
   &::before {
     content: "";
     margin-right: 8px;

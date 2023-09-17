@@ -1,28 +1,28 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { HomeComponent } from "./home-page/components/home/home.component";
-// import { NotFoundError } from "rxjs";
-import { NotFoundPageComponent } from "./not-found-page/not-found-page.component";
-import { NewAnnouncementPageComponent } from "./profile-page/components/new-announcement-page/new-announcement-page.component";
-import { SettingsPageComponent } from "./profile-page/components/settings-page/settings-page.component";
-import { ProfilePageComponent } from "./profile-page/profile-page.component";
-import { AuthComponent } from "./auth/auth.component";
+
+import { HomeComponent } from "./main/components/home/home.component";
+import { CategoryPageComponent } from "./main/components/cities-page/components/category-page/category-page.component";
+import { SubcategoryPageComponent } from "./main/components/cities-page/components/category-page/components/subcategory-page/subcategory-page.component";
+import { CategoryItemsComponent } from "./main/components/cities-page/components/category-page/components/subcategory-page/components/category-items/category-items.component";
+import { AuthComponent } from "./auth/components/auth/auth.component";
+import { ProfilePageComponent } from "./profile/components/profile-page/profile-page.component";
+import { NewAnnouncementPageComponent } from "./profile/components/profile-page/components/new-announcement-page/new-announcement-page.component";
+import { SettingsPageComponent } from "./profile/components/profile-page/components/settings-page/settings-page.component";
+import { NotFoundPageComponent } from "./not-found/components/not-found-page/not-found-page.component";
+import { CitiesPageComponent } from "./main/components/cities-page/cities-page.component";
+import { EStaticVar } from "./shared/types/staticVar.enum";
 
 const routes: Routes = [
   {
     path: "",
-    component: HomeComponent,
-    // loadChildren: () => import("./home-page/home-page.module").then(c => c.HomePageModule),
-    pathMatch: "full",
+    loadChildren: () => import("./main/main.module").then(m => m.MainModule),
   },
   // {
   //   path: "/:city",
   //   component: HomeComponent,
   // },
-  {
-    path: "sevastopol/:category",
-    component: HomeComponent,
-  },
+
   // {
   //   path: "sevastopol/:category/:subcategory",
   //   // component: ItemPageComponent,
@@ -37,17 +37,17 @@ const routes: Routes = [
   },
   {
     path: "profile",
-    component: ProfilePageComponent,
+    // component: ProfilePageComponent,
+    // redirect: ,
     children: [
-      { path: "my-announcements", component: NewAnnouncementPageComponent },
+      // { path: "my-announcements", component: MyAnnouncementPageComponent },
       { path: "new-announcement", component: NewAnnouncementPageComponent },
       { path: "settings", component: SettingsPageComponent },
     ],
   },
   {
     path: "**",
-    // component: NotFoundError,
-    component: NotFoundPageComponent,
+    loadChildren: () => import("./not-found/not-found.module").then(m => m.NotFoundModule),
   },
 ];
 

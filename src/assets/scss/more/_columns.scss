@@ -1,11 +1,12 @@
 .col {
+  display: flex;
   flex-direction: column;
   // &-2 {
   //   width: 50%;
   // }
-  // &-3 {
-  //   width: 33.333%;
-  // }
+  &-3 {
+    width: 33.333%;
+  }
   &-4 {
     width: 25%;
   }

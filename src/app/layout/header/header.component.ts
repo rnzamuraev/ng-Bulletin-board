@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { CategoryService } from "../services/category.service";
+import { ICategoryMenu } from "../types/category.interface";
 
-import { StateService } from "src/app/shared/services/state.service";
+// import { StateService } from "src/app/shared/services/state.service";
 
 @Component({
   selector: "app-header",
@@ -9,66 +12,85 @@ import { StateService } from "src/app/shared/services/state.service";
   styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  public isLogin!: boolean;
-  public userName!: string;
+  private unsubscribe$!: Subscription;
+  categories!: ICategoryMenu[];
+  public isOpenMenu = false;
+  // public isLogin!: boolean;
+  public isUser!: boolean;
   public searchText!: string;
-  public menuCategory = [
-    "Транспорт",
-    "Недвижимость",
-    "Работа",
-    "Услуги",
-    "Личные вещи",
-    "Для дома",
-    "Автозапчасти и аксессуары",
-    "Электроника",
-    "Хобби и отдых",
-    "Животные",
-    "Бизнес и оборудование",
-  ];
 
   constructor(
-    private router: Router, //
-    private stateService: StateService
+    private router: Router, //private stateService: StateService,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
-    this.getUser();
-    // this.getSearch$();
+    this.getCategories();
+  }
+
+  private getCategories() {
+    this.unsubscribe$ = this.categoryService.getCategory().subscribe(data => {
+      this.categories = data;
+    });
+  }
+
+  public onCloseMenuProps(data: boolean) {
+    this.isOpenMenu = data;
+    this.isScrolling();
+    console.log("close");
+  }
+  public onToggleMenu(): void {
+    this.isOpenMenu = !this.isOpenMenu;
+    this.isScrolling();
+    console.log(this.isOpenMenu);
+  }
+  private isScrolling() {
+    this.isOpenMenu ? this.disableScrolling() : this.enableScrolling();
+  }
+  private disableScrolling() {
+    const div = document.createElement("div");
+    const body = document.body;
+    body.appendChild(div);
+    const bodyHeight = body.scrollHeight;
+    div.style.width = "100px";
+    div.style.height = "100vh";
+
+    // console.log(body.scrollHeight);
+    // console.log(div.getBoundingClientRect().height);
+    // console.log(bodyHeight > div.getBoundingClientRect().height);
+
+    bodyHeight > div.getBoundingClientRect().height ? (div.style.overflowY = "scroll") : null;
+    body.style.paddingRight = 100 - div.clientWidth + "px";
+    div.remove();
+    body.style.overflow = "hidden";
+  }
+  private enableScrolling() {
+    const body = document.body;
+    body.style.overflow = "";
+    body.style.paddingRight = "0";
   }
 
   public getSearchTextProps(data: string) {
     console.log(data);
+    this.onGoTo(data);
   }
-
-  // private getSearch$() {
-  //   this.stateService.getSearch$.subscribe(data => {
-  //     this.searchText = data;
-  //   });
-  // }
-
-  private getUser(): void {
-    // this.stateService.getUser$.subscribe(data => {
-    //   if (data === null) {
-    this.isLogin = false;
-    //     return;
-    //   }
-    //   this.isLogin = true;
-    //   this.userName = data.name;
-    // });
-  }
-
   public onGoTo(value: string): void {
-    // if (value === "logout") {
-    //   this.stateService.setUser$(null);
-    //   value = "";
-    // }
-
-    this.router.navigate([`/${value}`]);
+    this.router.navigateByUrl(`/${value}`);
   }
 
   ngOnDestroy(): void {
-    setTimeout(() => {
-      console.log("timeout отработал");
-    }, 5000);
+    this.unsubscribe$.unsubscribe();
   }
 }
+
+// ******************
+// private getUser(): void {
+// this.stateService.getUser$.subscribe(data => {
+//   if (data === null) {
+// this.isLogin = false;
+//     return;
+//   }
+//   this.isLogin = true;
+//   this.userName = data.name;
+// });
+// }

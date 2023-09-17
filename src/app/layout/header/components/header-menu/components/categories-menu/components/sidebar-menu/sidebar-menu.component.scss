@@ -1,0 +1,31 @@
+:host {
+  overflow-y: auto;
+  .menu-sidebar__nav {
+    padding-right: 24px;
+  }
+  .menu-sidebar__nav-item {
+    margin-bottom: 8px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    &:last-child {
+      margin-right: 10px;
+      border-radius: 0;
+    }
+  }
+  .menu-sidebar__item {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .menu-sidebar__category {
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0s;
+  }
+}

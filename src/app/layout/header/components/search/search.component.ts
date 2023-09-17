@@ -8,9 +8,9 @@ import { NgForm } from "@angular/forms";
 })
 export class SearchComponent {
   @Output()
-  public searchText = new EventEmitter<string>();
+  public getSearchText = new EventEmitter<string>();
 
   public onSubmitSearchText(data: NgForm) {
-    this.searchText.emit(data.value.search);
+    this.getSearchText.emit(data.value.search);
   }
 }

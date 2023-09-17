@@ -7,11 +7,19 @@
   font-size: $text-sm;
   line-height: $lh-sm;
 }
+.text-lg {
+  font-size: $text-lg;
+  line-height: $lh-lg;
+}
+.text-xl {
+  font-size: $text-xl;
+  line-height: $lh-xl;
+}
 // color
 .text-white {
   color: $white;
 }
-.text-secondary{
+.text-secondary {
   color: $secondary;
 }
 .text-primary {
