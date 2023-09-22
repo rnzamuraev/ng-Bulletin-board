@@ -1,5 +1,4 @@
 import { Observable } from "rxjs";
-import { ICategoryMenu } from "../../types/category.interface";
 
 export interface ICommonDao<T> {
   get(): Observable<T[]>;

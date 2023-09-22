@@ -1,28 +1,28 @@
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { CommonModule } from "@angular/common";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-// import { SharedModule } from "./shared/shared.module";
-import { AuthModule } from "./auth/auth.module";
 import { LayoutModule } from "./layout/layout.module";
-import { MainModule } from "./main/main.module";
-import { NotFoundModule } from "./not-found/not-found.module";
-import { ProfileModule } from "./profile/profile.module";
+import { MainModule } from "./pages/main/main.module";
+import { LkModule } from "./pages/lk/lk.module";
+import { AuthModule } from "./pages/auth/auth.module";
+import { NotFoundModule } from "./pages/not-found/not-found.module";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    CommonModule,
-    // SharedModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     LayoutModule,
     MainModule,
-    ProfileModule,
-    NotFoundModule,
+    LkModule,
     AuthModule,
+    NotFoundModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

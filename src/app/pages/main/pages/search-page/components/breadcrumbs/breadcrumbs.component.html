@@ -1,0 +1,17 @@
+<!-- <ul> -->
+<ul class="d-flex" *ngIf="!breadcrumbs.length; else loading">
+  <li *ngFor="let item of breadcrumbsProps; let last = last">
+    <a *ngIf="!last; else not" class="pointer text-secondary" routerLink="['/']">{{item}}</a>
+    <ng-template #not>
+      <span class="circle">{{item}}</span>
+    </ng-template>
+    <span *ngIf="!last">></span>
+  </li>
+</ul>
+<ng-template #loading>
+  <ul class="d-flex">
+    <li *ngFor="let item of breadcrumbs">
+      {{item}} <span>></span>
+    </li>
+  </ul>
+</ng-template>

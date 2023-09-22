@@ -1,0 +1,21 @@
+<div class="container">
+  <div *ngIf="categoriesProps; else loading" class="menu">
+    <app-categories-sidebar [categoriesProps]="categoriesProps" [activeMenuCategoryProps]="activeMenuCategory"
+      (setActiveMenuCategory)="onActiveMenuCategoryProps($event)"></app-categories-sidebar>
+    <div class="menu__content">
+      <h4 class="d-flex menu-link" (click)="onGetCategoryLink(activeMenuCategory.category)">
+        {{activeMenuCategory.category}}
+        <span class="icon icon-right icon-arrow-right-big"></span>
+      </h4>
+      <div class="menu__card">
+        <app-categories-body *ngFor="let subcategory of activeMenuCategory.body" [subcategoryProps]="subcategory"
+          [subcategoryIdColProps]="categoryIdColumnCard" [subcategoryIdCol2Props]="categoryIdColumnCard2"
+          (getSubcategoryLink)="onGetSubcategoryLinkProps($event)"></app-categories-body>
+      </div>
+    </div>
+
+  </div>
+  <ng-template #loading>
+    <h4>Loading...</h4>
+  </ng-template>
+</div>

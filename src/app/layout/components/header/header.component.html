@@ -1,0 +1,27 @@
+<div class="header br-b-white-dark">
+  <div class="header__top bg-color-dark">
+    <div class="container">
+      <div class="header__wrap">
+        <a class="btn icon icon-left icon-auth" [ngClass]="{'icon-right': isUser, 'icon-arrow-down': isUser}"
+          (click)="onGoTo('login')">Войти</a>
+        <a routerLink="/lk/new-item" class="btn icon icon-right icon-plus" (click)="onGoTo('lk/new-item')">Новое
+          объявление</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="header__bottom">
+      <h3 class="font-weight-bold">Доска объявлений</h3>
+      <a class="btn icon icon-left icon-white" [class.icon-menu-close]="isOpenMenu" (click)="onToggleMenu()">Все
+        категории</a>
+      <app-search-input (getSearchText)="getSearchTextProps($event)"></app-search-input>
+    </div>
+  </div>
+
+  <div class="header__menu">
+    <app-categories-list *ngIf="isOpenMenu" class="bg-color-white" [categoriesProps]="categories"
+      (closeMenu)="onCloseMenuProps($event)"></app-categories-list>
+  </div>
+
+</div>

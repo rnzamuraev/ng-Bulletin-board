@@ -1,0 +1,10 @@
+<div class="container">
+  <app-breadcrumbs [breadcrumbsProps]="breadcrumbs"></app-breadcrumbs>
+  <router-outlet></router-outlet>
+  <h4>Объявления по запросу {{searchText}}</h4>
+  <ul class="card-list">
+    <li *ngFor="let prod of products">
+      <app-card-product [productProps]="prod" (getIdAndTitle)="onGetIdAndTitleProps($event)"></app-card-product>
+    </li>
+  </ul>
+</div>

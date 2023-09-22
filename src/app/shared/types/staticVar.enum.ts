@@ -1,3 +1,4 @@
+export let city = "Севастополь";
 export enum EStaticVar {
   USERS_TOKEN_KEY = "__users-token__",
   POSTS_TOKEN_KEY = "__posts-token__",
@@ -6,5 +7,6 @@ export enum EStaticVar {
   LOCATION_CITY_KEY = "__location-city__",
   LOGIN = "Авторизация",
   REGISTER = "Регистрация",
-  PATH_CITY = "city",
+  CITY_TITLE = "Севастополь",
+  PATH_CITY = `sevastopol`,
 }

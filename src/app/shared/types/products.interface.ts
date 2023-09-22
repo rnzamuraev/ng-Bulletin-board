@@ -1,15 +1,34 @@
+// export interface IProduct {
+//   id: number;
+//   title: "string";
+//   price: number;
+//   description: string;
+//   category: string;
+//   image: string;
+//   rating: IProductRating;
+// }
+// interface IProductRating {
+//   rate: number;
+//   count: number;
+// }
+
 export interface IProduct {
   id: number;
-  title: "string";
+  title: string;
   price: number;
   description: string;
-  category: string;
-  image: string;
-  rating: IProductRating;
+  images: string[];
+  creationAt: string;
+  updatedAt: string;
+  category: IProductCategory;
 }
-interface IProductRating {
-  rate: number;
-  count: number;
+
+export interface IProductCategory {
+  id: number;
+  name: string;
+  image: string;
+  creationAt: string;
+  updatedAt: string;
 }
 
 export interface IProd {

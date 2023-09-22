@@ -29,9 +29,13 @@ h6 {
   font-weight: $fw-h6;
 }
 
-// @media (max-width: $media-md) {
-//   h3 {
-//     font-size: 26px;
-//     line-height: 32px;
-//   }
-// }
+@media (max-width: $media-md) {
+  h3 {
+    font-size: $h4;
+    line-height: $lh-h4;
+  }
+  h4 {
+    font-size: $h5;
+    line-height: $lh-h5;
+  }
+}

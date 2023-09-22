@@ -1,25 +1,24 @@
 import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
-import { FooterComponent } from "./footer/footer.component";
-import { HeaderComponent } from "./header/header.component";
-import { SharedModule } from "src/app/shared/shared.module";
-import { SearchComponent } from "./header/components/search/search.component";
-import { HeaderMenuModule } from "./header/components/header-menu/header-menu.module";
-// *************************************
-import { CategoriesMenuComponent } from "./header/components/header-menu/components/categories-menu/categories-menu.component";
-import { CategoryItemsComponent } from "./header/components/header-menu/components/categories-menu/components/category-items/category-items.component";
-import { SidebarMenuComponent } from "./header/components/header-menu/components/categories-menu/components/sidebar-menu/sidebar-menu.component";
+import { FooterComponent } from "./components/footer/footer.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { CategoriesListComponent } from "./components/header/components/categories-list/categories-list.component";
+import { SearchInputComponent } from "./components/header/components/search-input/search-input.component";
+import { CategoriesBodyComponent } from "./components/header/components/categories-list/components/categories-body/categories-body.component";
+import { CategoriesSidebarComponent } from "./components/header/components/categories-list/components/categories-sidebar/categories-sidebar.component";
 
 @NgModule({
   declarations: [
     FooterComponent,
     HeaderComponent,
-    SearchComponent,
-    CategoriesMenuComponent,
-    CategoryItemsComponent,
-    SidebarMenuComponent,
+    CategoriesListComponent,
+    SearchInputComponent,
+    CategoriesBodyComponent,
+    CategoriesSidebarComponent,
   ],
-  imports: [SharedModule, HeaderMenuModule],
+  imports: [CommonModule, FormsModule],
   exports: [FooterComponent, HeaderComponent],
 })
 export class LayoutModule {}
