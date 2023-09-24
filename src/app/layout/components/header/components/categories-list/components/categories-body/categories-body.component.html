@@ -1,0 +1,14 @@
+<div class="menu-card menu-card-no-break" [ngClass]="{
+  'menu-card-break': subcategoryProps.id === subcategoryIdColProps || subcategoryIdCol2Props,}">
+  <h6 class="menu-link" (click)="onGetSubcategoryLink(title)">{{title}} | {{subcategoryProps.id}} |
+    {{subcategoryIdColProps}}
+    | {{subcategoryIdCol2Props}}</h6>
+  <ul class="menu-card-nav">
+    <li *ngFor="let item of subcategoryItems" (click)="onGetSubcategoryLink(title, item)">
+      <p class="menu-link">{{item}}</p>
+    </li>
+    <li *ngIf="isMore" (click)="onMoreItems()">
+      <p class="menu-link">ещё {{quantity}}</p>
+    </li>
+  </ul>
+</div>

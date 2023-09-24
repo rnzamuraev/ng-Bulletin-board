@@ -1,0 +1,13 @@
+<div class="container">
+  <app-breadcrumbs [breadcrumbsProps]="breadcrumbs" [isProductInfoProps]="isProductInfo"
+    (getLinkBreadcrumbs)="onGetLinkBreadcrumbsProps($event)"></app-breadcrumbs>
+  <router-outlet *ngIf="isProductInfo; else notProductInfo"></router-outlet>
+  <ng-template #notProductInfo>
+    <h4>Объявления по запросу {{searchText}}</h4>
+    <ul class="card-list">
+      <li *ngFor="let prod of products">
+        <app-card-product [productProps]="prod" (getIdAndTitle)="onGetIdAndTitleProps($event)"></app-card-product>
+      </li>
+    </ul>
+  </ng-template>
+</div>

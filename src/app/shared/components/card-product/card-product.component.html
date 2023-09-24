@@ -1,0 +1,21 @@
+<div class="card-product">
+  <div class="card-product__top pointer" (click)="onGetIdAndTitle(productProps.id, productProps.title)">
+    <!-- <img [src]="prod.prod.images.featured" [alt]="prod.prod.name" /> -->
+    <img *ngIf="prodProps" [src]="prodProps.prod.images.background" [alt]="prodProps.prod.name" />
+    <img *ngIf="productProps" [src]="productProps.images" [alt]="productProps.title" />
+    <!-- <img [src]="prod.prod.images.full_background" [alt]="prod.prod.name" /> -->
+    <!-- <img [src]="prod.prod.images.icon" [alt]="prod.prod.name" /> -->
+    <!-- <img [src]="prod.prod.images.icon_background" [alt]="prod.prod.name" /> -->
+  </div>
+
+  <div class="card-product__body">
+    <a class="pinter" (click)="onGetIdAndTitle(productProps.id, productProps.title)">
+      <h6 *ngIf="prodProps" class="text-primary">{{prodProps.prod.name}}</h6>
+      <h6 *ngIf="productProps" class="text-primary">{{productProps.title}}</h6>
+    </a>
+    <h6 *ngIf="prodProps">{{prodProps.price | currency:"$"}}</h6>
+    <h6 *ngIf="productProps">{{productProps.price | currency:"$"}}</h6>
+    <p class="card-product__description">Москва, Ленинский проспект</p>
+    <p class="card-product__description">Сегодня 14:12</p>
+  </div>
+</div>
