@@ -45,9 +45,11 @@ export class CategoriesBodyComponent implements OnInit {
 
   private setItems(data: ICategory[]): void {
     console.log(data);
+    this.subcategoryItems = [];
     data.forEach((elem: ICategory) => {
       console.log(elem);
       this.subcategoryItems.push(elem.category);
+      console.log(this.subcategoryItems);
     });
     console.log(this.subcategoryItems);
   }
@@ -56,6 +58,7 @@ export class CategoriesBodyComponent implements OnInit {
   }
   private setQuantity(data: number): void {
     this.quantity = data - 5;
+    console.log(this.quantity);
   }
 
   onMoreItems(): void {

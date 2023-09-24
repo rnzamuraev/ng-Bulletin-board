@@ -9,4 +9,5 @@ export enum EStaticVar {
   REGISTER = "Регистрация",
   CITY_TITLE = "Севастополь",
   PATH_CITY = `sevastopol`,
+  ROUTES_LENGTH_PRODUCT_PAGE = 6,
 }

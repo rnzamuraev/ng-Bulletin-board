@@ -1,26 +1,31 @@
-<div class="card-left">
-  <h3>90 000 Р</h3>
-  <div class="img">
-    <img src="" alt="" />
+<div *ngIf="product; else loading" class="card-info">
+  <div class="card-left">
+    <h3>{{product.title}}</h3>
+    <div class="img">
+      <img [src]="product.category.image" [alt]="product.title" />
+    </div>
+    <ul class="gallery">
+      <li *ngFor="let img of product.images" class="img-gallery">
+        <img [src]="img" [alt]="product.title" />
+      </li>
+    </ul>
   </div>
-  <ul class="galery">
-    <li class="img img-gallery">
-      <img src="" alt="" />
-    </li>
-  </ul>
+  <div class="card-right">
+    <div class="card-header">
+      <h3>{{product.price}} Р</h3>
+      <a class="btn icon icon-left icon-phone">Показать номер телефона</a>
+    </div>
+    <div class="card-body">
+      <h4>Адрес</h4>
+      <p>Севастополь, ул. Гоголя, 33Б</p>
+      <a class="link icon icon-right icon-arrow-top-right">Открыть на карте</a>
+    </div>
+    <div class="card-description">
+      <h4>Описание</h4>
+      <p>{{product.description}}</p>
+    </div>
+  </div>
 </div>
-<div class="card-right">
-  <div class="card-header">
-    <h3></h3>
-    <a class="btn icon icon-left icon-phone">Показать номер телефона</a>
-  </div>
-  <div class="card-body">
-    <h4>Адрес</h4>
-    <p>Севастополь, ул. Гоголя, 33Б</p>
-    <a class="link icon icon-right icon-arrow-top-right"></a>
-  </div>
-  <div class="card-description">
-    <h4>Описание</h4>
-    <p>Севастополь, ул. Гоголя, 33Б</p>
-  </div>
-</div>
+<ng-template #loading>
+<app-loading></app-loading>
+</ng-template>

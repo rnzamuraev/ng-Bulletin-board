@@ -21,8 +21,15 @@ export class HomePageComponent implements OnInit {
 
   public getProducts() {
     this.dataService.getProducts().subscribe(data => {
-      console.log();
       this.products = data;
+      const p = data.map(p => {
+        p.prod;
+        return {
+          rarity: p.prod.rarity,
+          type: p.prod.type,
+        };
+      });
+      console.log(p);
     });
   }
 }

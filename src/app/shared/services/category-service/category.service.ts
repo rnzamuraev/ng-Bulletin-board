@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { CategoriesDaoArray } from "src/app/db/dao/dao-array/categories-dao.array";
 import { ICategoryMenu } from "../../types/category.interface";
 import { HttpClient } from "@angular/common/http";
@@ -49,12 +49,9 @@ export class CategoryService {
     [",", ""],
     ["/", "/"],
   ];
+  private breadcrumbsLabels$ = new Subject<string[]>();
 
   constructor(private myHttp: CategoriesDaoArray, private http: HttpClient) {}
-
-  public getCategory(): Observable<ICategoryMenu[]> {
-    return this.myHttp.get();
-  }
 
   public transliter(str: string) {
     let newStr = "";
@@ -68,7 +65,23 @@ export class CategoryService {
     return newStr;
   }
 
-  public getProducts(): Observable<IProduct[]> {
+  //** Breadcrumbs */
+  get getBreadcrumbsLabels$(): Observable<string[]> {
+    return this.breadcrumbsLabels$.asObservable();
+  }
+  setBreadcrumbsLabels$(data: string[]) {
+    console.log(data);
+    this.breadcrumbsLabels$.next(data);
+  }
+  //** HTTP */
+  getCategory(): Observable<ICategoryMenu[]> {
+    return this.myHttp.get();
+  }
+
+  getProducts(): Observable<IProduct[]> {
     return this.http.get<IProduct[]>(API_URL);
+  }
+  getProductsId(id: string): Observable<IProduct> {
+    return this.http.get<IProduct>(API_URL + "/" + id);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { CategoryService } from "src/app/shared/services/category-service/category.service";
@@ -11,13 +11,17 @@ import { EStaticVar } from "src/app/shared/types/staticVar.enum";
   styleUrls: ["./categories-list.component.scss"],
 })
 export class CategoriesListComponent implements OnInit {
+  categories!: ICategoryMenu[];
   activeMenuCategory!: ICategoryMenu;
   numberOfColumns = 3;
   categoryIdColumnCard!: number;
   categoryIdColumnCard2!: number;
 
-  @Input()
-  categoriesProps!: ICategoryMenu[];
+  @Input("categoriesProps")
+  // categoriesProps!: ICategoryMenu[];
+  set getCategories(props: ICategoryMenu[]) {
+    this.categories = props;
+  }
 
   @Output()
   closeMenu = new EventEmitter<boolean>();
@@ -30,8 +34,8 @@ export class CategoriesListComponent implements OnInit {
 
   private initialActiveCategory(): void {
     if (!this.activeMenuCategory) {
-      this.activeMenuCategory = this.categoriesProps[0];
-      this.getCategoryIdInColumnCard(this.categoriesProps[0]);
+      this.activeMenuCategory = this.categories[0];
+      this.getCategoryIdInColumnCard(this.categories[0]);
     }
   }
 
@@ -58,18 +62,18 @@ export class CategoriesListComponent implements OnInit {
       console.log("count ", count);
       console.log("el: ", elem);
       console.log("sum: ", sum);
-      if (sum <= quantityItemsOneColumn) {
+      if (sum < quantityItemsOneColumn) {
         return;
       }
 
-      if (sum > quantityItemsOneColumn) {
+      if (sum >= quantityItemsOneColumn) {
         if (!column1) {
           column1 = count;
-          console.log(column1);
           sum = 0;
+          return;
         } else {
           column2 = count;
-          console.log(column2);
+          sum = 0;
           return;
         }
       }
@@ -112,7 +116,7 @@ export class CategoriesListComponent implements OnInit {
   }
   onGoTo(data: string): void {
     this.closeMenu.emit(false);
-
+    this.categoryService.setBreadcrumbsLabels$(data.split("/"));
     this.router.navigateByUrl(this.categoryService.transliter(`/${EStaticVar.CITY_TITLE}/${data}`));
   }
 }
