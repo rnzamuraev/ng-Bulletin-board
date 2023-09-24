@@ -8,6 +8,7 @@ import { CategoriesListComponent } from "./components/header/components/categori
 import { SearchInputComponent } from "./components/header/components/search-input/search-input.component";
 import { CategoriesBodyComponent } from "./components/header/components/categories-list/components/categories-body/categories-body.component";
 import { CategoriesSidebarComponent } from "./components/header/components/categories-list/components/categories-sidebar/categories-sidebar.component";
+import { LoadingComponent } from '../shared/components/loading/loading.component'
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { CategoriesSidebarComponent } from "./components/header/components/categ
     CategoriesBodyComponent,
     CategoriesSidebarComponent,
   ],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LoadingComponent],
   exports: [FooterComponent, HeaderComponent],
 })
 export class LayoutModule {}

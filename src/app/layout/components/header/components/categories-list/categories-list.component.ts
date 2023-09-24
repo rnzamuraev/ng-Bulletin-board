@@ -17,11 +17,15 @@ export class CategoriesListComponent implements OnInit {
   categoryIdColumnCard!: number;
   categoryIdColumnCard2!: number;
 
-  @Input("categoriesProps")
-  // categoriesProps!: ICategoryMenu[];
-  set getCategories(props: ICategoryMenu[]) {
-    this.categories = props;
-  }
+  // @Input("categoriesProps")
+  @Input()
+  categoriesProps!: ICategoryMenu[];
+  // set getCategories(props: ICategoryMenu[]) {
+  //   this.categories = props;
+  // }
+  // set getCategories(props: ICategoryMenu[]) {
+  //   this.categories = props;
+  // }
 
   @Output()
   closeMenu = new EventEmitter<boolean>();
@@ -29,10 +33,10 @@ export class CategoriesListComponent implements OnInit {
   constructor(private categoryService: CategoryService, private router: Router) {}
 
   ngOnInit(): void {
-    this.initialActiveCategory();
+    this.initializeActiveCategory();
   }
 
-  private initialActiveCategory(): void {
+  private initializeActiveCategory(): void {
     if (!this.activeMenuCategory) {
       this.activeMenuCategory = this.categories[0];
       this.getCategoryIdInColumnCard(this.categories[0]);
@@ -116,7 +120,7 @@ export class CategoriesListComponent implements OnInit {
   }
   onGoTo(data: string): void {
     this.closeMenu.emit(false);
-    this.categoryService.setBreadcrumbsLabels$(data.split("/"));
+    // this.categoryService.setBreadcrumbsLabels$(data.split("/"));
     this.router.navigateByUrl(this.categoryService.transliter(`/${EStaticVar.CITY_TITLE}/${data}`));
   }
 }

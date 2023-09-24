@@ -47,7 +47,9 @@ export class CategoryService {
     ["я", "ya"],
     [" ", "_"],
     [",", ""],
-    ["/", "/"],
+    // ["/", "/"],
+    // ["?", "?"],
+    // ["=", "="],
   ];
   private breadcrumbsLabels$ = new Subject<string[]>();
 
@@ -56,11 +58,20 @@ export class CategoryService {
   public transliter(str: string) {
     let newStr = "";
     for (let i = 0; i < str.length; i++) {
+      let isStrI = false;
       this.converter.forEach(el => {
-        if (str.toLowerCase().trim()[i] !== el[0]) return;
-
-        newStr += el[1];
+        if (str[i] !== el[0]) return;
+        else isStrI = true;
       });
+
+      if (isStrI) {
+        this.converter.forEach(el => {
+          if (str[i] !== el[0]) return;
+          newStr += el[1];
+        });
+      }
+
+      newStr += str[i];
     }
     return newStr;
   }

@@ -74,18 +74,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     return str.split("/").slice(2);
   }
 
-  //** Get Breadcrumbs */
-  // private getBreadcrumbs$(): void {
-  //   this.unSubscribeBreadcrumbs = this.categoryService.getBreadcrumbsLabels$.subscribe(
-  //     (data: string[]) => {
-  //       this.getBreadcrumbsLinks(this.getRoutes(this.getUrlParams()));
-
-  //       data.forEach((elem: string, i: number) => {
-  //         this.breadcrumbs[i].label = elem;
-  //       });
-  //     }
-  //   );
-  // }
   //** Set Breadcrumbs on page load */
   private setBreadcrumbs(data: ICategoryMenu[]): void {
     let i = 0;
