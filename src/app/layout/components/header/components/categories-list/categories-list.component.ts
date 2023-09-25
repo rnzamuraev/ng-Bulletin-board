@@ -11,7 +11,7 @@ import { EStaticVar } from "src/app/shared/types/staticVar.enum";
   styleUrls: ["./categories-list.component.scss"],
 })
 export class CategoriesListComponent implements OnInit {
-  categories!: ICategoryMenu[];
+  // categories!: ICategoryMenu[];
   activeMenuCategory!: ICategoryMenu;
   numberOfColumns = 3;
   categoryIdColumnCard!: number;
@@ -20,9 +20,6 @@ export class CategoriesListComponent implements OnInit {
   // @Input("categoriesProps")
   @Input()
   categoriesProps!: ICategoryMenu[];
-  // set getCategories(props: ICategoryMenu[]) {
-  //   this.categories = props;
-  // }
   // set getCategories(props: ICategoryMenu[]) {
   //   this.categories = props;
   // }
@@ -38,8 +35,8 @@ export class CategoriesListComponent implements OnInit {
 
   private initializeActiveCategory(): void {
     if (!this.activeMenuCategory) {
-      this.activeMenuCategory = this.categories[0];
-      this.getCategoryIdInColumnCard(this.categories[0]);
+      this.activeMenuCategory = this.categoriesProps[0];
+      this.getCategoryIdInColumnCard(this.categoriesProps[0]);
     }
   }
 
@@ -121,6 +118,8 @@ export class CategoriesListComponent implements OnInit {
   onGoTo(data: string): void {
     this.closeMenu.emit(false);
     // this.categoryService.setBreadcrumbsLabels$(data.split("/"));
-    this.router.navigateByUrl(this.categoryService.transliter(`/${EStaticVar.CITY_TITLE}/${data}`));
+    this.router.navigateByUrl(
+      `/${this.categoryService.transliter(EStaticVar.CITY_TITLE + "/" + data)}`
+    );
   }
 }

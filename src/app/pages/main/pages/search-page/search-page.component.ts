@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-
+import { NavigationEnd, Router } from "@angular/router";
 import { Subscription, filter } from "rxjs";
+
 import { IBreadcrumbs } from "src/app/pages/main/types/breadcrumbs.interface";
 import { ICategories } from "src/app/pages/main/types/categories.interface";
+import { IFormFilter } from "src/app/pages/main/types/form-filter.interface";
 import { CategoryService } from "src/app/shared/services/category-service/category.service";
 import { ICategoryMenu } from "src/app/shared/types/category.interface";
 import { IProduct } from "src/app/shared/types/products.interface";
@@ -23,7 +24,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   products!: IProduct[];
   categories!: ICategoryMenu[];
   breadcrumbs!: IBreadcrumbs[];
-  // routerLinks!: string[];
+  activeCategory!: string;
+  activeSubcategory!: string;
   titlePage!: string;
   searchText!: string;
 
@@ -52,10 +54,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   }
   private initializeRouterEvents() {
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
-      //     this.breadcrumbs = [];
-      //     console.log(this.route);
-      //     // this.getBreadcrumbs(this.route.children);
-      //     this.getBreadcrumbs(this.route.snapshot);
       this.setBreadcrumbs(this.categories);
     });
   }
@@ -79,6 +77,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     let i = 0;
     this.getBreadcrumbsLinks(this.getRoutes(this.getUrlParams()));
     this.getBreadcrumbsLabel(i, data);
+    this.setActiveCategories(this.breadcrumbs);
     console.log(this.breadcrumbs);
   }
   //** Get BreadcrumbsLinks */
@@ -117,76 +116,11 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
     if (category.body) this.getBreadcrumbsLabel(i, category.body);
   }
-
-  // ***************************************** Start
-  // private changeBreadcrumbs(titles: string[], data: ICategoryMenu[]) {
-  //   // this.breadcrumbs = ["Главная"];
-  //   let i = 0;
-
-  //   this.getBreadcrumbs(titles, i, data);
-
-  //   // const category = data.filter(
-  //   //   el => this.categoryService.transliter(el.category) === titles[i]
-  //   // )[0];
-  //   // this.breadcrumbs.push(category.category);
-  //   // i++;
-  //   // const subcategory = category.body.filter(
-  //   //   el => this.categoryService.transliter(el.category) === titles[i]
-  //   // )[0];
-  //   // this.breadcrumbs.push(subcategory.category);
-  //   // i++;
-  //   // if (subcategory.body) {
-  //   //   const subcategoryItem = subcategory.body.filter(
-  //   //     el => this.categoryService.transliter(el) === titles[i]
-  //   //   )[0];
-  //   //   this.breadcrumbs.push(subcategoryItem);
-  //   // }
-  //   console.log(this.breadcrumbs);
-  // }
-  // private getBreadcrumbs(arr: string[], i: number, data: ICategories[]): void {
-  //   const category = data.filter(el => this.categoryService.transliter(el.category) === arr[i])[0];
-  //   if (!category) {
-  //     // this.goTo(this.routerLink);
-  //     this.router.navigate(["/**"]);
-  //     return;
-  //   }
-  //   console.log(category);
-  //   this.breadcrumbs.push(category.category);
-  //   i++;
-  //   if (i >= arr.length) {
-  //     return;
-  //   }
-
-  //   if (category.body) this.getBreadcrumbs(arr, i, category.body);
-  // }
-
-  // private forEachMethod(item: Route, i: number, titles: string[]) {
-  //   item.children?.forEach(elem => {
-  //     if (elem.path === ":category" && i < titles.length) {
-  //       elem.title = titles[i];
-  //       i++;
-  //       this.forEachMethod(elem, i, titles);
-  //     }
-  //   });
-  // }
-  // private setTitleUrl(titles: string[], data: ICategoryMenu[]) {
-  //   let i = 0;
-  //   console.log(titles);
-  //   console.log(data);
-  //   console.log(data.filter(el => this.categoryService.transliter(el.category) === titles[i]));
-
-  //   this.changeBreadcrumbs(titles, data);
-
-  //   this.router.config.forEach(el => {
-  //     console.log(el);
-  //     if (el.path === "sevastopol" && el.children) {
-  //       el.title = `${this.city}`;
-  //       this.forEachMethod(el, i, this.breadcrumbs);
-  //     }
-  //   });
-  //   console.log(this.router.config);
-  // }
-  // **************************************** End
+  //** Set Active Categories */
+  private setActiveCategories(data: IBreadcrumbs[]) {
+    this.activeCategory = data[0].label;
+    this.activeSubcategory = data[1].label;
+  }
 
   //** GET Products */
   getProducts() {
@@ -196,6 +130,15 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         return el.category;
       });
       console.log(p);
+    });
+  }
+  getCat() {
+    this.categoryService.getCat().subscribe((prod: any[]) => {
+      // this.products = prod;
+      // const p = prod.map(el => {
+      //   return el.category;
+      // });
+      console.log(prod);
     });
   }
 
@@ -216,16 +159,25 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   }
 
   onGetIdAndTitleProps(props: { id: number; title: string }): void {
-    const link = this.getUrlParams() + "/" + props.title + "_" + props.id;
+    const link =
+      this.getUrlParams() + "/" + this.categoryService.transliter(props.title) + "_" + props.id;
     console.log(link);
     this.isProductInfo = true;
     this.goTo(link);
   }
 
+  onGetRouterLinkProps(props: string) {
+    console.log(props);
+    this.goTo("sevastopol/" + this.categoryService.transliter(props));
+  }
+
+  onSubmitFormFilterProps(props: IFormFilter) {
+    console.log(props);
+  }
+
   goTo(str: string): void {
     console.log(str);
     this.router.navigateByUrl(`/${str}`);
-    console.log(this.router);
   }
 
   ngOnDestroy(): void {

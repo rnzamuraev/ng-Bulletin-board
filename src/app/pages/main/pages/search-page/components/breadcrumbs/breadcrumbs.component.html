@@ -3,14 +3,13 @@
 <ul class="d-flex">
   <li class="d-flex content-start">
     <span class="pointer text-secondary" routerLink="/" (click)="onGoTo(null)">Главная</span>
-    <div class="circle bg-color-secondary"></div>
   </li>
   <li *ngFor="let item of breadcrumbsProps; let last = last" class="d-flex content-start">
+    <div class="circle bg-color-secondary"></div>
     <span *ngIf="!last; else not" class="pointer text-secondary" (click)="onGoTo(item)">{{item.label}}</span>
     <ng-template #not>
       <span *ngIf="!isProductInfoProps">{{item.label}}</span>
     </ng-template>
-    <div *ngIf="!last" class="circle bg-color-secondary"></div>
   </li>
 </ul>
 <!-- <ng-template #loading>

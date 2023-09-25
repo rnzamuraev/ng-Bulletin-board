@@ -1,8 +1,8 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { CategoriesDaoArray } from "src/app/db/dao/dao-array/categories-dao.array";
 import { ICategoryMenu } from "../../types/category.interface";
-import { HttpClient } from "@angular/common/http";
 import { IProduct } from "../../types/products.interface";
 
 const API_URL = "https://api.escuelajs.co/api/v1/products";
@@ -51,7 +51,7 @@ export class CategoryService {
     // ["?", "?"],
     // ["=", "="],
   ];
-  private breadcrumbsLabels$ = new Subject<string[]>();
+  // private breadcrumbsLabels$ = new Subject<string[]>();
 
   constructor(private myHttp: CategoriesDaoArray, private http: HttpClient) {}
 
@@ -60,35 +60,43 @@ export class CategoryService {
     for (let i = 0; i < str.length; i++) {
       let isStrI = false;
       this.converter.forEach(el => {
-        if (str[i] !== el[0]) return;
+        if (str.toLowerCase()[i] !== el[0]) return;
         else isStrI = true;
       });
 
       if (isStrI) {
         this.converter.forEach(el => {
-          if (str[i] !== el[0]) return;
+          if (str.toLowerCase()[i] !== el[0]) return;
           newStr += el[1];
         });
+      } else {
+        newStr += str[i];
       }
-
-      newStr += str[i];
     }
+    console.log(newStr);
     return newStr;
   }
 
   //** Breadcrumbs */
-  get getBreadcrumbsLabels$(): Observable<string[]> {
-    return this.breadcrumbsLabels$.asObservable();
-  }
-  setBreadcrumbsLabels$(data: string[]) {
-    console.log(data);
-    this.breadcrumbsLabels$.next(data);
-  }
+  // get getBreadcrumbsLabels$(): Observable<string[]> {
+  //   return this.breadcrumbsLabels$.asObservable();
+  // }
+  // setBreadcrumbsLabels$(data: string[]) {
+  //   console.log(data);
+  //   this.breadcrumbsLabels$.next(data);
+  // }
   //** HTTP */
   getCategory(): Observable<ICategoryMenu[]> {
     return this.myHttp.get();
   }
 
+  getCat(): Observable<any[]> {
+    return this.http.get<any[]>("http://194.87.237.48:5000/swagger/v1/categories").pipe(
+      tap(p => {
+        console.log(p);
+      })
+    );
+  }
   getProducts(): Observable<IProduct[]> {
     return this.http.get<IProduct[]>(API_URL);
   }
