@@ -1,6 +1,6 @@
 <div class="container">
-  <div *ngIf="categories; else loading" class="menu">
-    <app-categories-sidebar [categoriesProps]="categories" [activeMenuCategoryProps]="activeMenuCategory"
+  <div *ngIf="categoriesProps; else loading" class="menu">
+    <app-categories-sidebar [categoriesProps]="categoriesProps" [activeMenuCategoryProps]="activeMenuCategory"
       (setActiveMenuCategory)="onActiveMenuCategoryProps($event)"></app-categories-sidebar>
     <div class="menu__content">
       <h4 class="d-flex menu-link" (click)="onGetCategoryLink(activeMenuCategory.category)">
@@ -13,9 +13,9 @@
           (getSubcategoryLink)="onGetSubcategoryLinkProps($event)"></app-categories-body>
       </div>
     </div>
-
   </div>
+
   <ng-template #loading>
-    <h4>Loading...</h4>
+    <app-loading></app-loading>
   </ng-template>
 </div>

@@ -1,8 +1,10 @@
 :host {
   overflow-y: auto;
-  .menu-sidebar__nav {
-    padding-right: 24px;
-  }
+  display: flex;
+  gap: 24px;
+  // .menu-sidebar__nav {
+  //   padding-right: 24px;
+  // }
   .menu-sidebar__nav-item {
     margin-bottom: 8px;
     border-radius: 8px;

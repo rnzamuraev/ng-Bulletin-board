@@ -1,4 +1,10 @@
 :host {
-  height: 100%;
-  padding: 32px 0 80px;
+  .wrap {
+    display: grid;
+    grid-template-columns: 306px 1fr;
+    column-gap: 24px;
+  }
+  .card-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
