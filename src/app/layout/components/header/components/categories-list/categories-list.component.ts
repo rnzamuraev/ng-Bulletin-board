@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { CategoryService } from "src/app/shared/services/category-service/category.service";
-import { ICategoryMenu } from "src/app/shared/types/category.interface";
-import { EStaticVar } from "src/app/shared/types/staticVar.enum";
+import { QueryParamsService } from "src/app/shared/services/query-params-service/query-params.service";
+import { INewCategory } from "src/app/shared/types/category.interface";
+// import { EStaticVar } from "src/app/shared/types/staticVar.enum";
 
 @Component({
   selector: "app-categories-list",
@@ -11,15 +12,15 @@ import { EStaticVar } from "src/app/shared/types/staticVar.enum";
   styleUrls: ["./categories-list.component.scss"],
 })
 export class CategoriesListComponent implements OnInit {
-  // categories!: ICategoryMenu[];
-  activeMenuCategory!: ICategoryMenu;
+  city = "Севастополь";
+  activeMenuCategory!: INewCategory;
   numberOfColumns = 3;
   categoryIdColumnCard!: number;
   categoryIdColumnCard2!: number;
 
   // @Input("categoriesProps")
   @Input()
-  categoriesProps!: ICategoryMenu[];
+  categoriesProps!: INewCategory[];
   // set getCategories(props: ICategoryMenu[]) {
   //   this.categories = props;
   // }
@@ -27,7 +28,7 @@ export class CategoriesListComponent implements OnInit {
   @Output()
   closeMenu = new EventEmitter<boolean>();
 
-  constructor(private categoryService: CategoryService, private router: Router) {}
+  constructor(private queryParamsService: QueryParamsService, private router: Router) {}
 
   ngOnInit(): void {
     this.initializeActiveCategory();
@@ -40,7 +41,7 @@ export class CategoriesListComponent implements OnInit {
     }
   }
 
-  private getCategoryIdInColumnCard(data: ICategoryMenu): void {
+  private getCategoryIdInColumnCard(data: INewCategory): void {
     let column1!: number;
     let column2!: number;
     let count = 0;
@@ -84,7 +85,7 @@ export class CategoriesListComponent implements OnInit {
     this.categoryIdColumnCard = column1;
     this.categoryIdColumnCard2 = column2;
   }
-  private getTotalNumberOfSubcategories(data: ICategoryMenu, arrNum: number[]): number {
+  private getTotalNumberOfSubcategories(data: INewCategory, arrNum: number[]): number {
     let sum = 0;
     data.body.forEach(el => {
       if (el.body && el.body.length) {
@@ -103,14 +104,14 @@ export class CategoriesListComponent implements OnInit {
     return sum;
   }
 
-  onActiveMenuCategoryProps(data: ICategoryMenu): void {
+  onActiveMenuCategoryProps(data: INewCategory): void {
     this.activeMenuCategory = data;
     this.getCategoryIdInColumnCard(data);
   }
 
   onGetSubcategoryLinkProps(props: string): void {
-    console.log(`${this.activeMenuCategory.category}/${props}`);
-    this.onGoTo(`${this.activeMenuCategory.category}/${props}`);
+    console.log(`${this.activeMenuCategory.name}/${props}`);
+    this.onGoTo(`${this.activeMenuCategory.name}/${props}`);
   }
   onGetCategoryLink(data: string): void {
     this.onGoTo(data);
@@ -118,8 +119,6 @@ export class CategoriesListComponent implements OnInit {
   onGoTo(data: string): void {
     this.closeMenu.emit(false);
     // this.categoryService.setBreadcrumbsLabels$(data.split("/"));
-    this.router.navigateByUrl(
-      `/${this.categoryService.transliter(EStaticVar.CITY_TITLE + "/" + data)}`
-    );
+    this.router.navigateByUrl(`/${this.queryParamsService.transliter(this.city + "/" + data)}`);
   }
 }

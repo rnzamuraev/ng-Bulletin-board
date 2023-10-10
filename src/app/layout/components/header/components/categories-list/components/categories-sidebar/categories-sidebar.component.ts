@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { ICategoryMenu } from "src/app/shared/types/category.interface";
+import { INewCategory } from "src/app/shared/types/category.interface";
 
 @Component({
   selector: "app-categories-sidebar",
@@ -8,15 +8,15 @@ import { ICategoryMenu } from "src/app/shared/types/category.interface";
 })
 export class CategoriesSidebarComponent {
   @Input()
-  activeMenuCategoryProps!: ICategoryMenu;
+  activeMenuCategoryProps!: INewCategory;
 
   @Input()
-  categoriesProps!: ICategoryMenu[];
+  categoriesProps!: INewCategory[];
 
   @Output()
-  setActiveMenuCategory = new EventEmitter<ICategoryMenu>();
+  setActiveMenuCategory = new EventEmitter<INewCategory>();
 
-  onGetActiveMenuCategory(data: ICategoryMenu): void {
+  onGetActiveMenuCategory(data: INewCategory): void {
     if (data !== this.activeMenuCategoryProps) {
       this.setActiveMenuCategory.emit(data);
     }

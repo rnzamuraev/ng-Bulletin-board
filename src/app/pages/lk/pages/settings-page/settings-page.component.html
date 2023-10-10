@@ -1,1 +1,52 @@
-<p>settings-page works!</p>
+<form [formGroup]="settingsForm" class="settings-form pb-24" (ngSubmit)="onSubmitSettingsSave()">
+  <!-- <form class="settings-form" (ngSubmit)="onSubmitSetSettings()"> -->
+  <h4 class="pb-24">Настройки</h4>
+  <div class="d-flex gap-24">
+    <div class="settings-form__field">
+      <label for="settings-name">Имя</label>
+      <input id="settings-name" class="input input-settings mt-8" type="text" formControlName="name" autocomplete="on"
+        placeholder="Ваше имя">
+    </div>
+    <div class="settings-form__field">
+      <label for="settings-phone">Номер телефона</label>
+      <input id="settings-phone" class="input input-settings mt-8" type="text" formControlName="login" autocomplete="on"
+        placeholder="Ваш телефон">
+    </div>
+  </div>
+
+  <div class="settings-form__field">
+    <label for="settings-address">Адрес <span class="text-secondary">(будет указываться в объявлениях по
+        умолчанию)</span></label>
+    <input id="settings-address" class="input mt-8" type="text" formControlName="location" autocomplete="off"
+      placeholder="Начните вводить адрес" (input)="onSearchAddress()">
+  </div>
+  <div class="settings-form__footer">
+    <!-- <button class="btn" type="button" [disabled]="advertForm.invalid" [class.disabled]="advertForm.invalid"> -->
+    <button class="btn" type="submit">
+      Сохранить
+    </button>
+  </div>
+</form>
+<!-- <form [formGroup]="changePasswordForm" class="settings-form" (ngSubmit)="onSubmitChangePassword()"> -->
+<form class="settings-form pt-24">
+  <h4 class="pb-24">Смена пароля</h4>
+  <div class="settings-form__field">
+    <label for="settings-pass">Текущий пароль</label>
+    <!-- <input id="settings-cost" class="input mt-8" type="password" formControlName="password" -->
+    <input id="settings-pass" class="input input-settings mt-8" type="password" name="password"
+      placeholder="Введите текущий пароль">
+  </div>
+  <div class="settings-form__field">
+    <label for="settings-newPass">Новый пароль <span class="text-secondary">(минимум 8 символов)</span></label>
+    <!-- <input id="settings-cost" class="input mt-8" type="password" formControlName="newPassword" -->
+    <input id="settings-newPass" class="input input-settings mt-8" type="password" name="newPassword"
+      placeholder="Введите новый пароль">
+  </div>
+  <div class="settings-form__footer">
+    <!-- <button class="btn" type="button" [disabled]="advertForm.invalid" [class.disabled]="advertForm.invalid"> -->
+    <!-- <button class="btn" type="submit" [disabled]="changePasswordForm.get('password') "> -->
+    <button class="btn" type="submit">
+      Изменить пароль
+    </button>
+  </div>
+</form>

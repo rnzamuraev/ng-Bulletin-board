@@ -8,11 +8,21 @@ import { SearchPageRoutingModule } from "./search-page-routing.module";
 import { RouterModule } from "@angular/router";
 import { FilterSidebarComponent } from "./components/filter-sidebar/filter-sidebar.component";
 import { FormsModule } from "@angular/forms";
-import { LoadingComponent } from 'src/app/shared/components/loading/loading.component'
+import { LoadingComponent } from "src/app/shared/components/loading/loading.component";
+// import { FilterCategoriesPipe } from "src/app/shared/pipes/filter-categories.pipe";
+// import { PipesModule } from "src/app/shared/pipes/pipes.module";
 
 @NgModule({
   declarations: [SearchPageComponent, BreadcrumbsComponent, FilterSidebarComponent],
-  imports: [CommonModule, CardProductComponent, SearchPageRoutingModule, RouterModule, FormsModule, LoadingComponent],
+  imports: [
+    CommonModule,
+    CardProductComponent,
+    SearchPageRoutingModule,
+    RouterModule,
+    FormsModule,
+    LoadingComponent,
+    // PipesModule,
+  ],
   exports: [SearchPageComponent],
 })
 export class SearchPageModule {}

@@ -1,15 +1,29 @@
-import { IPost } from "./post.interface";
-
-export interface IUserLogin {
-  phone: string;
-  password: string;
-}
-export interface IAddUser extends IUserLogin {
+export interface IUser {
+  id: string;
   name: string;
+  role: string;
+  adverts: IUserAdverts[];
+  registeredTime: string;
 }
-export interface IUserResponse extends IAddUser {
-  id: number;
-  email: string;
-  avatar: string;
-  posts?: IPost[];
+export interface IUserAdverts {
+  id: string;
+  name: string;
+  location: string;
+  createdAt: string;
+  isActive: true;
+  imagesIds: string[];
+  cost: number;
+}
+export interface IGetUserId {
+  id: string;
+  register: boolean;
+}
+export interface IUpdateUser {
+  name: string; //Имя пользователя
+  login: string; //Телефон
+  password: string; //Пароль
+}
+export interface IUpdateUserResponse {
+  id: string;
+  name: string;
 }

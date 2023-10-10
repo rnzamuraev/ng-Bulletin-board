@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
-import { ICategory, ISubCategoryMenu } from "src/app/shared/types/category.interface";
+import { INewCategory } from "src/app/shared/types/category.interface";
 
 @Component({
   selector: "app-categories-body",
@@ -14,7 +14,10 @@ export class CategoriesBodyComponent implements OnInit {
   quantity!: number;
 
   @Input()
-  subcategoryProps!: ISubCategoryMenu;
+  subcategoryProps!: INewCategory;
+
+  @Input()
+  indexProps!: number;
 
   @Input()
   subcategoryIdColProps!: number;
@@ -30,7 +33,7 @@ export class CategoriesBodyComponent implements OnInit {
     this.initializeVariables(this.subcategoryProps);
   }
 
-  private initializeVariables(data: ISubCategoryMenu): void {
+  private initializeVariables(data: INewCategory): void {
     if (data.body) {
       if (data.body.length <= 6) {
         this.setItems(data.body);
@@ -43,18 +46,18 @@ export class CategoriesBodyComponent implements OnInit {
     }
   }
 
-  private setItems(data: ICategory[]): void {
+  private setItems(data: INewCategory[]): void {
     console.log(data);
     this.subcategoryItems = [];
-    data.forEach((elem: ICategory) => {
+    data.forEach((elem: INewCategory) => {
       console.log(elem);
-      this.subcategoryItems.push(elem.category);
+      this.subcategoryItems.push(elem.name);
       console.log(this.subcategoryItems);
     });
     console.log(this.subcategoryItems);
   }
   private setTitle(): void {
-    this.title = this.subcategoryProps.category;
+    this.title = this.subcategoryProps.name;
   }
   private setQuantity(data: number): void {
     this.quantity = data - 5;

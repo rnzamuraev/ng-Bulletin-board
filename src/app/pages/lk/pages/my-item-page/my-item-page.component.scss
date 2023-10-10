@@ -1,0 +1,32 @@
+.card-product {
+  width: 306px;
+  min-height: 336px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(59, 130, 246, 0.04);
+  border: 3px dashed rgba(59, 130, 246, 0.16);
+  border-radius: 8px;
+  &:hover {
+    border: 3px dashed rgba(59, 130, 246, 0.32);
+    background: rgba(59, 130, 246, 0.08);
+  }
+  &:active {
+    border: 3px dashed rgba(39, 110, 226, 0.16);
+    background: rgba(39, 110, 226, 0.04);
+  }
+  svg {
+    margin-bottom: 24px;
+  }
+}
+.card-product:active.link {
+  color: rgba(30, 58, 138, 1);
+}
+.card-product:active svg path {
+  fill: #1e3a8a;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

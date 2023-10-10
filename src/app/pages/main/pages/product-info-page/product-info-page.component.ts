@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { CategoryService } from "src/app/shared/services/category-service/category.service";
+import { ProductService } from "src/app/shared/services/product-service/product.service";
 import { IProduct } from "src/app/shared/types/products.interface";
 
 @Component({
@@ -12,7 +13,12 @@ export class ProductInfoPageComponent implements OnInit {
   productId!: string;
   product!: IProduct;
   routerLink!: string;
-  constructor(private router: Router, private categoryService: CategoryService) {
+
+  constructor(
+    private router: Router,
+    // private categoryService: CategoryService,
+    private productService: ProductService
+  ) {
     this.getUrlRouts();
   }
 
@@ -31,7 +37,7 @@ export class ProductInfoPageComponent implements OnInit {
     this.getProductId(this.productId);
   }
   private getProductId(id: string): void {
-    this.categoryService.getProductsId(id).subscribe((data: IProduct) => {
+    this.productService.getProductsId(id).subscribe((data: IProduct) => {
       this.product = data;
       console.log(data);
     });

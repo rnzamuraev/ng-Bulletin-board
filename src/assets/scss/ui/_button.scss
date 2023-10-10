@@ -9,16 +9,22 @@
   border-radius: 4px;
   transition: $animate;
   outline: none;
+  white-space: nowrap;
   cursor: pointer;
-  &:hover {
-    background-color: $primary-dark;
-  }
+  // &:hover {
+  //   background-color: $primary-dark;
+  // }
   &-form {
     padding: 12px 40px;
   }
   &-filter {
     padding: 12px;
     width: 100%;
+  }
+  &-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   // &-plus {
   //   &::after {
@@ -128,51 +134,51 @@
 //   }
 // }
 
-// .btn-icon {
-//   // padding: 5px;
-//   width: 30px;
-//   height: 30px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   // font-size: 20px;
-//   // line-height: 14px;
-//   color: $white;
-//   background-color: transparent;
-//   border: none;
-//   transition: $animate;
-//   outline: none;
-//   overflow: hidden;
-//   cursor: pointer;
-//   * {
-//     font-size: 20px;
-//     line-height: 20px;
-//   }
-//   &__add {
-//     width: 40px;
-//     height: 40px;
-//     background-color: white;
-//     border-radius: 50%;
-//     * {
-//       font-size: 30px;
-//       line-height: 30px;
-//     }
-//   }
-//   // &__before {
-//   //   position: absolute;
-//   //   top: 50%;
-//   //   transform: translateY(-50%);
-//   //   left: 10px;
-//   //   z-index: 10;
-//   // }
-//   // &__after {
-//   //   position: absolute;
-//   //   top: 50%;
-//   //   transform: translateY(-50%);
-//   //   right: 10px;
-//   //   z-index: 10;
-//   // }
-// }
+.btn-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 20px;
+  background-color: transparent;
+  border: none;
+  transition: $animate;
+  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  // * {
+  //   font-size: 20px;
+  //   line-height: 20px;
+  // }
+  &-visibility {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    z-index: 10;
+    overflow: hidden;
+  }
+  &-select {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 22px;
+    right: 12px;
+    pointer-events: none;
+    z-index: 10;
+  }
+  &-clear {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 40px;
+    z-index: 10;
+  }
+  &-br {
+    border: 2px solid $primary;
+  }
+}
 
 // ********************************
 

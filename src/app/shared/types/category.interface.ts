@@ -1,12 +1,23 @@
+// export interface ICat {
+//   id: number;
+//   category: string;
+// }
+
+// export interface ICategoryMenu extends ICat {
+//   body: ISubCategoryMenu[];
+// }
+
+// export interface ISubCategoryMenu extends ICat {
+//   body: ICat[] | null;
+// }
 export interface ICategory {
-  id: number;
-  category: string;
+  id: string;
+  parentId: string;
+  name: string;
 }
-
-export interface ICategoryMenu extends ICategory {
-  body: ISubCategoryMenu[];
+export interface ICategoryChild extends ICategory {
+  childs: ICategory[];
 }
-
-export interface ISubCategoryMenu extends ICategory {
-  body: ICategory[] | null;
+export interface INewCategory extends ICategory {
+  body: INewCategory[];
 }

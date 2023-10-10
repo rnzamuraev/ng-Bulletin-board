@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgForm } from "@angular/forms";
 
 @Component({
@@ -7,10 +7,14 @@ import { NgForm } from "@angular/forms";
   styleUrls: ["./search-input.component.scss"],
 })
 export class SearchInputComponent {
+  @Input()
+  termProps!: string;
   @Output()
-  getSearchText = new EventEmitter<string>();
+  getTerm = new EventEmitter<string>();
 
-  onSubmitSearchText(data: NgForm): void {
-    this.getSearchText.emit(data.value.search);
+  onSubmitTerm(data: NgForm): void {
+    if (data.value.search === this.termProps) return
+    console.log(data.value.search);
+    this.getTerm.emit(data.value.search);
   }
 }

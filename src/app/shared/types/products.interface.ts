@@ -31,6 +31,16 @@ export interface IProductCategory {
   updatedAt: string;
 }
 
+export interface IProductsFilter {
+  title?: string;
+  categoryId?: string;
+  min?: string;
+  max?: string;
+  offset?: string;
+  limit?: string;
+}
+
+// ****************
 export interface IProd {
   audio: null | string;
   description: string;

@@ -13,6 +13,9 @@ import { IProd, IProduct } from "src/app/shared/types/products.interface";
 export class CardProductComponent {
   // public prod!: { prod: IProd; price: number };
   @Input()
+  advertProps!: any;
+
+  @Input()
   productProps!: IProduct;
 
   @Input()
@@ -22,9 +25,9 @@ export class CardProductComponent {
   routerLinkTitlesProps!: string;
 
   @Output()
-    getIdAndTitle = new EventEmitter<{id: number, title:string}>()
+  getIdAndTitle = new EventEmitter<{ id: number; title: string }>();
 
-  onGetIdAndTitle(id: number, title:string) {
-    this.getIdAndTitle.emit({id, title})
+  onGetIdAndTitle(id: number, title: string) {
+    this.getIdAndTitle.emit({ id, title });
   }
 }

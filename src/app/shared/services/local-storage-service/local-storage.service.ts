@@ -6,9 +6,9 @@ import { Injectable } from "@angular/core";
 export class LocalStorageService {
   constructor() {}
 
-  get(key: string) {
+  get(key: string): any {
     try {
-      const data = localStorage.getItem(key);
+      const data: string | null = localStorage.getItem(key);
       if (typeof data === "string") return JSON.parse(data);
       else if (!data) return null;
     } catch (error) {

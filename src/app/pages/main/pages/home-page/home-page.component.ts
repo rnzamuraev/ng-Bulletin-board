@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { DataService } from "src/app/shared/services/data.service";
+
 import { IProd } from "src/app/shared/types/products.interface";
 
 @Component({
@@ -13,23 +13,23 @@ export class HomePageComponent implements OnInit {
   products!: { prod: IProd; price: number }[];
   routerLink!: string;
 
-  constructor(private dataService: DataService) {}
+  // constructor(private userService: DataService) {}
 
   ngOnInit(): void {
-    this.getProducts();
+    // this.getProducts();
   }
 
-  public getProducts() {
-    this.dataService.getProducts().subscribe(data => {
-      this.products = data;
-      const p = data.map(p => {
-        p.prod;
-        return {
-          rarity: p.prod.rarity,
-          type: p.prod.type,
-        };
-      });
-      console.log(p);
-    });
-  }
+  // public getProducts() {
+  //   this.dataService.getProducts().subscribe(data => {
+  //     this.products = data;
+  //     const p = data.map(p => {
+  //       p.prod;
+  //       return {
+  //         rarity: p.prod.rarity,
+  //         type: p.prod.type,
+  //       };
+  //     });
+  //     console.log(p);
+  //   });
+  // }
 }

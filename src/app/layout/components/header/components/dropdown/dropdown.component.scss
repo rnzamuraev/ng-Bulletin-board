@@ -1,0 +1,20 @@
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: end;
+  border-radius: 4px;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  overflow: hidden;
+
+  &-item {
+    padding: 8px 16px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    white-space: nowrap;
+    align-self: stretch;
+  }
+}

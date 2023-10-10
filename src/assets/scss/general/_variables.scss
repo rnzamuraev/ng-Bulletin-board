@@ -1,15 +1,18 @@
 // *** Color
-$white-dark: #f5f5f5;
+$white-dark: #f8fafc; //
 $white: #ffffff;
 $dark: #1e293b;
+$grey: #cbd5e1;
 $secondary: #64748b;
 $primary-dark: #1155ee;
-// $primary-dark: #2266dd;
 $primary: #3b82f6;
 $success: #22c55e;
 $danger: #ef4444;
 
 // *** Shadow
+// box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.10);
+$shadow-black: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
+
 $shadow-dark: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgb(30, 41, 59, 0.4);
 $shadow-secondary: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgb(100, 116, 139, 0.4);
 $shadow-primary: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgb(59, 130, 246, 0.4);
@@ -94,7 +97,7 @@ $lh-base: $lh-md;
 $fw-base: $fw-xs;
 $color-base: $dark;
 $bg-base: $white;
-$br-base: 1px solid $primary;
+$br-base: 1px solid $grey;
 $shadow-base: $shadow-primary;
 
 // *** Btn
