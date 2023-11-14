@@ -1,6 +1,6 @@
-<form class="form-search" #form="ngForm" (ngSubmit)="onSubmitTerm(form)">
+<form class="form-search" #form="ngForm" (ngSubmit)="onSubmitTerm($event, form)">
   <input class="input input-search" type="text" name="search" ngModel placeholder="Поиск по объявлениям"
-    [value]="termProps" />
+    [value]="termProps" (blur)="onSubmitTerm($event, form)" />
   <button class="btn icon icon-right icon-search" type="submit">
     Найти
   </button>

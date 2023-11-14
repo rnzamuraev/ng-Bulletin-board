@@ -1,5 +1,7 @@
 .btn {
   padding: 8px 12px;
+  display: flex;
+  align-items: center;
   font-size: $text-sm;
   font-weight: 500;
   line-height: $lh-sm;
@@ -25,6 +27,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  &-phone {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: $text-xl;
+    line-height: $lh-xl;
+    font-weight: $fw-xs;
   }
   // &-plus {
   //   &::after {

@@ -1,20 +1,17 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, Subject, catchError, map, of } from "rxjs";
+import { ElementRef, Injectable } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { Observable, catchError, of } from "rxjs";
 
-import { LocalStorageService } from "src/app/shared/services/local-storage-service/local-storage.service";
-import { UserService } from "src/app/shared/services/user-service/user.service";
+import { OpenService } from "src/app/shared/services/open-service/open.service";
 import { IAuthLogin, IAuthRegister } from "src/app/shared/types/auth.interface";
-import { IError } from "src/app/shared/types/error.interface";
-import { EStaticVar } from "src/app/shared/types/staticVar.enum";
-import { IUser } from "src/app/shared/types/user.interface";
+import { IErrorMessage } from "src/app/shared/types/error.interface";
 
-@Injectable()
-// {providedIn: "root",}
+@Injectable(
+  // { providedIn: "root" }
+)
 export class AuthService {
-  private _isOpen = new Subject<boolean>();
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private openService: OpenService) {}
 
   //** HTTP запросы */
   //** Регистрация пользователя */
@@ -35,17 +32,5 @@ export class AuthService {
         return of(error);
       })
     );
-  }
-
-  //** обычные методы */
-  //** Открыть-Закрыть форму Регистрации/Авторизации */
-  get show(): Observable<boolean> {
-    return this._isOpen.asObservable();
-  }
-  open(): void {
-    this._isOpen.next(true);
-  }
-  close(): void {
-    this._isOpen.next(false);
   }
 }

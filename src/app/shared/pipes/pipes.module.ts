@@ -1,10 +1,20 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FilterCategoriesPipe } from "./filter-categories/filter-categories.pipe";
+import { CustomCurrencyPipe } from "./custom-currency/custom-currency.pipe";
+import { CustomDatePipe } from "./custom-date/custom-date.pipe";
 
 @NgModule({
-  declarations: [FilterCategoriesPipe],
+  declarations: [
+    // FilterCategoriesPipe,
+    // FormErrorsPipe,
+    // CustomCurrencyPipe,
+
+    CustomDatePipe,
+  ],
   imports: [],
-  exports: [FilterCategoriesPipe],
+  exports: [
+    // FilterCategoriesPipe,
+    // FormErrorsPipe,
+    // CustomCurrencyPipe,
+  ],
 })
 export class PipesModule {}

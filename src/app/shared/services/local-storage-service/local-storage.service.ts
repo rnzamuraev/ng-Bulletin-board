@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { ICityStorage } from "../../types/query-params.interface";
 
 @Injectable({
   providedIn: "root",
@@ -7,14 +8,17 @@ export class LocalStorageService {
   constructor() {}
 
   get(key: string): any {
+    let data!: any;
     try {
-      const data: string | null = localStorage.getItem(key);
-      if (typeof data === "string") return JSON.parse(data);
-      else if (!data) return null;
+      console.log(localStorage.getItem(key));
+      data = localStorage.getItem(key);
+      if (typeof data === "string") data = JSON.parse(data);
+      else data = null;
     } catch (error) {
       console.error("Error getting data from LocalStorage", error);
-      return null;
+      data = null;
     }
+    return data;
   }
 
   set(key: string, data: any): void {
@@ -29,7 +33,7 @@ export class LocalStorageService {
     try {
       localStorage.removeItem(key);
     } catch (error) {
-      console.error("Error saving to LocalStorage", error);
+      console.error("Error remove to LocalStorage", error);
     }
   }
 }

@@ -1,11 +1,15 @@
 import { Injectable } from "@angular/core";
-import { Params } from "@angular/router";
 import { BehaviorSubject, Observable } from "rxjs";
+import { EStaticVar } from "../../types/staticVar.enum";
+import { LocalStorageService } from "../local-storage-service/local-storage.service";
+import { ICityStorage } from "../../types/query-params.interface";
 
 @Injectable({
   providedIn: "root",
 })
 export class QueryParamsService {
+  private _isLoadingInfoPage$ = new BehaviorSubject<boolean>(false);
+  private _isLoadingApp$ = new BehaviorSubject<boolean>(false);
   private _converter = [
     ["а", "a"],
     ["б", "b"],
@@ -42,19 +46,29 @@ export class QueryParamsService {
     ["я", "ya"],
     [" ", "_"],
     [",", ""],
+    [".", ""],
   ];
-  private queryParamsObj: Params = {
-    search: "",
-    "price-min": "",
-    "price-max": "",
-    title: "",
-  };
-  private _queryParamUrl$ = new BehaviorSubject<string | null>(null);
-  private _queryParams: { label: string; value: string }[] = [];
-  // private breadcrumbsLabels$ = new Subject<string[]>();
 
-  // constructor(private myHttp: CategoriesDaoArray, private http: HttpClient) {}
+  constructor(private localStorage: LocalStorageService) {}
+  //** Получить состояние страницы загружается или нет для 'Guard'а Авторизации/Регистрации */
+  get getIsLoadingApp$(): Observable<boolean> {
+    return this._isLoadingApp$.asObservable();
+  }
+  //** Задать состояние страницы загружается или нет */
+  setIsLoadingApp(isData: boolean) {
+    console.log(isData);
+    this._isLoadingApp$.next(isData);
+  }
+  //** Получить состояние страницы информации о товаре */
+  get getIsLoadingInfoPage$(): Observable<boolean> {
+    return this._isLoadingInfoPage$.asObservable();
+  }
+  //** Задать состояние страницы информации о товаре */
+  setIsLoadingInfoPage(isData: boolean) {
+    this._isLoadingInfoPage$.next(isData);
+  }
 
+  //** Переводит русские слова в транслит для 'Url' строки */
   transliter(str: string): string {
     let newStr = "";
     for (let i = 0; i < str.length; i++) {
@@ -75,44 +89,33 @@ export class QueryParamsService {
     }
     return newStr;
   }
-
-  setQueryParam(params: Params, value: string): string {
-    let item!: string;
-    if (typeof params[value] !== "undefined") {
-      item = params[value];
-    } else item = "";
-    return item
+  //** Установить 'Query Params' */
+  createQueryParams(params: { term: string; min: string; max: string; sort: string }) {
+    let { term, min, max, sort } = params;
+    let newTerm!: { search: string };
+    let newMin!: { min: string };
+    let newMax!: { max: string };
+    let newSort!: { sort: string };
+    if (term && term.trim().length > 0) newTerm = { search: term };
+    if (min && min.trim().length > 0) newMin = { min };
+    if (max && max.trim().length > 0) newMax = { max };
+    if (sort && sort.trim().length > 0) newSort = { sort };
+    console.log({ queryParams: { ...newTerm, ...newMin, ...newMax, ...newSort } });
+    return { queryParams: { ...newTerm, ...newMin, ...newMax, ...newSort } };
   }
-
-  //** Get Query Param Url String */
-  get getQueryParamUrl$(): Observable<string | null> {
-    return this._queryParamUrl$.asObservable();
+  // //** Создать ссылку */
+  // createLink(url: string) {}
+  //** Получить Город из 'LocalStorage'
+  get getCity(): string {
+    let city: ICityStorage | null = this.localStorage.get(EStaticVar.CITY_KEY);
+    console.log(city);
+    if (city) {
+      return city.translit.toLowerCase().trim();
+    }
+    return "all";
   }
-  setQueryParamUrl$(params: Params): void {
-    this._queryParams = [];
-    let link: string | null = "";
-    if (Object.keys(params).length) {
-      let count = 0;
-      let q = "?";
-      for (let key in params) {
-        const obj = { label: "", value: "" };
-        if (count !== 0) {
-          q = "&";
-        }
-        link += `${q}${key}=${params[key]}`;
-        count++;
-
-        obj.label = key;
-        obj.value = `${q}${key}=${params[key]}`;
-        this._queryParams.push(obj);
-      }
-    } else link = null;
-
-    console.log(this._queryParams);
-    console.log(link);
-    this._queryParamUrl$.next(link);
-  }
-  get getQueryParams(): { label: string; value: string }[] {
-    return this._queryParams;
+  //** Сохраняем 'City' в 'LocalStorage' при его изменении в настройках */
+  saveCity(value: string) {
+    this.localStorage.set(EStaticVar.CITY_KEY, value);
   }
 }

@@ -4,3 +4,7 @@ export interface IQueryParams {
   "price-max"?: string;
   title?: string;
 }
+export interface ICityStorage {
+  origin: string;
+  translit: string;
+}

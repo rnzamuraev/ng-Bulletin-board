@@ -31,10 +31,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgba(59, 130, 246, 0.04);
     border-radius: 4px;
     overflow: hidden;
     img {
-      width: 100%;
+      max-width: 100%;
+      height: auto;
+      max-height: 100%;
     }
   }
   &__img-list {
@@ -49,14 +52,14 @@
       }
     }
   }
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  input[type="number"] {
-    -moz-appearance: textfield;
-  }
+  // input::-webkit-outer-spin-button,
+  // input::-webkit-inner-spin-button {
+  //   -webkit-appearance: none;
+  //   margin: 0;
+  // }
+  // input[type="number"] {
+  //   -moz-appearance: textfield;
+  // }
   &__footer {
     width: 285px;
     padding-top: 24px;

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
-import { INewCategory } from "src/app/shared/types/category.interface";
+import { ICategoryChild } from "src/app/shared/types/category.interface";
 
 @Component({
   selector: "app-categories-body",
@@ -13,71 +13,62 @@ export class CategoriesBodyComponent implements OnInit {
   subcategoryItems!: string[];
   quantity!: number;
 
-  @Input()
-  subcategoryProps!: INewCategory;
+  @Output()
+  // subcategory = new EventEmitter<{ link: string; category: INewCategro}>();
+  subcategoryLink = new EventEmitter<string>();
 
+  @Input()
+  subcategoryProps!: ICategoryChild;
   @Input()
   indexProps!: number;
-
   @Input()
   subcategoryIdColProps!: number;
-
   @Input()
   subcategoryIdCol2Props!: number;
 
-  @Output()
-  getSubcategoryLink = new EventEmitter<string>();
-
   ngOnInit(): void {
-    this.setTitle();
-    this.initializeVariables(this.subcategoryProps);
+    this._initializeVisibleCategory();
   }
-
-  private initializeVariables(data: INewCategory): void {
-    if (data.body) {
-      if (data.body.length <= 6) {
-        this.setItems(data.body);
+  //** Устанавливаем количество видимых категорий и кнопку показать еще */
+  private _initializeVisibleCategory(): void {
+    if (this.subcategoryProps.childs) {
+      if (this.subcategoryProps.childs.length <= 6) {
+        this._setItems(this.subcategoryProps.childs);
         return;
       }
-
-      this.isMore = true;
-      this.setQuantity(data.body.length);
-      this.setItems(data.body.slice(0, 5));
+      this._toggleIsMore(true);
+      this._setQuantity(this.subcategoryProps.childs.length);
+      this._setItems(this.subcategoryProps.childs.slice(0, 5));
     }
   }
-
-  private setItems(data: INewCategory[]): void {
-    console.log(data);
-    this.subcategoryItems = [];
-    data.forEach((elem: INewCategory) => {
-      console.log(elem);
-      this.subcategoryItems.push(elem.name);
-      console.log(this.subcategoryItems);
-    });
-    console.log(this.subcategoryItems);
+  //** Устанавливаем суб-суб категории  */
+  private _setItems(data: ICategoryChild[]): void {
+    this.subcategoryItems = data.map((elem: ICategoryChild) => elem.name);
   }
-  private setTitle(): void {
-    this.title = this.subcategoryProps.name;
-  }
-  private setQuantity(data: number): void {
+  //** Устанавливаем количество скрытых категории  */
+  private _setQuantity(data: number): void {
     this.quantity = data - 5;
     console.log(this.quantity);
   }
-
+  //** Скрыть/Показать категории */
+  private _toggleIsMore(isValue: boolean): void {
+    this.isMore = isValue;
+  }
+  //** Показать еще */
   onMoreItems(): void {
-    this.isMore = false;
-    if (this.subcategoryProps.body) {
-      this.setItems(this.subcategoryProps.body);
+    this._toggleIsMore(false);
+    if (this.subcategoryProps.childs) {
+      this._setItems(this.subcategoryProps.childs);
     }
   }
-
+  //** Получаем ссылку для перехода на страницу выбранной категории и передаем в родительский компонент */
   onGetSubcategoryLink(arg0: string, arg1: string | null = null): void {
     console.log("subcategory: ", arg0, "item: ", arg1);
     let str = `${arg0}`;
     if (arg1) {
       str = `${arg0}/${arg1}`;
     }
-
-    this.getSubcategoryLink.emit(str);
+    this.subcategoryLink.emit(str);
+    // this.subcategoryLink.emit({link: str, category: });
   }
 }

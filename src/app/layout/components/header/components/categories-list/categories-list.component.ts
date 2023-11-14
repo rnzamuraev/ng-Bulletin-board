@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
+import { AdvertService } from "src/app/shared/services/adverts-service/advert.service";
 
-import { CategoryService } from "src/app/shared/services/category-service/category.service";
 import { QueryParamsService } from "src/app/shared/services/query-params-service/query-params.service";
-import { INewCategory } from "src/app/shared/types/category.interface";
+import { ICategoryChild } from "src/app/shared/types/category.interface";
 // import { EStaticVar } from "src/app/shared/types/staticVar.enum";
 
 @Component({
@@ -12,89 +12,61 @@ import { INewCategory } from "src/app/shared/types/category.interface";
   styleUrls: ["./categories-list.component.scss"],
 })
 export class CategoriesListComponent implements OnInit {
-  city = "Севастополь";
-  activeMenuCategory!: INewCategory;
+  activeMenuCategory!: ICategoryChild;
   numberOfColumns = 3;
   categoryIdColumnCard!: number;
   categoryIdColumnCard2!: number;
 
-  // @Input("categoriesProps")
-  @Input()
-  categoriesProps!: INewCategory[];
-  // set getCategories(props: ICategoryMenu[]) {
-  //   this.categories = props;
-  // }
-
   @Output()
   closeMenu = new EventEmitter<boolean>();
 
-  constructor(private queryParamsService: QueryParamsService, private router: Router) {}
+  @Input()
+  cityProps!: string;
+  @Input()
+  categoriesProps!: ICategoryChild[];
+
+  constructor(
+    private advertService: AdvertService,
+    private queryParamsService: QueryParamsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.initializeActiveCategory();
+    this._initializeActiveCategory();
   }
-
-  private initializeActiveCategory(): void {
+  //** Установить начальную активную категорию если еще не установлена */
+  private _initializeActiveCategory(): void {
     if (!this.activeMenuCategory) {
       this.activeMenuCategory = this.categoriesProps[0];
-      this.getCategoryIdInColumnCard(this.categoriesProps[0]);
+      this._getCategoryIdInColumnCard(this.categoriesProps[0]);
     }
   }
-
-  private getCategoryIdInColumnCard(data: INewCategory): void {
-    let column1!: number;
-    let column2!: number;
-    let count = 0;
-    let sum = 0;
+  //** Получаем из дочернего компонента активную категорию из меню категорий */
+  onActiveMenuCategoryProps(data: ICategoryChild): void {
+    this.activeMenuCategory = data;
+    this._getCategoryIdInColumnCard(data);
+  }
+  //** Получить индекс категорий к которым будут применены стили */
+  private _getCategoryIdInColumnCard(data: ICategoryChild): void {
     const arrayNumberOfSubcategories: number[] = [];
-    let totalNumberOfSubcategories = this.getTotalNumberOfSubcategories(
+    const totalNumberOfSubcategories = this._getTotalNumberOfSubcategories(
       data,
       arrayNumberOfSubcategories
     );
-
-    console.log(arrayNumberOfSubcategories);
-    console.log(totalNumberOfSubcategories);
-
     const quantityItemsOneColumn = Math.floor(totalNumberOfSubcategories / this.numberOfColumns);
-    console.log(quantityItemsOneColumn);
-
-    arrayNumberOfSubcategories.forEach((elem: number) => {
-      count++;
-      sum += elem;
-      console.log("count ", count);
-      console.log("el: ", elem);
-      console.log("sum: ", sum);
-      if (sum < quantityItemsOneColumn) {
-        return;
-      }
-
-      if (sum >= quantityItemsOneColumn) {
-        if (!column1) {
-          column1 = count;
-          sum = 0;
-          return;
-        } else {
-          column2 = count;
-          sum = 0;
-          return;
-        }
-      }
-    });
-    console.log("id-1: ", column1);
-    console.log("id-2: ", column2);
-    this.categoryIdColumnCard = column1;
-    this.categoryIdColumnCard2 = column2;
+    this._setIndexCategoryInColumnCart(arrayNumberOfSubcategories, quantityItemsOneColumn);
   }
-  private getTotalNumberOfSubcategories(data: INewCategory, arrNum: number[]): number {
+  //** Получить общее количество под-под категорий *
+  private _getTotalNumberOfSubcategories(data: ICategoryChild, arrNum: number[]): number {
     let sum = 0;
-    data.body.forEach(el => {
-      if (el.body && el.body.length) {
-        if (el.body.length > 6) {
+    data.childs.forEach(el => {
+      if (el.childs && el.childs.length) {
+        if (el.childs.length > 6) {
           sum += 6;
           arrNum.push(6);
         } else {
-          sum += el.body.length;
-          arrNum.push(el.body.length);
+          sum += el.childs.length;
+          arrNum.push(el.childs.length);
         }
       } else {
         sum += 2;
@@ -103,22 +75,48 @@ export class CategoriesListComponent implements OnInit {
     });
     return sum;
   }
-
-  onActiveMenuCategoryProps(data: INewCategory): void {
-    this.activeMenuCategory = data;
-    this.getCategoryIdInColumnCard(data);
+  //** Устанавливаем индексы категорий к которым будут применены стили (если они будут работать) */
+  private _setIndexCategoryInColumnCart(arrNum: number[], quantity: number): void {
+    let count = 0;
+    let sum = 0;
+    arrNum.forEach((elem: number) => {
+      count++;
+      sum += elem;
+      if (sum < quantity) {
+        return;
+      }
+      if (sum >= quantity) {
+        if (!this.categoryIdColumnCard) {
+          this.categoryIdColumnCard = count;
+          sum = 0;
+          return;
+        } else {
+          this.categoryIdColumnCard2 = count;
+          sum = 0;
+          return;
+        }
+      }
+    });
   }
 
+  //** Получаем ссылку из дочернего компонента для перехода на страницу выбранной категории */
   onGetSubcategoryLinkProps(props: string): void {
     console.log(`${this.activeMenuCategory.name}/${props}`);
     this.onGoTo(`${this.activeMenuCategory.name}/${props}`);
   }
-  onGetCategoryLink(data: string): void {
-    this.onGoTo(data);
+  //** Получаем ссылку из списка основных категорий*/
+  onGetCategoryLink(data: ICategoryChild): void {
+    this.onGoTo(data.name);
+    // this._setCategorySearch(data);
   }
+  //** Передать состояние закрыть меню и перейти по ссылке */
   onGoTo(data: string): void {
     this.closeMenu.emit(false);
-    // this.categoryService.setBreadcrumbsLabels$(data.split("/"));
-    this.router.navigateByUrl(`/${this.queryParamsService.transliter(this.city + "/" + data)}`);
+    this.router.navigateByUrl(
+      `/${this.queryParamsService.transliter(this.cityProps + "/" + data)}`
+    );
   }
+  // private _setCategorySearch(category: ICategoryChild): void {
+  //   this.advertService.searchAdvertByCategory(category);
+  // }
 }

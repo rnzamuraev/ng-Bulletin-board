@@ -1,16 +1,16 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
-import { ICategoryMenu } from "src/app/shared/types/category.interface";
+import { ICategoryChild } from "src/app/shared/types/category.interface";
 
 @Pipe({
   name: "filterCategories",
 })
 export class FilterCategoriesPipe implements PipeTransform {
-  transform(categories: ICategoryMenu[], activeCategory: string): ICategoryMenu[] {
+  transform(categories: ICategoryChild[], activeCategory: string): ICategoryChild[] {
     if (!activeCategory) {
       return categories;
     }
 
-    return categories.filter(el => el.category === activeCategory);
+    return categories.filter(el => el.name === activeCategory);
   }
 }

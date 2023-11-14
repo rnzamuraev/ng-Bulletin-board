@@ -10,12 +10,10 @@
   </button>
   <p-dropdown styleClass="input input-select" [options]="categoriesProps" [(ngModel)]="selectedCategory"
     optionLabel="name" placeholder="Нажмите, чтобы выбрать">
-    <!-- optionLabel="name" placeholder="Нажмите, чтобы выбрать" [showClear]="true"> -->
     <ng-template pTemplate="selectedItem">
       <div class="d-flex content-between text-dark" *ngIf="selectedCategory">
         <div>{{ selectedCategory.name }}</div>
       </div>
-      <!-- <button *ngIf="selectedCategory" class="btn-icon" (click)="onClear()"> -->
     </ng-template>
     <ng-template let-category pTemplate="item">
       <div class="d-flex content-start menu-item" (click)="onSelectedCategory(category)">
@@ -24,3 +22,5 @@
     </ng-template>
   </p-dropdown>
 </div>
+<!-- <button *ngIf="selectedCategory" class="btn-icon" (click)="onClear()"> -->
+  <!-- optionLabel="name" placeholder="Нажмите, чтобы выбрать" [showClear]="true"> -->

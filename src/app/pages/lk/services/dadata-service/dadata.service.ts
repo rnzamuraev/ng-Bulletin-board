@@ -11,7 +11,9 @@ export class DadataService {
   fetchAddress(term: string): Observable<any> {
     console.log(term);
     // return this.http.post<any>("address", { body: `[${term}]` }).pipe(
-    return this.http.post<any>("address", { address: term }).pipe(
+    // return this.http.post<any>("address", { address: term }).pipe(
+    return this.http.post<any>("address", { query: term }).pipe(
+      // {query: query}
       map(data => {
         console.log(data);
         return data;

@@ -1,135 +1,207 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Subscription } from "rxjs";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Subscription, tap } from "rxjs";
 
+import { ErrorMessageService } from "src/app/shared/services/error-message-service/error-message.service";
+import { FormService } from "src/app/shared/services/form-service/form.service";
 import { UserService } from "src/app/shared/services/user-service/user.service";
-import { IUpdateUser, IUpdateUserResponse, IUser } from "src/app/shared/types/user.interface";
-import { DadataService } from "../../services/dadata-service/dadata.service";
-import { LocalStorageService } from "src/app/shared/services/local-storage-service/local-storage.service";
-import { EStaticVar } from "src/app/shared/types/staticVar.enum";
+import { IUser, IUserResponse } from "src/app/shared/types/user.interface";
+import { ISettingsFormSubmit } from "../../types/advert-form.interface";
+import { INewUser } from "../../types/user.interface";
 
 @Component({
   selector: "app-settings-page",
   templateUrl: "./settings-page.component.html",
   styleUrls: ["./settings-page.component.scss"],
 })
-export class SettingsPageComponent implements OnInit {
+export class SettingsPageComponent implements OnInit, OnDestroy {
   private _unsubscribeGetCurrentUser!: Subscription;
-  private _address = "";
-  private _phone = "";
-  private _userId = "";
+  private _unsubscribeGetIsErrorPassword!: Subscription;
+  private _passwordStorage!: string;
 
-  userUpdateObj!: IUpdateUser;
-  settingsForm!: FormGroup;
-  changePasswordForm!: FormGroup;
-  term!: string;
+  isSubmitting = false;
+  isSuccessSubmit = false;
+  isErrorPassword!: boolean;
+  newCurrentUser!: INewUser;
+  errorMessage: string | null = null;
 
   constructor(
     private userService: UserService,
-    private dadataService: DadataService,
-    private localStorage: LocalStorageService
+    private formService: FormService,
+    private errorMessageService: ErrorMessageService
   ) {}
 
   ngOnInit(): void {
-    // this._InitializeUserUpdateObj();
-    this._initializeLocation();
-    this._initializePhone();
+    this._initializeIsErrorPassword();
     this._initializeGetCurrentUser();
-    this._initializeSettingsForm();
-    this._initializeChangePasswordForm();
   }
 
   //**? При загрузке страницы */
-  // ** Создаем новый объект для изменения настроек пользователя */
-  private _createUserUpdateObj(): IUpdateUser {
-    return {
-      name: "",
-      login: "",
-      password: "",
-    };
+  //** Подписываемся на изменения статуса ошибки пароля */
+  private _initializeIsErrorPassword() {
+    this._unsubscribeGetIsErrorPassword = this.errorMessageService.getIsErrorPassword.subscribe(
+      (isData: boolean) => {
+        this.isErrorPassword = isData;
+      }
+    );
   }
-  private _initializeLocation(): void {
-    const location = this.localStorage.get(EStaticVar.LOCATION_KEY);
+  //** Получаем адрес из 'LocalStorage' */
+  private _getAddressFromStorage(): string {
+    const location = this.formService.getLocation;
     if (location) {
-      this._address = location;
+      return location;
     }
+    return "";
   }
-  private _initializePhone(): void {
-    const phone = this.localStorage.get(EStaticVar.PHONE_KEY);
+  //** Получаем телефон из 'LocalStorage' */
+  private _getPhoneFromStorage(): string {
+    const phone = this.formService.getPhone;
     if (phone) {
-      this._phone = phone;
+      return phone;
     }
+    return "";
+  }
+  //** Устанавливаем статус ошибки пароля */
+  private _setIsErrorPass(isValue: boolean) {
+    this.errorMessageService.setIsErrorPassword(isValue);
   }
   //** Получаем текущего пользователя если он вошел в аккаунт */
   private _initializeGetCurrentUser() {
     this._unsubscribeGetCurrentUser = this.userService.getCurrentUser.subscribe(
       (data: IUser | null) => {
         if (data) {
-          this._userId = data.id;
-          this.userUpdateObj = { ...this._createUserUpdateObj(), name: data.name };
+          console.log(data);
+          this.newCurrentUser = {
+            ...data,
+            address: this._getAddressFromStorage(),
+            phone: this._getPhoneFromStorage(),
+          };
         }
-        console.log(this.userUpdateObj);
       }
     );
   }
-  //** Инициализировать форму настроек */
-  private _initializeSettingsForm() {
-    this.settingsForm = new FormGroup({
-      name: new FormControl(this.userUpdateObj.name),
-      login: new FormControl(""),
-      location: new FormControl(this._address),
-    });
+  //** Включить/Отключить кнопку во время отправки формы */
+  onIsSubmittingProps(props: boolean) {
+    this._setIsSubmitting(props);
   }
-  //** Инициализировать форму изменения пароля */
-  private _initializeChangePasswordForm() {
-    this.changePasswordForm = new FormGroup({
-      password: new FormControl("", [Validators.required]),
-      newPassword: new FormControl("", [Validators.required]),
-    });
-  }
-  fetchAddress(term: string) {
-    this.dadataService.fetchAddress(term).subscribe(data => {
-      this._address = data;
-    });
-  }
-  onSearchAddress() {
-    console.log(this.settingsForm.value["location"]);
-    // console.log(this.settingsForm.value.location);
-    // this.fetchAddress(this.settingsForm.value["location"]);
-  }
-
-  onSubmitSettingsSave() {
-    console.log(this.settingsForm);
-    this.userUpdateObj.name = this.settingsForm.value.name;
-    this.userUpdateObj.login = this.settingsForm.value.login;
-    this._setPhone(this.settingsForm.value.login);
-    this._setAddress(this.settingsForm.value.location);
-    console.log(this.userUpdateObj);
-  }
-  private _setPhone(phone: string) {
-    if (phone) {
-      this.localStorage.set(EStaticVar.PHONE_KEY, phone);
+  //** Получаем измененные параметры пользователя из формы дочернего компонента */
+  onGetParamsUserProps(props: ISettingsFormSubmit) {
+    this._setPassword();
+    if (props.prevPassword) {
+      this._getBackResponse(props, props.prevPassword);
+      return;
     }
+    this._getBackResponse(props, this._passwordStorage);
   }
-  private _setAddress(address: string) {
-    if (address) {
-      this.localStorage.set(EStaticVar.LOCATION_KEY, address);
-    }
-  }
-  onSubmitChangePassword() {
-    console.log(this.changePasswordForm);
-    console.log(this.changePasswordForm.get("password"));
-    this._updateUserSettings(this._userId, {
-      ...this.userUpdateObj,
-      password: this.changePasswordForm.get("password")?.value,
-    });
-  }
-  private _updateUserSettings(id: string, body: IUpdateUser) {
-    this.userService.updateUserSettings(id, body).subscribe((data: IUpdateUserResponse | null) => {
+  //** Отправка формы */
+  private _getBackResponse(formValue: ISettingsFormSubmit, pass: string) {
+    this._passwordStatus(pass).then((data: { status: string }) => {
+      // this._setIsSubmitting(false);
       console.log(data);
+      if (data.status === "Ok") {
+        this._updateUserSettings(formValue);
+        this._setBackErrorMessage(null);
+        return;
+      }
+      if (data.status === "Error") {
+        this._setIsErrorPass(true);
+        return;
+      }
+      this._setBackErrorMessage(data.status);
     });
   }
+  private _setIsSubmitting(isValue: boolean) {
+    this.isSubmitting = isValue;
+  }
+  private _setPassword() {
+    const password = this.formService.getPass;
+    if (password) {
+      this._passwordStorage = password;
+    }
+  }
+  //** Имитация ответа с сервера по состоянию пароля */
+  private _passwordStatus(pass: string): Promise<{ status: string }> {
+    return new Promise<{ status: string }>(resolve => {
+      setTimeout(() => {
+        const res = { status: "Текущий пароль не совпадает с введенным" };
+        if (this._passwordStorage === pass) res.status = "Ok";
+        if (!this._passwordStorage) res.status = "Error";
+        resolve(res);
+      }, 1000);
+    });
+  }
+  private _setBackErrorMessage(message: string | null) {
+    this.errorMessage = message;
+  }
+  private _updateUserSettings(formValue: ISettingsFormSubmit) {
+    this.userService
+      .updateUserSettings(this.newCurrentUser.id, this._createFormData(formValue))
+      .pipe(
+        tap(data => {
+          console.log(data);
+          if (data) this._fetchCurrentUserById(data.id, formValue);
+        })
+      )
+      .subscribe((data: IUserResponse | null) => {
+        console.log(data);
+        // this._setIsSuccessSubmit(true);
+      });
+  }
+  // ** Получаем пользователя после изменения данных по ID и заносим данные в сервис */
+  private _fetchCurrentUserById(id: string, formValue: ISettingsFormSubmit): void {
+    console.log(id);
+    this.userService.fetchUserById(id).subscribe((data: IUser | null) => {
+      console.log(data);
+      this.userService.setCurrentUser(data);
+      this._saveParams(formValue);
+      this._setIsSuccessSubmit(true);
+      this._setIsSubmitting(false);
+    });
+  }
+  //** Создаем объект 'FormData' */
+  private _createFormData(formValue: ISettingsFormSubmit): FormData {
+    const formData = new FormData();
+    formData.append("name", formValue.name);
+    formData.append("login", formValue.login);
+    if (formValue.password) formData.append("password", formValue.password);
+    else formData.append("password", this._passwordStorage);
+    return formData;
+  }
+  //** Сохраняем параметры пользователя */
+  private _saveParams(data: ISettingsFormSubmit) {
+    if (data.location !== null) {
+      this._saveAddress(data.location);
+      this._savePhone();
+      return;
+    }
+    if (data.password) this._savePass(data.password);
+  }
+  //** Сохранить адрес */
+  private _saveAddress(value: string) {
+    this.formService.saveLocation(value);
+  }
+  //** Сохранить пароль */
+  private _savePass(value: string) {
+    this.formService.savePass(value);
+  }
+  //** Сохранить телефон */
+  private _savePhone() {
+    this.formService.setIsSavePhone(true);
+  }
+  //** Получаем измененный статус из дочернего компонента */
+  onIsSuccessSubmit(props: boolean) {
+    this._setIsSuccessSubmit(props);
+  }
+  //** Изменение статуса успешной отправки данных на сервер */
+  private _setIsSuccessSubmit(isValue: boolean) {
+    this.isSuccessSubmit = isValue;
+  }
+  //** переход по ссылке на другую страницу */
   onGoTo(value: string) {
     console.log(value);
+  }
+  //** Отписываемся от кастомных подписок/
+  ngOnDestroy(): void {
+    this._unsubscribeGetCurrentUser.unsubscribe();
+    this._unsubscribeGetIsErrorPassword.unsubscribe();
   }
 }

@@ -1,10 +1,13 @@
-<!-- <div class="home"> -->
 <div class="container">
   <h4>Рекомендации для вас</h4>
-  <ul class="card-list">
-    <li *ngFor="let prod of products">
-      <app-card-product [prodProps]="prod"></app-card-product>
+  <ul *ngIf="adverts.length > 0; else notAdverts" class="card-list">
+    <li *ngFor="let advert of adverts">
+      <!-- <app-card-product [advertProps]="advert" (getAdvertUser)="onGetAdvertProps($event)"></app-card-product> -->
+      <app-card-product [advertProps]="advert"></app-card-product>
     </li>
   </ul>
 </div>
-<!-- </div> -->
+<ng-template #notAdverts>
+  <app-loading *ngIf="!errorMessage"></app-loading>
+  <h6 *ngIf="errorMessage">{{errorMessage}}</h6>
+</ng-template>

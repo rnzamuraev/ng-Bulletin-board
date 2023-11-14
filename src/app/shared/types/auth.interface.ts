@@ -1,7 +1,7 @@
 // import { IPost } from "./post.interface";
 
 export interface IAuthLogin {
-  phone: string;
+  login: string;
   password: string;
 }
 export interface IAuthRegister extends IAuthLogin {

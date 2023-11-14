@@ -14,10 +14,14 @@ export interface ICategory {
   id: string;
   parentId: string;
   name: string;
+  childs?: ICategory[];
 }
+// export interface IChildsCategory extends ICategory {
+//   childs: ICategory[];
+// }
 export interface ICategoryChild extends ICategory {
-  childs: ICategory[];
+  childs: ICategoryChild[];
 }
-export interface INewCategory extends ICategory {
-  body: INewCategory[];
-}
+// export interface ICategoryChild extends ICategory {
+//   childs: ICategoryChild[];
+// }

@@ -11,7 +11,7 @@ export class FormDropdownComponent implements OnInit {
   selectedCategory!: ICategory | null;
   categoriesProps!: ICategory[];
   indexProps!: number;
-
+ 
   @Input("categoryProps")
   set setCategories(props: { categories: ICategory[]; i: number }) {
     if (!props.categories) return;
@@ -23,18 +23,35 @@ export class FormDropdownComponent implements OnInit {
       this.indexProps = props.i;
     }
   }
+  @Input("isResetDropdownProps")
+  set setIsResetDropdown(props: boolean) {
+    console.log(props);
+    if (props) {
+      this.selectedCategory = null;
+      console.log(this.selectedCategory);
+      setTimeout(() => {
+        this.isResetDropdown.emit(false);
+      }, 0);
+    }
+  }
 
   @Output()
   selectCategory = new EventEmitter<ICategory | null>();
   @Output()
   isNewCategoryField = new EventEmitter<boolean>();
+  @Output()
+  isResetDropdown = new EventEmitter<boolean>();
+  // @Output()
+  // clearDropdown = new EventEmitter<(() => void) | undefined>();
 
   constructor(private categoryService: CategoryService) {}
 
   ngOnInit(): void {
-    // this._initializeFetchCategory();
+    // this._clearDropdown();
   }
-
+  // private _clearDropdown() {
+  //   this.clearDropdown.emit(this.onClearDropdown);
+  // }
   onSelectedCategory(category: ICategory | null) {
     console.log(category);
     this.selectCategory.emit(category);

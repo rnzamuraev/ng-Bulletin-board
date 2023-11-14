@@ -1,0 +1,10 @@
+<label *ngIf="isLabelProps" for="cost">Цена <span class="text-danger">*</span></label>
+<!-- <input id="advert-cost" class="input mt-8" type="number" formControlName="cost" placeholder="0 ₽">-->
+<input id="cost" class="input mt-8" type="text" [placeholder]="placeholderProps" #cost name="cost"
+  (input)="onInputMask()" />
+<!-- (blur)="onInputMask($event)" (focus)="onInputMask($event)" (input)="onInputMask($event)" /> -->
+<!-- <app-input-field-error [controlsStringProps]="form.controls['login']" [errorMessageProps]="errorMessageLogin">
+</app-input-field-error> -->
+<span class="error" *ngIf="controlsProps?.invalid">
+  {{errorMessageProps}}
+</span>

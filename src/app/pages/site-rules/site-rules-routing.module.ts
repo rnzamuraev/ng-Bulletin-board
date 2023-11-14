@@ -5,6 +5,7 @@ import { RouterModule, Routes } from "@angular/router";
 const routes: Routes = [
   {
     path: "rules",
+    title: "Правила сайта",
     loadChildren: () =>
       import("./pages/site-rules-page/site-rules-page.module").then(m => m.SiteRulesPageModule),
   },

@@ -1,0 +1,75 @@
+<div *ngIf="categoriesProps" class="filter-sidebar">
+  <h6 *ngIf="categoriesProps && categoriesProps.length > 1;else oneCategory">Все категории</h6>
+  <ng-template #oneCategory>
+    <h6>{{categoriesProps[0].name}}</h6>
+  </ng-template>
+  <ul *ngIf="categoriesProps" class="categories mb-8">
+    <li *ngFor="let category of categoriesProps" class="categories__item">
+      <div class="categories__link mt-8" [class.active]="activeCategoryProps === category.name">
+        <svg *ngIf="category.childs.length > 0" class="pointer" (click)="onShowCategories(category.name)"
+          xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M1.02876 2.90382C1.05779 2.87472 1.09227 2.85163 1.13024 2.83587C1.1682 2.82012 1.2089 2.81201 1.25001 2.81201C1.29111 2.81201 1.33181 2.82012 1.36978 2.83587C1.40775 2.85163 1.44223 2.87472 1.47126 2.90382L5.00001 6.4332L8.52876 2.90382C8.55781 2.87477 8.59231 2.85172 8.63027 2.83599C8.66823 2.82027 8.70892 2.81218 8.75001 2.81218C8.7911 2.81218 8.83179 2.82027 8.86975 2.83599C8.90771 2.85172 8.9422 2.87477 8.97126 2.90382C9.00031 2.93288 9.02336 2.96737 9.03909 3.00533C9.05481 3.04329 9.0629 3.08398 9.0629 3.12507C9.0629 3.16616 9.05481 3.20685 9.03909 3.24481C9.02336 3.28277 9.00031 3.31727 8.97126 3.34632L5.22126 7.09632C5.19223 7.12542 5.15775 7.14851 5.11978 7.16427C5.08181 7.18002 5.04111 7.18813 5.00001 7.18813C4.9589 7.18813 4.9182 7.18002 4.88024 7.16427C4.84227 7.14851 4.80779 7.12542 4.77876 7.09632L1.02876 3.34632C0.999657 3.31729 0.976568 3.28281 0.960814 3.24484C0.94506 3.20688 0.936951 3.16617 0.936951 3.12507C0.936951 3.08397 0.94506 3.04326 0.960814 3.0053C0.976568 2.96733 0.999657 2.93285 1.02876 2.90382Z"
+            fill="#3B82F6" stroke="#3B82F6" stroke-width="0.7" />
+        </svg>
+        <!-- <span *ngIf="activeItemProps" -->
+        <span [ngClass]="{'text-secondary': activeItemProps === category.id, 'link': activeItemProps !== category.id}"
+          (click)="onGoTo(category.name, category.id)">{{category.name}}</span>
+      </div>
+      <ul class="categories categories__sub" [class.active]="activeCategoryProps === category.name">
+        <li *ngFor="let subcategory of category.childs" class="categories__item">
+          <div class="categories__link mt-8" [class.active]="activeSubcategoryProps === subcategory.name">
+            <svg *ngIf="subcategory.childs.length > 0" class="pointer"
+              (click)="onShowCategories(subcategory.name, 'sub')" xmlns="http://www.w3.org/2000/svg" width="10"
+              height="10" viewBox="0 0 10 10" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M1.02876 2.90382C1.05779 2.87472 1.09227 2.85163 1.13024 2.83587C1.1682 2.82012 1.2089 2.81201 1.25001 2.81201C1.29111 2.81201 1.33181 2.82012 1.36978 2.83587C1.40775 2.85163 1.44223 2.87472 1.47126 2.90382L5.00001 6.4332L8.52876 2.90382C8.55781 2.87477 8.59231 2.85172 8.63027 2.83599C8.66823 2.82027 8.70892 2.81218 8.75001 2.81218C8.7911 2.81218 8.83179 2.82027 8.86975 2.83599C8.90771 2.85172 8.9422 2.87477 8.97126 2.90382C9.00031 2.93288 9.02336 2.96737 9.03909 3.00533C9.05481 3.04329 9.0629 3.08398 9.0629 3.12507C9.0629 3.16616 9.05481 3.20685 9.03909 3.24481C9.02336 3.28277 9.00031 3.31727 8.97126 3.34632L5.22126 7.09632C5.19223 7.12542 5.15775 7.14851 5.11978 7.16427C5.08181 7.18002 5.04111 7.18813 5.00001 7.18813C4.9589 7.18813 4.9182 7.18002 4.88024 7.16427C4.84227 7.14851 4.80779 7.12542 4.77876 7.09632L1.02876 3.34632C0.999657 3.31729 0.976568 3.28281 0.960814 3.24484C0.94506 3.20688 0.936951 3.16617 0.936951 3.12507C0.936951 3.08397 0.94506 3.04326 0.960814 3.0053C0.976568 2.96733 0.999657 2.93285 1.02876 2.90382Z"
+                fill="#3B82F6" stroke="#3B82F6" stroke-width="0.7" />
+            </svg>
+            <!-- <span *ngIf="activeItemProps" -->
+            <span
+              [ngClass]="{'text-secondary': activeItemProps === subcategory.id, 'link': activeItemProps !== subcategory.id}"
+              (click)="onGoTo(category.name+'/'+subcategory.name, subcategory.id)">
+              {{subcategory.name}}
+            </span>
+          </div>
+          <ul class="categories categories__sub" [class.active]="activeSubcategoryProps === subcategory.name">
+            <li *ngFor="let item of subcategory.childs" class="categories__item">
+              <div class="categories__link mt-8">
+                <!-- <span *ngIf="activeItemProps" -->
+                <span [ngClass]="{'text-secondary': activeItemProps === item.id, 'link': activeItemProps !== item.id}"
+                  (click)="onGoTo(category.name+'/'+subcategory.name+'/'+item.name, item.id)">
+                  {{item.name}}
+                </span>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <h6>Цена</h6>
+  <div class="form">
+    <div class="form__fields">
+      <app-input-number class="mr-8" name="min" [costValueProps]="searchParamsProps.min" placeholderProps="Цена от"
+        (cost)="onGetCostMinProps($event)">
+      </app-input-number>
+      <app-input-number name="max" [costValueProps]="searchParamsProps.max" placeholderProps="до, руб."
+        (cost)="onGetCostMaxProps($event)">
+      </app-input-number>
+      <!-- <input class="input input-number mr-8" type="text" name="min" placeholder="Цена от"
+        [(ngModel)]="searchParamsProps.min" /> -->
+      <!-- <input class="input input-number" type="text" name="max" placeholder="до, руб."
+        [(ngModel)]="searchParamsProps.max" /> -->
+    </div>
+    {{searchParamsProps.min}}
+    {{searchParamsProps.max}}
+    {{minCostProps}}
+    {{maxCostProps}}
+    <button class="btn btn-filter center" type="button" (click)="onSetFilterFromTo()"
+      [disabled]="minCostProps === searchParamsProps.min && maxCostProps === searchParamsProps.max"
+      [class.disabled]="minCostProps === searchParamsProps.min && maxCostProps === searchParamsProps.max">
+      Показать объявления
+    </button>
+  </div>
+</div>

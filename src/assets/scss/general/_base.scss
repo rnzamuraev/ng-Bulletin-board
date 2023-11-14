@@ -12,6 +12,11 @@ body {
   color: $color-base;
 }
 
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .container {
   margin: 0 auto;
   max-width: $container-xxl;

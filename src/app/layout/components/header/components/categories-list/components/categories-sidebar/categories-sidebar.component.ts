@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { INewCategory } from "src/app/shared/types/category.interface";
+import { ICategoryChild } from "src/app/shared/types/category.interface";
 
 @Component({
   selector: "app-categories-sidebar",
@@ -7,18 +7,17 @@ import { INewCategory } from "src/app/shared/types/category.interface";
   styleUrls: ["./categories-sidebar.component.scss"],
 })
 export class CategoriesSidebarComponent {
-  @Input()
-  activeMenuCategoryProps!: INewCategory;
-
-  @Input()
-  categoriesProps!: INewCategory[];
-
   @Output()
-  setActiveMenuCategory = new EventEmitter<INewCategory>();
+  activeMenuCategory = new EventEmitter<ICategoryChild>();
 
-  onGetActiveMenuCategory(data: INewCategory): void {
+  @Input()
+  activeMenuCategoryProps!: ICategoryChild;
+  @Input()
+  categoriesProps!: ICategoryChild[];
+  //** Получить активную категорию */
+  onGetActiveMenuCategory(data: ICategoryChild): void {
     if (data !== this.activeMenuCategoryProps) {
-      this.setActiveMenuCategory.emit(data);
+      this.activeMenuCategory.emit(data);
     }
   }
 }
