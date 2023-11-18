@@ -1,38 +1,30 @@
 <h4>Новое объявление</h4>
 <form [formGroup]="advertForm" class="advert-form" #form (ngSubmit)="onSubmitAddNewAdvert()">
-  <!-- <li *ngFor="let child of get('categories')['controls']; let i = index" formGroupName="{{i}}"> -->
   <ul class="advert-form__field" formArrayName="categoryId">
-    <label for="category">Выберите категорию <span class="text-danger">*</span></label>
+    <span>Выберите категорию <span class="text-danger">*</span></span>
     <li *ngFor="let child of getCategory(); let i = index" formGroupName="{{i}}" class="d-flex col">
-      <!-- <app-form-dropdown [categoryProps]="{categories, i}" formControlName="category" -->
       <app-form-dropdown [categoryProps]="{categories, i}" [isResetDropdownProps]="isResetDropdown"
         (isResetDropdown)="onIsResetDropdown($event)"
         (selectCategory)="onSelectedCategoryProps($event, i)"></app-form-dropdown>
     </li>
-    <!-- (clearDropdown)="onClearDropdownProps($event)" -->
   </ul>
   <div class="advert-form__field">
-    <label for="advert-name">Название объявления <span class="text-danger">*</span></label>
-    <input id="advert-name" class="input mt-8" type="text" formControlName="name" placeholder="Что хотите продать?">
+    <span>Название объявления <span class="text-danger">*</span></span>
+    <input class="input mt-8" type="text" formControlName="name" placeholder="Что хотите продать?">
     <app-input-field-error [controlsStringProps]="advertForm.controls['name']" [errorMessageProps]="errorMessageName">
     </app-input-field-error>
   </div>
   <div class="advert-form__field">
-    <label for="advert-descr">Описание</label>
-    <textarea id="advert-descr" class="textarea mt-8" formControlName="description"
+    <span>Описание</span>
+    <textarea class="textarea mt-8" formControlName="description"
       placeholder="Расскажите подробнее о товаре или услуге"></textarea>
     <app-input-field-error [controlsStringProps]="advertForm.controls['description']"
       [errorMessageProps]="errorMessageDescr">
     </app-input-field-error>
-    <!-- <span
-      *ngIf="advertForm.controls['description'].invalid && advertForm.controls['description'].touched && advertForm.controls['description'].value?.length !== 0"
-      class="error">{{errorMessageDescr}}
-    </span> -->
   </div>
   <div class="advert-form__field">
-    <label for="advert-address">Адрес (место проведения сделки) <span class="text-danger">*</span></label>
-    <input id="advert-address" class="input mt-8" type="text" formControlName="location"
-      placeholder="Начните вводить адрес">
+    <span>Адрес (место проведения сделки) <span class="text-danger">*</span></span>
+    <input class="input mt-8" type="text" formControlName="location" placeholder="Начните вводить адрес">
     <app-input-field-error [controlsStringProps]="advertForm.controls['location']"
       [errorMessageProps]="errorMessageLoc">
     </app-input-field-error>
@@ -49,11 +41,8 @@
               d="M17.5024 16.25C17.5024 16.913 17.239 17.5489 16.7702 18.0178C16.3014 18.4866 15.6655 18.75 15.0024 18.75H2.50244C1.8394 18.75 1.20352 18.4866 0.734674 18.0178C0.265834 17.5489 0.00244141 16.913 0.00244141 16.25V6.25C0.00244107 5.58739 0.26549 4.95189 0.73379 4.48312C1.20209 4.01435 1.83733 3.75066 2.49994 3.75C2.49994 3.08696 2.76333 2.45107 3.23217 1.98223C3.70102 1.51339 4.3369 1.25 4.99994 1.25H17.4999C18.163 1.25 18.7989 1.51339 19.2677 1.98223C19.7365 2.45107 19.9999 3.08696 19.9999 3.75V13.75C19.9999 14.4126 19.7369 15.0481 19.2686 15.5169C18.8003 15.9857 18.165 16.2493 17.5024 16.25ZM17.4999 2.5H4.99994C4.66842 2.5 4.35048 2.6317 4.11606 2.86612C3.88164 3.10054 3.74994 3.41848 3.74994 3.75H15.0024C15.6655 3.75 16.3014 4.01339 16.7702 4.48223C17.239 4.95107 17.5024 5.58696 17.5024 6.25V15C17.8335 14.9993 18.1508 14.8673 18.3847 14.633C18.6186 14.3987 18.7499 14.0811 18.7499 13.75V3.75C18.7499 3.41848 18.6182 3.10054 18.3838 2.86612C18.1494 2.6317 17.8315 2.5 17.4999 2.5ZM2.50244 5C2.17092 5 1.85298 5.1317 1.61856 5.36612C1.38414 5.60054 1.25244 5.91848 1.25244 6.25V16.25L4.55994 13.3075C4.66211 13.2057 4.79634 13.1424 4.93986 13.1283C5.08339 13.1141 5.22739 13.1501 5.34744 13.23L8.67244 15.4463L13.3099 10.8088C13.4026 10.716 13.5222 10.6547 13.6516 10.6336C13.781 10.6125 13.9138 10.6327 14.0312 10.6913L16.2524 13.125V6.25C16.2524 5.91848 16.1207 5.60054 15.8863 5.36612C15.6519 5.1317 15.334 5 15.0024 5H2.50244Z"
               fill="white" />
           </svg>
-          <!-- <span>Добавить картинки</span> -->
           Добавить картинки
         </span>
-        <!-- <img class="thumb" src="e.target.result" title="theFile.name" /> -->
-        <!-- <input id="file" type="file" formControlName="imagesId" placeholder="" (change)="onLoadImage($event)">  -->
         <input id="file" type="file" accept=".jpeg,.png,.heic," multiple formControlName="images"
           (change)="onLoadImage($event)">
       </label>
@@ -66,7 +55,6 @@
     </div>
     <ul *ngIf="arrayImage.length > 0" class="advert-form__img-lis px-16 pt-16 br-t-base">
       <li *ngFor="let img of arrayImage; let i = index" class="d-flex mb-16">
-        <!-- <div class="advert-form__img" [ngStyle]="{'background-image': img.url}"> -->
         <div class="advert-form__img">
           <img [src]="img.url" [alt]="img.name">
         </div>
@@ -85,28 +73,24 @@
     </ul>
   </div>
   <div class="advert-form__field">
-    <!-- <label for="advert-cost">Цена <span class="text-danger">*</span></label>
-    <input id="advert-cost" class="input mt-8" type="number" formControlName="cost" placeholder="0 ₽">
-    <app-input-field-error [controlsNumberProps]="advertForm.controls['cost']" [errorMessageProps]="errorMessageCost"> -->
+    <span>Цена <span class="text-danger">*</span></span>
     <app-input-number [controlsProps]="advertForm.controls['cost']" [costProps]="cost"
-      [errorMessageProps]="errorMessageCost" placeholderProps="0 ₽" [isLabelProps]="true"
-      (cost)="onGetCostProps($event)">
+      [errorMessageProps]="errorMessageCost" placeholderProps="0 ₽" (cost)="onGetCostProps($event)">
     </app-input-number>
-    <!-- (costInput)="onGetCostInputProps($event)" [costProps]="advertForm.controls['cost']"-->
-    <!-- </app-input-field-error> -->
   </div>
-  <div class="advert-form__footer">
-    <button class="btn" type="submit" [disabled]="advertForm.invalid" [class.disabled]="advertForm.invalid">
-      <!-- <button class="btn" type="submit"> -->
-      <h5 *ngIf="!isEdit; else edit">Разместить объявление</h5>
-      <ng-template #edit>
-        <h5>Сохранить изменения</h5>
-      </ng-template>
-      <!-- Разместить объявление -->
-    </button>
-    <p class="text-sm mt-8">
-      Нажимая кнопку «Разместить объявление»
-      Вы соглашаетесь с <span class="link" (click)="onGoTo('rules')">правилами площадки</span>
-    </p>
+  <div class="d-flex">
+    <div class="advert-form__btn">
+      <button class="btn" type="submit" [disabled]="advertForm.invalid" [class.disabled]="advertForm.invalid">
+        <h5 *ngIf="!isEdit; else edit">Разместить объявление</h5>
+        <ng-template #edit>
+          <h5>Сохранить изменения</h5>
+        </ng-template>
+      </button>
+      <p class="text-sm mt-8">
+        Нажимая кнопку «Разместить объявление»
+        Вы соглашаетесь с <span class="link" (click)="onGoTo('rules')">правилами площадки</span>
+      </p>
+    </div>
+    <div *ngIf="isAddAdvert" class="advert-form__success br-base bg-color-white-dark">Объявление успешно добавлено</div>
   </div>
 </form>

@@ -38,7 +38,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   //**? При загрузке страницы */
   //** Подписываемся на изменения статуса ошибки пароля */
   private _initializeIsErrorPassword() {
-    this._unsubscribeGetIsErrorPassword = this.errorMessageService.getIsErrorPassword.subscribe(
+    this._unsubscribeGetIsErrorPassword = this.errorMessageService.getIsErrorPassword$.subscribe(
       (isData: boolean) => {
         this.isErrorPassword = isData;
       }
@@ -66,7 +66,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   }
   //** Получаем текущего пользователя если он вошел в аккаунт */
   private _initializeGetCurrentUser() {
-    this._unsubscribeGetCurrentUser = this.userService.getCurrentUser.subscribe(
+    this._unsubscribeGetCurrentUser = this.userService.getCurrentUser$.subscribe(
       (data: IUser | null) => {
         if (data) {
           console.log(data);
@@ -111,6 +111,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   }
   private _setIsSubmitting(isValue: boolean) {
     this.isSubmitting = isValue;
+    console.log(isValue);
   }
   private _setPassword() {
     const password = this.formService.getPass;
@@ -194,6 +195,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   //** Изменение статуса успешной отправки данных на сервер */
   private _setIsSuccessSubmit(isValue: boolean) {
     this.isSuccessSubmit = isValue;
+    console.log(isValue);
   }
   //** переход по ссылке на другую страницу */
   onGoTo(value: string) {

@@ -7,17 +7,16 @@ import { OpenService } from "src/app/shared/services/open-service/open.service";
 import { IAuthLogin, IAuthRegister } from "src/app/shared/types/auth.interface";
 import { IErrorMessage } from "src/app/shared/types/error.interface";
 
-@Injectable(
-  // { providedIn: "root" }
-)
+@Injectable()
+// { providedIn: "root" }
 export class AuthService {
   constructor(private http: HttpClient, private openService: OpenService) {}
 
   //** HTTP запросы */
   //** Регистрация пользователя */
   // addUser(user: IAuthRegister): Observable<HttpErrorResponse | string> {
-  addUser(user: IAuthRegister): Observable<any> {
-    return this.http.post("auth/register", user).pipe(
+  fetchAddUser(body: IAuthRegister): Observable<HttpErrorResponse | string> {
+    return this.http.post<string>("auth/register", body).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log(error);
         return of(error);
@@ -25,8 +24,8 @@ export class AuthService {
     );
   }
   //** Авторизация пользователя */
-  userLogin(user: IAuthLogin): Observable<any> {
-    return this.http.post("auth/login", user).pipe(
+  fetchUserLogin(body: IAuthLogin): Observable<HttpErrorResponse | string> {
+    return this.http.post<string>("auth/login", body).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log(error);
         return of(error);

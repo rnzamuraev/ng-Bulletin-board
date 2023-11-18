@@ -17,31 +17,15 @@
       </app-input-field-error>
     </div>
     <div class="auth-form__field">
-      <!-- <input class="input" type="text" placeholder="phone" formControlName="login" #login (blur)="onInputMask($event)"
-        (focus)="onInputMask($event)" (input)="onInputMask($event)" /> -->
       <app-input-login [controlsProps]="form.controls['login']" [errorMessageProps]="errorMessageLogin"
         (loginInput)="onGetLoginInputProps($event)" (phoneNumber)="onGetPhoneNumberProps($event)">
       </app-input-login>
-      <!-- <app-input-field-error [controlsStringProps]="form.controls['login']" [errorMessageProps]="errorMessageLogin">
-      </app-input-field-error> -->
-      <!-- <span class="error"
-        *ngIf="form.get('login')?.invalid && form.get('login')?.touched && form.get('login')?.value.length > 0">
-        {{errorMessageLogin}} -->
-      <!-- </span> -->
-      <!-- <span class="error"
-        *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched && form.get('phone')?.value.length > 0">
-        Не верно заполнено поле
-      </span> -->
     </div>
     <div class="auth-form__field">
       <app-input-password [controlsProps]="form.controls['password']" [errorMessageProps]="errorMessagePass"
         placeholderProps="Пароль" (passwordInput)="onGetPasswordInputProps($event)"
         (password)="onGetPasswordProps($event)">
       </app-input-password>
-      <!-- <span class="error" *ngIf="form.get('password')?.invalid &&
-      form.get('password')?.touched && form.get('password')?.value.length > 0">
-        {{getTextInvalidFormPass()}}
-      </span> -->
     </div>
   </div>
   <div class="auth-form__footer">
@@ -51,7 +35,7 @@
     </button>
     <p class="text-xs mt-8">
       Нет учетной записи?
-      <span class="link" (click)="onSetIsLogin(false)">Зарегистрируйтесь и войдите!</span>
+      <span class="link" (click)="onSetIsLogin()">Зарегистрируйтесь и войдите!</span>
     </p>
   </div>
 </form>

@@ -83,7 +83,7 @@ export class ProductInfoPageComponent implements OnInit, OnDestroy {
   // }
   //** Подписываемся на изменения статуса 'Not Found' */
   private _initialIsNotFound() {
-    this.errorMessageService.getIsNotFoundPage.subscribe((isData: boolean) => {
+    this.errorMessageService.getIsNotFoundPage$.subscribe((isData: boolean) => {
       console.log(isData);
       this.isNotFoundPage = isData;
     });

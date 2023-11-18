@@ -8,7 +8,7 @@ import { ICityStorage } from "../../types/query-params.interface";
   providedIn: "root",
 })
 export class QueryParamsService {
-  private _isLoadingInfoPage$ = new BehaviorSubject<boolean>(false);
+  // private _isLoadingInfoPage$ = new BehaviorSubject<boolean>(false);
   private _isLoadingApp$ = new BehaviorSubject<boolean>(false);
   private _converter = [
     ["а", "a"],
@@ -59,14 +59,14 @@ export class QueryParamsService {
     console.log(isData);
     this._isLoadingApp$.next(isData);
   }
-  //** Получить состояние страницы информации о товаре */
-  get getIsLoadingInfoPage$(): Observable<boolean> {
-    return this._isLoadingInfoPage$.asObservable();
-  }
-  //** Задать состояние страницы информации о товаре */
-  setIsLoadingInfoPage(isData: boolean) {
-    this._isLoadingInfoPage$.next(isData);
-  }
+  // //** Получить состояние страницы информации о товаре */
+  // get getIsLoadingInfoPage$(): Observable<boolean> {
+  //   return this._isLoadingInfoPage$.asObservable();
+  // }
+  // //** Задать состояние страницы информации о товаре */
+  // setIsLoadingInfoPage(isData: boolean) {
+  //   this._isLoadingInfoPage$.next(isData);
+  // }
 
   //** Переводит русские слова в транслит для 'Url' строки */
   transliter(str: string): string {
@@ -89,9 +89,9 @@ export class QueryParamsService {
     }
     return newStr;
   }
-  //** Установить 'Query Params' */
+  //** Установить поисковые параметры 'Url' строки 'Query Params' */
   createQueryParams(params: { term: string; min: string; max: string; sort: string }) {
-    let { term, min, max, sort } = params;
+    const { term, min, max, sort } = params;
     let newTerm!: { search: string };
     let newMin!: { min: string };
     let newMax!: { max: string };
@@ -103,8 +103,6 @@ export class QueryParamsService {
     console.log({ queryParams: { ...newTerm, ...newMin, ...newMax, ...newSort } });
     return { queryParams: { ...newTerm, ...newMin, ...newMax, ...newSort } };
   }
-  // //** Создать ссылку */
-  // createLink(url: string) {}
   //** Получить Город из 'LocalStorage'
   get getCity(): string {
     let city: ICityStorage | null = this.localStorage.get(EStaticVar.CITY_KEY);

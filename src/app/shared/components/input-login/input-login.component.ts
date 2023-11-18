@@ -52,7 +52,7 @@ export class InputLoginComponent implements AfterViewInit, OnDestroy {
   }
   //** подписка на состояние сохранять телефон или нет */
   private _initializeIsSavaPhone() {
-    this.unsubscribeIsSavePhone = this.formService.getIsSavePhone.subscribe((isData: boolean) => {
+    this.unsubscribeIsSavePhone = this.formService.getIsSavePhone$.subscribe((isData: boolean) => {
       if (isData) {
         this._savePhone();
         this.formService.setIsSavePhone(false);

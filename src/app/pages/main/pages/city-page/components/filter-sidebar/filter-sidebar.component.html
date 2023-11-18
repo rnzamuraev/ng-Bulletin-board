@@ -52,23 +52,17 @@
   <div class="form">
     <div class="form__fields">
       <app-input-number class="mr-8" name="min" [costValueProps]="searchParamsProps.min" placeholderProps="Цена от"
-        (cost)="onGetCostMinProps($event)">
+        (costInput)="onGetInputElementMinProps($event)">
       </app-input-number>
       <app-input-number name="max" [costValueProps]="searchParamsProps.max" placeholderProps="до, руб."
-        (cost)="onGetCostMaxProps($event)">
+        (costInput)="onGetInputElementMaxProps($event)">
       </app-input-number>
       <!-- <input class="input input-number mr-8" type="text" name="min" placeholder="Цена от"
         [(ngModel)]="searchParamsProps.min" /> -->
       <!-- <input class="input input-number" type="text" name="max" placeholder="до, руб."
         [(ngModel)]="searchParamsProps.max" /> -->
     </div>
-    {{searchParamsProps.min}}
-    {{searchParamsProps.max}}
-    {{minCostProps}}
-    {{maxCostProps}}
-    <button class="btn btn-filter center" type="button" (click)="onSetFilterFromTo()"
-      [disabled]="minCostProps === searchParamsProps.min && maxCostProps === searchParamsProps.max"
-      [class.disabled]="minCostProps === searchParamsProps.min && maxCostProps === searchParamsProps.max">
+    <button class="btn btn-filter center" type="button" (click)="onSetFilterFromTo()">
       Показать объявления
     </button>
   </div>

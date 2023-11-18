@@ -35,15 +35,12 @@ export class RegisterComponent implements OnInit {
   @Output()
   formValue = new EventEmitter<IAuthRegister>();
 
-  // @Input("isUserProps")
-  // set isUser(props: boolean) {
-  //   if (props) {
-  //     this._savePass();
-  //     this._resetForm();
-  //     this._setIsSubmitting();
-  //     this.onClose();
-  //   }
-  // }
+  @Input("isUserProps")
+  set isUser(props: boolean) {
+    if (props) {
+      this._resetForm();
+    }
+  }
   @Input("errorMessageProps")
   set errorMessage(props: string[] | null) {
     if (props) {
@@ -56,7 +53,6 @@ export class RegisterComponent implements OnInit {
   name!: ElementRef<HTMLInputElement>;
 
   constructor(
-    // private authService: AuthService,
     private openService: OpenService,
     private formService: FormService,
     private errorMessageService: ErrorMessageService
@@ -65,7 +61,6 @@ export class RegisterComponent implements OnInit {
   //** Отслеживаем 'Event' кнопок клавиатура 'Enter' и 'Escape' */
   @HostListener("window:keydown", ["$event"])
   keyboardEvent(e: KeyboardEvent) {
-    console.log(e);
     this.formService.keydown(e, this.form, this.loginInput, this.passInput, this.name);
     if (e.key === "Enter" && this.form?.valid && !this.isSubmitting) this.onSubmitRegister();
   }
@@ -82,7 +77,6 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(24),
-        // Validators.pattern(/^[a-zа-яё][a-zа-яё]+[ _]?[A-ZА-ЯЁ]*$/i),
         Validators.pattern(/^[a-zа-яёA-ZА-ЯЁ]*$/i),
       ]),
       login: new FormControl("", [Validators.required, this.formService.setValidatorsLogin()]),
@@ -97,57 +91,43 @@ export class RegisterComponent implements OnInit {
   //** Подписываемся на изменения значений в форме */
   private _initializeValidationForm() {
     this.form.valueChanges.subscribe((data: IAuthRegister) => {
-      console.log(data);
-      console.log(this.form.controls["login"].errors);
       if (data.name) {
         this.errorMessageName = this.errorMessageService.validationControl(
           this.form.controls["name"],
           "name"
         );
-        console.log(data.name);
       }
     });
   }
   //** Получаем 'Login HTMLInputElement' из дочернего компонента */
   onGetLoginInputProps(props: ElementRef<HTMLInputElement>) {
-    console.log(props);
     this.loginInput = props;
   }
   //** Получаем 'Password HTMLInputElement' из дочернего компонента */
   onGetPasswordInputProps(props: ElementRef<HTMLInputElement>) {
-    console.log(props);
     this.passInput = props;
   }
   //** Получаем номер телефона из дочернего компонента */
   onGetPhoneNumberProps(props: string) {
-    console.log(props);
     this._patchFormControl({ login: props });
     this._setErrorMessage("login");
   }
   //** Получаем пароль из дочернего компонента */
   onGetPasswordProps(props: string) {
-    console.log(props);
     this._patchFormControl({ password: props });
     this._setErrorMessage("password", props);
   }
-  //** Записываем полученные данные в форму */
+  //** Записываем полученные данные из дочерних в форму */
   private _patchFormControl(value: { login: string } | { password: string }) {
-    console.log(value);
-
     this.form.patchValue(value, { emitEvent: false });
-    console.log(this.form);
-    console.log(this.form.value);
   }
   //** Записываем полученную ошибку в соответствующую переменную */
   private _setErrorMessage(control: string, value: string = "") {
-    console.log(control);
-    console.log(this.form.controls[control]);
     const errorMessage = this.errorMessageService.validationControl(
       this.form.controls[control],
       control,
       value
     );
-    console.log(errorMessage);
     if (control === "login") this.errorMessageLogin = errorMessage;
     if (control === "password") this.errorMessagePass = errorMessage;
   }
@@ -160,7 +140,6 @@ export class RegisterComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    console.log(this.form.value);
     this._setIsSubmitting();
     this._passNewUser(this.form.value);
   }
@@ -168,30 +147,6 @@ export class RegisterComponent implements OnInit {
   private _passNewUser(user: IAuthRegister) {
     this.formValue.emit(user);
   }
-  // //** Добавляем нового пользователя, получаем 'ID' нового пользователя */
-  // private _addNewUser(user: IAuthRegister) {
-  //   this.authService.addUser(user).subscribe((data: string | HttpErrorResponse) => {
-  //     this._setIsSubmitting();
-  //     console.log(data);
-  //     if (typeof data === "string") {
-  //       console.log(data);
-  //       this._savePass();
-  //       this._passNewUserId(data);
-
-  //       this._setErrorsMessage([]);
-  //       return;
-  //     }
-  //     this._setErrorsMessage(this.errorMessageService.setBackErrorMessage(data.error));
-  //   });
-  // }
-  //** Сохранить пароль */
-  private _savePass() {
-    this.formService.savePass(this.form.value.password);
-  }
-  // //** Установить сообщение об ошибке при их наличии */
-  // private _setErrorsMessage(value: string[]) {
-  //   this.formErrorMessage = value;
-  // }
   //** Включить/Отключить кнопку во время отправки формы */
   private _setIsSubmitting() {
     this.isSubmitting = !this.isSubmitting;
@@ -202,7 +157,6 @@ export class RegisterComponent implements OnInit {
   }
   //** Закрыть форму */
   onClose() {
-    // this.toggleIsLogin.emit(true);
     this.openService.closeAuth(null);
   }
 }

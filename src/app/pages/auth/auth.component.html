@@ -1,11 +1,10 @@
 <div *ngIf="isOpen" class="modal">
   <div class="modal__content">
     <app-login *ngIf="isLogin; else register" [isUserProps]="isUser" [errorMessageProps]="errorMessage"
-      (toggleIsLogin)="onToggleIsLoginProps($event)" (formValue)="onUserLogIn($event)"></app-login>
+      (toggleIsLogin)="onToggleIsLoginProps($event)" (formValue)="onUserLogInProps($event)"></app-login>
     <ng-template #register>
-      <!-- <app-register [isUserProps]="isUser" [errorMessageProps]="errorMessage" -->
       <app-register [errorMessageProps]="errorMessage" (toggleIsLogin)="onToggleIsLoginProps($event)"
-        (formValue)="onAddNewUser($event)"></app-register>
+        (formValue)="onAddNewUserProps($event)"></app-register>
     </ng-template>
   </div>
 </div>

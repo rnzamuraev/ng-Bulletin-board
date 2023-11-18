@@ -4,18 +4,24 @@ import { OpenService } from "../open-service/open.service";
 import { EStaticVar } from "../../types/staticVar.enum";
 import { LocalStorageService } from "../local-storage-service/local-storage.service";
 import { BehaviorSubject, Observable } from "rxjs";
-import { QueryParamsService } from '../query-params-service/query-params.service'
+import { QueryParamsService } from "../query-params-service/query-params.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class FormService {
   private _isSavePhone$ = new BehaviorSubject<boolean>(false);
-  constructor(private openService: OpenService, private localStorage: LocalStorageService, private queryParamsService:QueryParamsService) {}
+  constructor(
+    private openService: OpenService,
+    private localStorage: LocalStorageService,
+    private queryParamsService: QueryParamsService
+  ) {}
 
-  get getIsSavePhone(): Observable<boolean> {
+  //** Получить указание сохранять телефон или нет при определенных обстоятельствах */
+  get getIsSavePhone$(): Observable<boolean> {
     return this._isSavePhone$.asObservable();
   }
+  //** Добавить указания для дальнейших действий с номером телефона */
   setIsSavePhone(isVal: boolean) {
     this._isSavePhone$.next(isVal);
   }
@@ -36,25 +42,15 @@ export class FormService {
   //** Сохраняем 'Location' в 'LocalStorage' при его изменении в настройках */
   saveLocation(value: string) {
     this.localStorage.set(EStaticVar.LOCATION_KEY, value);
-    this._saveCity;
-    value;
+    this._saveCity(value);
   }
+  //** Сохраняем город в 'LocalStorage' для его дальнейшего использования в динамически подгружаемых страницах */
   private _saveCity(address: string) {
     let city!: string;
-    let arrAddressItem!: string[];
-    if (address.split(",").length === 0) {
-      arrAddressItem = address.split(" ");
-      if (arrAddressItem[0].length <= 2 || arrAddressItem[0].toLowerCase() === "город")
-        city = arrAddressItem[1];
-    } else {
-      arrAddressItem = address.split(",")[0].split(" ");
-      if (arrAddressItem.length <= 2 || arrAddressItem[0].toLowerCase() === "город")
-        city = arrAddressItem[1];
-      else city = arrAddressItem[0];
-    }
-    // if (arrAddressItem.length > 1) city = arrAddressItem[1];
-    // else city = arrAddressItem[0];
-
+    let arrAddressItem: string[] = address.split(",")[0].split(" ");
+    if (arrAddressItem[0].length <= 2 || arrAddressItem[0].toLowerCase() === "город") {
+      city = arrAddressItem[1];
+    } else city = arrAddressItem[0];
     console.log(city);
     this.localStorage.set(EStaticVar.CITY_KEY, {
       origin: city.trim(),
@@ -88,7 +84,9 @@ export class FormService {
   }
 
   //**! обычные методы */
-  //** Обработчик событий клавиатуры */
+  //** Обработчик событий клавиатуры при клике на 'Enter', изначально реализован для окна регистрации
+  //** так как при случайном нажатии на 'Enter' окно закрывалось и данные не сохранялись.
+  //** Теперь при нажатии на ентер фокус падает на первый в списке не валидный инпут или отправляет форму если она валидна*/
   keydown(
     e: KeyboardEvent,
     form: FormGroup,
@@ -99,7 +97,6 @@ export class FormService {
     if (e.key === "Enter") {
       e.preventDefault();
       console.log(e);
-
       if (form.controls["name"]?.invalid) {
         name?.nativeElement.focus();
         return;
@@ -118,12 +115,12 @@ export class FormService {
     //** Закрыть форму Регистрации/Авторизации при нажатии на 'Escape' */
     if (e.key === "Escape") this.openService.closeAuth(null);
   }
-  //** Получить номер телефона из введенного значения в 'input' */
+  //** Получить номер телефона без маски из введенного значения в 'input' */
   getNumberPhone(value: string): string {
     if (value.replace(/\D/g, "").length > 11) return value.replace(/\D/g, "").slice(0, 11);
     else return value.replace(/\D/g, "");
   }
-  //** Валидируем поле логин(телефон) */
+  //** Валидируем поле логин(телефон), кастомный валидатор */
   setValidatorsLogin(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       console.log(control);

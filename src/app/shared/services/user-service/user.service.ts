@@ -12,9 +12,7 @@ import { FormService } from "../form-service/form.service";
   providedIn: "root",
 })
 export class UserService {
-  private _isUser!: boolean;
   private _isUser$ = new Subject<boolean>();
-  // private _isUser$ = new BehaviorSubject<{isUser: boolean, event: string}>(false);
   private _currentUser$ = new BehaviorSubject<IUser | null>(null);
 
   constructor(
@@ -37,28 +35,6 @@ export class UserService {
       })
     );
   }
-  // get fetchCurrentUserAsync(): Promise<Response> | null {
-  //   const token = this.localStorage.get(EStaticVar.USER_TOKEN_KEY);
-  //   if (!token) {
-  //     console.log("token: ", false);
-  //     return null;
-  //   }
-  //   console.log("token: ", true);
-  //   return fetch(`http://194.87.237.48:5000/Users/current`, {
-  //     headers: {
-  //       "Content-type": "application/json;charset=utf-8",
-  //       Authentication: `Bearer ${token}`,
-  //       // Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-  //   // .pipe(
-  //   // catchError((error: IError) => {
-  //   //   console.log(error);
-  //   //   this.localStorage.remove(EStaticVar.USER_TOKEN_KEY);
-  //   //   return of(null);
-  //   // })
-  //   // );
-  // }
   fetchUserById(id: string): Observable<IUser | null> {
     return this.http.get<IUser>(`users/${id}`).pipe(
       catchError((error: IError) => {
@@ -77,36 +53,27 @@ export class UserService {
   }
   //** HTTP запросы End*
 
-  //** Current User *
-  get getCurrentUser(): Observable<IUser | null> {
+  //** Получить данные текущего юзера из сервисе *
+  get getCurrentUser$(): Observable<IUser | null> {
     return this._currentUser$.asObservable();
   }
+  //** Сохранить данные текущего юзера в сервисе если пользователь разлогинился
+  //** удаляются все данные связанные с этим пользователем и токен *
   setCurrentUser(data: IUser | null) {
-    console.log(data);
     this._currentUser$.next(data);
-    if (data) this.setIsUser(true);
+    if (data) this._setIsUser(true);
     else {
-      this.setIsUser(false);
+      this._setIsUser(false);
       this.formService.removeToken();
       this.formService.removePass();
     }
   }
-
-  //** _IsUser */
-  get getIsUserStatic(): boolean {
-    return this._isUser;
-  }
-  get getIsUser(): Observable<boolean> {
+  //** Подписка на статус залогинин пользователь или нет */
+  get getIsUser$(): Observable<boolean> {
     return this._isUser$.asObservable();
   }
-  setIsUser(value: boolean): void {
+  //** Изменяем статус залогинин пользователь или нет */
+  private _setIsUser(value: boolean): void {
     this._isUser$.next(value);
-    this._isUser = value;
   }
-  // setNewDate() {
-  //   const date = new Date();
-  //   if (+date > +date + 24 * 3600 * 1000) {
-  //     this.localStorage.remove(EStaticVar.USER_TOKEN_KEY);
-  //   }
-  // }
 }

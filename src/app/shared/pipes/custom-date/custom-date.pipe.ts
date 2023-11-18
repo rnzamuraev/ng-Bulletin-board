@@ -7,8 +7,6 @@ import { Pipe, PipeTransform } from "@angular/core";
 export class CustomDatePipe implements PipeTransform {
   transform(value: string, ..._args: unknown[]): string {
     let dateItems = `${new Date(Date.parse(value))}`.split(" ");
-    console.log(dateItems);
-    console.log(this._createDate(dateItems));
     return this._createDate(dateItems);
   }
   private _createDate(data: string[]): string {
@@ -52,7 +50,6 @@ export class CustomDatePipe implements PipeTransform {
         str = "ноября";
         break;
     }
-    console.log(str);
     return `${num.replace("0", "")} ${str} ${time.slice(0, -3)} ${+year > 2023 ? ` ,${year}` : ""}`;
   }
 }

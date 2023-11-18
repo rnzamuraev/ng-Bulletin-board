@@ -48,30 +48,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private queryParamsService: QueryParamsService,
     private userService: UserService,
     private openService: OpenService,
-    private breadcrumbsService: BreadcrumbsService,
     private location: Location,
-    private advertService: AdvertService,
-    private errorMessageService: ErrorMessageService
   ) {}
 
   ngOnInit(): void {
     console.log("header ngOnInit: ");
     this._getIsLoadingApp();
-    this._initializeCity();
+    this._initialCity();
     this._getIsSearchPage();
-    this._initializeFetchCurrentUser();
-    this._initializeGetCurrentUser();
-    this._initializeFetchCategories();
-    this._initializeDropdownItems();
-    this._initializeQueryParams();
-    // this._initializeUrlParams();
-    this._initializeRouterEvents();
-    // this._initializeQueryParamsUrl();
+    this._initialFetchCurrentUser();
+    this._initialGetCurrentUser();
+    this._initialFetchCategories();
+    this._initialDropdownItems();
+    this._initialQueryParams();
+    this._initialRouterEvents();
   }
 
   //**! При загрузке страницы */
   //** Получаем город пользователя если он был сохранен */
-  private _initializeCity(): void {
+  private _initialCity(): void {
     this.city = this.queryParamsService.getCity;
   }
   //** Получаем URL текущей страницы */
@@ -81,30 +76,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   //** Получаем список категорий от сервера */
-  private _initializeFetchCategories(): void {
-    // this._unsubscribeCategories =
-    this.categoryService
-      .fetchCategories()
-      // .pipe(
-      //   tap(data => {
-      //     // if (data && this.term) {
-      //     //   this._fetchSearch(this.term, data);
-      //     // }
-      //   })
-      // )
-      .subscribe((data: ICategoryChild[]) => {
-        console.log(data);
-        this.categories = data;
-        this._setCategory(data);
-        // this._setBreadcrumbs();
-      });
+  private _initialFetchCategories(): void {
+    this.categoryService.fetchCategories().subscribe((data: ICategoryChild[]) => {
+      this.categories = data;
+      this._setCategory(data);
+    });
   }
   //** Записываем полученный список категорий в сервис */
   private _setCategory(data: ICategoryChild[]): void {
     this.categoryService.setCategoryChildList(data); //TODO ???
   }
   //** Устанавливаем список ссылок в выпадающем списке */
-  private _initializeDropdownItems(): void {
+  private _initialDropdownItems(): void {
     this.dropdownItems = [
       { label: "Мои объявления", link: "lk/my-items", color: "dark" },
       { label: "Настройки", link: "lk/settings", color: "dark" },
@@ -112,8 +95,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ];
   }
   //** Подписываемся на обновления текущего пользователя в сервисе */
-  private _initializeGetCurrentUser(): void {
-    this._unsubscribeGetCurrentUser = this.userService.getCurrentUser.subscribe(
+  private _initialGetCurrentUser(): void {
+    this._unsubscribeGetCurrentUser = this.userService.getCurrentUser$.subscribe(
       (data: IUser | null) => {
         this.currentUser = data;
         if (this.currentUserLogin) this._setUserLogin(data);
@@ -121,7 +104,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
   //** Получаем текущего пользователя из API и записываем в сервис */
-  private _initializeFetchCurrentUser(): void {
+  private _initialFetchCurrentUser(): void {
     this.userService.fetchCurrentUser().subscribe((user: IUser | null) => {
       this._setUserLogin(user);
       this._setCurrentUser(user);
@@ -143,7 +126,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userService.setCurrentUser(user);
   }
   //** Подписываемся на 'QueryParams', проверяем есть ли поисковый запрос */
-  private _initializeQueryParams(): void {
+  private _initialQueryParams(): void {
     this._unsubscribeTerm = this.activatedRoute.queryParams.subscribe((params: Params) => {
       console.log(params);
       if (params["search"]) this.term = params["search"];
@@ -159,26 +142,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   getQueryParams(data: Params) {
     console.log(data);
   }
-  // //**! Подписываемся на изменения 'Params' */
-  // private _initializeUrlParams() {
-  //   this.activatedRoute.params.subscribe((data: Params) => {
-  //     console.log("Параметры полученные из 'Header'");
-  //     console.log(data);
-  //   });
-  // }
-  // //********************************************! */
   //** Подписываемся на 'Event' событие по окончанию перехода на другую страницу */
-  private _initializeRouterEvents() {
+  private _initialRouterEvents() {
     this._unSubscribeRouterEvents = this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe(() => {
         console.log("NavigationEnd");
-        this._getIsLoadingApp();
         this._getIsSearchPage();
-
-        if (this.categories) {
-          // this._setBreadcrumbs();
-        }
       });
   }
   //** Проверяем находится ли пользователь на страницах Личного Кабинета */
@@ -198,66 +168,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     return false;
   }
-  // private _setBreadcrumbsReset() {
-  //   this.breadcrumbsService.setBreadcrumbsReset(true);
-  // }
-  //** Задаем параметры для хлебных крошек (при загрузке страницы) */
-  // private _setBreadcrumbs(): void {
-  //   this._getLengthBreadcrumbs(this._getRoutes(this._getUrlLink()));
-  //   // this.breadcrumbs = [];
-  //   // let i = 0;
-  //   // this._getBreadcrumbsLinks(this._getRoutes(this._getUrlParams()));
-  //   this._getBreadcrumbsItems(this.categories, 0);
-  //   // this._setActiveCategories(this.breadcrumbs);
-  //   // console.log(this.breadcrumbs);
-  // }
-  // //** Получаем длину массива хлебных крошек */
-  // private _getLengthBreadcrumbs(data: string[]) {
-  //   let length!: number;
-  //   if (data.filter((elem: string) => elem === "ad").length > 0) length = data.length - 1;
-  //   else length = data.length;
-  //   this.breadcrumbsService.setLengthBreadcrumbs(length);
-  // }
-  // //** Get BreadcrumbsLabel */
-  // private _getBreadcrumbsItems(categories: ICategoryChild[], i: number): void {
-  //   const routes = this._getRoutes(this._getUrlLink());
-  //   console.log(i);
-  //   console.log(routes);
-  //   console.log(categories);
-  //   const category = categories.filter(
-  //     (elem: ICategoryChild) => this.queryParamsService.transliter(elem.name) === routes[i]
-  //   )[0];
-  //   if (!category) {
-  //     console.log(category);
-  //     this.setErrorNotFoundPage();
-  //     return;
-  //   }
-  //   this._setBreadcrumbsItems(category, i);
-  //   if (i < routes.length - 1 && category.body.length > 0) {
-  //     this._getBreadcrumbsItems(category.body, i + 1);
-  //   }
-  // }
-  // // ** Преобразуем 'Url' страницы в массив ссылок для роутинга */
-  // private _getRoutes(url: string): string[] {
-  //   if (this.term) url = url.split(`?${EStaticVar.QUERY_SEARCH}`)[0];
-  //   return url.split("/").slice(2);
-  // }
-  // //** Получаем ссылки перехода на другие страницы для хлебных крошек */
-  // private _setBreadcrumbsItems(category: ICategoryChild, index: number): void {
-  //   const routes = this._getRoutes(this._getUrlLink());
-  //   let link = this._getCity();
-  //   routes.forEach((elem: string, i: number) => {
-  //     if (i > index) return;
-  //     link += `/${elem}`;
-  //   });
-  //   this.breadcrumbsService.setBreadcrumbs({ link, label: category.name, id: category.id });
-  // }
-  // //** устанавливаем сообщение об ошибке */
-  // private setErrorNotFoundPage(): void {
-  //   // this.errorMessageService.setIsNotFoundPage(true);
-  //   console.log("Такой категории нет"); //
-  //   // TODO Установить переадресацию на Not-Found если категория не существует
-  // }
   //** Получить город для поиска объявлений из 'LocalStorage' */
   private _getCity(): string {
     return this.queryParamsService.getCity;
@@ -267,8 +177,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   //** Закрываем меню при получении из дочернего компонента выбранного пункта меню */
   onCloseMenuProps(props: boolean): void {
     this.onToggleMenu(props);
-    // this.isOpenMenu = props;
-    // this._toggleScrolling();
   }
   //** Переключатель режимов меню Открыто/Закрыто */
   onToggleMenu(isValue: boolean): void {
@@ -290,10 +198,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (!this.isSearchPage) link = this.city;
     this.onGoTo(link);
   }
-  // //** Поиск по тексту */
-  // private _fetchSearch(value: string, categories: ICategoryChild[]): void {
-  //   this.advertService.searchAllAdverts(categories, value);
-  // }
   //** Переключатель режимов "Dropdown" Открыто/Закрыто */
   onDropdownToggleProps(props: boolean): void {
     this.isOpenDropdown = props;
@@ -310,7 +214,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   //** Выход из аккаунта */
   private _logout(): void {
     this._goToHome();
-    // this._removeToken();
     this._setCurrentUser(null);
     this._setUserLogin(this.currentUser);
   }
@@ -338,17 +241,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private _closeMenu() {
     this.onToggleMenu(false);
   }
-  // private _openAuthComponent(link: string): void {
-  //   console.log(this.currentUserLogin);
-  //   this.openService.openAuth(link);
-  // }
   //** Отписываемся от кастомных подписок */
   ngOnDestroy(): void {
     this._unsubscribeTerm.unsubscribe();
     this._unsubscribeGetCurrentUser.unsubscribe();
     this._unSubscribeRouterEvents.unsubscribe();
-    // this._unsubscribeCategories.unsubscribe();
-    // this._unsubscribeQueryParams.unsubscribe();
-    // this._unsubscribeUser.unsubscribe();
   }
 }

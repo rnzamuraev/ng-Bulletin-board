@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { NgForm } from "@angular/forms";
+import { Component, ElementRef, EventEmitter, Input, Output } from "@angular/core";
 import { IFormFilter } from "src/app/pages/main/types/form-filter.interface";
 
 import { ICategoryChild } from "src/app/shared/types/category.interface";
@@ -10,14 +9,13 @@ import { ICategoryChild } from "src/app/shared/types/category.interface";
   styleUrls: ["./filter-sidebar.component.scss"],
 })
 export class FilterSidebarComponent {
+  inputMinCost!: ElementRef<HTMLInputElement>;
+  inputMaxCost!: ElementRef<HTMLInputElement>;
+
   @Output()
   routerLink = new EventEmitter<string>();
   @Output()
   submitFormFilter = new EventEmitter<IFormFilter>();
-  // @Output()
-  // activeItem = new EventEmitter<IFormFilter>();
-  minCostProps!: string;
-  maxCostProps!: string;
 
   @Input()
   categoriesProps!: ICategoryChild[];
@@ -28,21 +26,14 @@ export class FilterSidebarComponent {
   @Input()
   activeSubcategoryProps!: string;
   @Input()
-  // termProps!: string;
-  // @Input()
-  // minCostProps!: string;
-  // @Input()
-  // maxCostProps!: string;
-  @Input()
   searchParamsProps!: { min: string; max: string };
-  onGetCostMinProps(props: string) {
-    this.minCostProps = props;
-    // form.form.min=props
+
+  onGetInputElementMinProps(props: ElementRef<HTMLInputElement>) {
+    this.inputMinCost = props;
     console.log(props);
   }
-  onGetCostMaxProps(props: string) {
-    this.maxCostProps = props;
-    // form.form.min=props
+  onGetInputElementMaxProps(props: ElementRef<HTMLInputElement>) {
+    this.inputMaxCost = props;
     console.log(props);
   }
   onShowCategories(category: string, val: string = "") {
@@ -71,9 +62,14 @@ export class FilterSidebarComponent {
   }
 
   onSetFilterFromTo() {
-    console.log(this.minCostProps);
-    console.log(this.maxCostProps);
-    // console.log(form.form.value);
-    this.submitFormFilter.emit({ min: this.minCostProps, max: this.maxCostProps });
+    if (
+      this.inputMinCost.nativeElement.value.replace(/\D/g, "") === this.searchParamsProps.min &&
+      this.inputMaxCost.nativeElement.value.replace(/\D/g, "") === this.searchParamsProps.max
+    )
+      return;
+    this.submitFormFilter.emit({
+      min: this.inputMinCost.nativeElement.value.replace(/\D/g, ""),
+      max: this.inputMaxCost.nativeElement.value.replace(/\D/g, ""),
+    });
   }
 }

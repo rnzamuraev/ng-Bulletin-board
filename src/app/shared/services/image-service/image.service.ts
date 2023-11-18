@@ -11,7 +11,7 @@ export class ImageService {
 
   deleteImageById(id: string): Observable<null> {
     console.log(id);
-    return this.http.delete<null>(`Images/${id}`).pipe(
+    return this.http.delete<null>(`images/${id}`).pipe(
       tap(data => console.log(data)),
       catchError((error: IError) => {
         console.error(error);

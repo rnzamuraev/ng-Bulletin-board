@@ -16,16 +16,10 @@
       <app-input-field-error [errorsMessageProps]="errorMessageProps">
       </app-input-field-error>
     </div>
-    <!-- <span *ngIf="formErrorMessage?.name" class="error mb-8">{{formErrorMessage.name}}</span>
-    <span *ngIf="formErrorMessage?.password" class="error mb-8">{{formErrorMessage.password}}</span> -->
     <div class="auth-form__field">
       <input class="input" type="text" placeholder="Имя" #name formControlName="name" />
       <app-input-field-error [controlsStringProps]="form.controls['name']" [errorMessageProps]="errorMessageName">
       </app-input-field-error>
-      <!-- <span class="error"
-        *ngIf="form.controls['name'].invalid && form.controls['name'].touched && form.controls['name'].value.length > 0">
-        {{errorMessageName}}
-      </span> -->
     </div>
     <div class="auth-form__field">
       <app-input-login [controlsProps]="form.controls['login']" [errorMessageProps]="errorMessageLogin"

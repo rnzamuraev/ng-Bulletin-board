@@ -1,7 +1,7 @@
 import { Location } from "@angular/common";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { Subscription, zip } from "rxjs";
 
 import { IFormFilter } from "src/app/pages/main/types/form-filter.interface";
 import { AdvertService } from "src/app/shared/services/adverts-service/advert.service";
@@ -48,19 +48,18 @@ export class CityPageComponent implements OnInit, OnDestroy {
     private categoryService: CategoryService,
     // private location: Location,
     private advertService: AdvertService
-  ) {
-    this._initialGetCategory();
-  }
+  ) {}
 
   ngOnInit(): void {
+    this._initialGetCategory();
+    this._initialBreadcrumbs();
     this._initialIsNotFound();
     this._initialQueryParams();
     this._initialAdvertResponse();
-    this._initialBreadcrumbs();
   }
   //** Подписываемся на изменения статуса 'Not Found' */
   private _initialIsNotFound() {
-    this.errorMessage.getIsNotFoundPage.subscribe((isData: boolean) => {
+    this.errorMessage.getIsNotFoundPage$.subscribe((isData: boolean) => {
       console.log(isData);
       this.isNotFoundPage = isData;
     });

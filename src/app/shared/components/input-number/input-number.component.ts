@@ -5,7 +5,6 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnDestroy,
   Output,
   ViewChild,
 } from "@angular/core";
@@ -26,13 +25,11 @@ export class InputNumberComponent implements AfterViewInit {
   @Output()
   cost = new EventEmitter<string>();
 
-  @Input()
-  isLabelProps!: boolean;
   @Input("costProps")
   set isClearInput(props: string) {
     if (props) this.inputCost.nativeElement.value = "";
   }
-  costProps!: string;
+
   @Input()
   costValueProps!: string;
   @Input()
@@ -48,11 +45,15 @@ export class InputNumberComponent implements AfterViewInit {
   constructor(private maskService: MaskInputService, private formService: FormService) {}
 
   ngAfterViewInit(): void {
+    this._passInputCost();
     this._initialCost();
     this.onInputMask();
   }
   //** Записать величины стоимости в инпут если она была передана от родителя */
   private _initialCost(): void {
+    console.log(this.controlsProps);
+    console.log(this.costValueProps);
+    console.log(this.inputCost);
     if (this.controlsProps) this.inputCost.nativeElement.value = this.controlsProps.value;
     else this.inputCost.nativeElement.value = this.costValueProps;
   }
@@ -69,5 +70,9 @@ export class InputNumberComponent implements AfterViewInit {
   //** Передаем  в родительский компонент */
   private _passCost() {
     this.cost.emit(this.inputCost.nativeElement.value.replace(/\D/g, ""));
+  }
+  //** Передаем  в родительский компонент */
+  private _passInputCost() {
+    this.costInput.emit(this.inputCost);
   }
 }

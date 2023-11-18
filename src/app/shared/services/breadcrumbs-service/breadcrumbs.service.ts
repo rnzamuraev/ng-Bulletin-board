@@ -10,9 +10,11 @@ import { EStaticVar } from "../../types/staticVar.enum";
 })
 export class BreadcrumbsService {
   private _breadcrumbs$ = new BehaviorSubject<IBreadcrumbs[] | null>(null);
+  //** Получить хлебные крошки */
   get getBreadcrumbs$(): Observable<IBreadcrumbs[] | null> {
     return this._breadcrumbs$.asObservable();
   }
+  //** Добавить хлебные крошки в сервис */
   setBreadcrumbs(data: IBreadcrumbs[]): void {
     this._breadcrumbs$.next(data);
   }

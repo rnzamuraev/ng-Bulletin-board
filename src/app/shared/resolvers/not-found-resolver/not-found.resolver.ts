@@ -17,6 +17,7 @@ export const notFoundResolver: ResolveFn<Observable<boolean>> = (
   let isErrorPage!: boolean;
   const arrayParams: string[] = [];
   const breadcrumbs: IBreadcrumbs[] = [];
+  let categories: ICategoryChild[] = [];
 
   const categoryService = inject(CategoryService);
   const errorMessageService = inject(ErrorMessageService);
@@ -85,8 +86,12 @@ export const notFoundResolver: ResolveFn<Observable<boolean>> = (
         if (data) return of(data);
         return categoryService.fetchCategories();
       }),
+      // map(data => {
+      //   categoryService.setCategoryChildList(data);
+      //   return data;
+      // }),
       map((data: ICategoryChild[]) => {
-        // categoryService.setCategoryChildList(data);
+        console.log(data);
         getCategoryChild(data, 0);
 
         if (isErrorPage) return false;

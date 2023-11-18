@@ -7,8 +7,8 @@ import { CityPageComponent } from "./pages/city-page/city-page.component";
 // import { CityPageComponent } from "./pages/city-page/city-page.component";
 
 const routes = (): Routes => {
-  localStorage.setItem("__city__", JSON.stringify({ origin: "Москва", translit: "moskva" }));
-  let city = localStorage.getItem("__city__")?.toLowerCase().trim();
+  // localStorage.setItem("__city__", JSON.stringify({ origin: "Москва", translit: "moskva" }));
+  let city = localStorage.getItem("__city__");
   if (city) {
     city = JSON.parse(city).translit;
   } else city = "all";

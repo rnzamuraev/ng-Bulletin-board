@@ -36,7 +36,7 @@ export class MyItemPageComponent implements OnInit, OnDestroy {
   //**? При загрузке страницы */
   //** Получаем текущего пользователя если он вошел в аккаунт */
   private _initializeGetCurrentUser() {
-    this._unsubscribeGetCurrentUser = this.userService.getCurrentUser.subscribe(
+    this._unsubscribeGetCurrentUser = this.userService.getCurrentUser$.subscribe(
       (data: IUser | null) => {
         console.log(data);
         this.currentUser = data;

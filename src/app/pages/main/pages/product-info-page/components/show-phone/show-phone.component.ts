@@ -28,10 +28,10 @@ export class ShowPhoneComponent implements OnInit {
   //** Установить ссылку телефона для звонка */
   private _setLinkTel(value: string) {
     if (value[0] === "8") {
-      this.linkTel = `tel:${value}`; //tel:+78142332211
+      this.linkTel = `tel:${value}`;
       return;
     }
-    this.linkTel = `tel:+${value}`; //tel:+78142332211
+    this.linkTel = `tel:+${value}`;
   }
   //** Установить маску телефона */
   private _setMaskPhone(value: string): void {
@@ -39,7 +39,7 @@ export class ShowPhoneComponent implements OnInit {
   }
   // ** Подписываемся на изменения статуса Показать/Закрыть номер телефона */
   private _initializeShowModal(): void {
-    this.openService.showPhone.subscribe((isData: boolean) => {
+    this.openService.showPhone$.subscribe((isData: boolean) => {
       this.isOpen = isData;
     });
   }

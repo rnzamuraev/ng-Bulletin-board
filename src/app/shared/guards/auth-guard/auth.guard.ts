@@ -20,39 +20,37 @@ export const authGuard: CanActivateFn = (_route, state): Observable<boolean> => 
   });
   console.log(isLoading);
 
-  return userService.getCurrentUser.pipe(
+  // return userService.getCurrentUser$.pipe(
+  //   map((data: IUser | null) => {
+  //     if (data) return true;
+  //     else return false;
+  //   }),
+  //   switchMap(isData => {
+  //     if (isData) {
+  //       console.log("User true");
+  //       return of(true);
+  //     } else
+  return userService.fetchCurrentUser().pipe(
     map((data: IUser | null) => {
-      if (data) return true;
-      else return false;
-    }),
-    switchMap(isData => {
-      if (isData) {
-        console.log("User true");
-        return of(true);
-      } else
-        return userService.fetchCurrentUser().pipe(
-          map((data: IUser | null) => {
-            console.log(state.url);
-            if (data) {
-              console.log("user");
-              advertService.setIsEdit(false);
-              return true;
-            }
-            if (
-              // !data
-              !data &&
-              isLoading
-            ) {
-              console.log("lk - redirect");
-              queryParamsService.setIsLoadingApp(false);
-              router.navigate(["/"]);
-              return false;
-            }
-            console.log("openAuth");
-            openService.openAuth(state.url);
-            return false;
-          })
-        );
+      console.log(state.url);
+      if (data) {
+        console.log("user");
+        userService.setCurrentUser(data);
+        advertService.setIsEdit(false);
+        openService.closeAuth(null);
+        return true;
+      }
+      if (!data && isLoading) {
+        console.log("lk - redirect");
+        queryParamsService.setIsLoadingApp(false);
+        router.navigate(["/"]);
+        return false;
+      }
+      console.log("openAuth");
+      openService.openAuth(state.url);
+      return false;
     })
   );
+  //     })
+  //   );
 };

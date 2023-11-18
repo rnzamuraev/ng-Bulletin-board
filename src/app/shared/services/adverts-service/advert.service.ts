@@ -20,13 +20,14 @@ export class AdvertService {
   private _count!: number;
   private _isEdit$ = new BehaviorSubject<boolean>(false);
   private _isAdvert!: boolean;
-  private _alphabet = ["а", "е", "и", "о", "у", "э", "ю", "я"];
+  private _alphabet = ["а", "е", "и", "о"];
   private _searchArrayAdverts$ = new Subject<IAdvertUser[]>();
   private _advert$ = new BehaviorSubject<IAdvertById | null>(null);
 
   constructor(private http: HttpClient) {}
 
   //**? HTTP запросы*/
+  //** Получаем список объявлений пользователя */
   private _fetchAdverts(body: IAdvertSearchReq): Observable<IAdvertUser[]> {
     return this.http.post<IAdvertUser[]>("advert/search", body).pipe(
       catchError(e => {
@@ -35,6 +36,7 @@ export class AdvertService {
       })
     );
   }
+  //** Добавляем новое объявление */
   addNewAdvert(advert: FormData): Observable<IAdvertUser | null> {
     return this.http.post<IAdvertUser>(`advert`, advert).pipe(
       catchError((error: IError) => {
@@ -43,6 +45,7 @@ export class AdvertService {
       })
     );
   }
+  //** обновляем текущее объявление по 'ID' */
   updateAdvert(id: string, advert: FormData): Observable<IAdvertUser | null> {
     return this.http.put<IAdvertUser>(`advert/${id}`, advert).pipe(
       catchError((error: IError) => {
@@ -51,6 +54,7 @@ export class AdvertService {
       })
     );
   }
+  //** Получаем одно объявление со всей информацией по 'ID' */
   fetchAdvertById(id: string): Observable<IAdvertById | null> {
     return this.http.get<IAdvertById>(`advert/${id}`).pipe(
       catchError((error: IError) => {
@@ -59,6 +63,7 @@ export class AdvertService {
       })
     );
   }
+  //** Удаляем объявление по 'ID' */
   deleteAdvert(id: string): Observable<IError | null> {
     return this.http.delete<IError | null>(`advert/${id}`).pipe(
       catchError((error: IError) => {
@@ -67,11 +72,11 @@ export class AdvertService {
       })
     );
   }
-  //** Отобразить полученное объявление по 'ID' для отображения на странице 'Info' */
+  //** Отобразить полученное объявление по 'ID' на странице 'Info' или при обновлении */
   get getAdvert$(): Observable<IAdvertById | null> {
     return this._advert$.asObservable();
   }
-  //** Передаем полученное объявление по 'ID' для отображения на странице 'Info' */
+  //** Передаем полученное объявление по 'ID' в сервис */
   setAdvert(data: IAdvertById) {
     this._advert$.next(data);
   }
@@ -88,7 +93,7 @@ export class AdvertService {
       this._searchByCategories(elem, category);
     });
   }
-
+  //** поиск по категориям и вложенности */
   private _searchByCategories(term: string, category: ICategoryChild[]): void {
     // if (category.childs.length > 0)
     category.forEach((category: ICategoryChild) => {
@@ -109,6 +114,7 @@ export class AdvertService {
   //     this._fetchAdvertsByCategory(el, category);
   //   });
   // }
+  //** Установить начальные параметры вспомогательных переменных */
   private _initialParamsForSearch() {
     this._searchArrayAdverts = [];
     this._count = 0;
@@ -134,7 +140,7 @@ export class AdvertService {
       this._addNewParamAdvertising({ adverts, category, count });
     });
   }
-  //** Создаем объект для поиска по категории */
+  //** Создаем тело запроса для поиска по категории */
   private _createBody(term: string, id: string): IAdvertSearchReq {
     return {
       search: term,
@@ -154,7 +160,7 @@ export class AdvertService {
     });
     this._setAdvertsAfterSearching(newAdverts);
   }
-  //** Получить список объявлений и их категорий при поиске */
+  //** Получить список объявлений и их категорий при поиске(Подписка) */
   get getAdvertsAfterSearching$(): Observable<IAdvertUser[]> {
     return this._searchArrayAdverts$.asObservable();
   }

@@ -31,6 +31,7 @@ export class NewItemPageComponent implements OnInit, OnDestroy {
   private _currentUser!: IUser;
   private _advert!: IAdvertById;
 
+  isAddAdvert!: boolean;
   isResetDropdown = false;
   isEdit!: boolean;
   categories!: ICategory[];
@@ -106,7 +107,7 @@ export class NewItemPageComponent implements OnInit, OnDestroy {
   //********************************************************************** */
   //** Получаем данные пользователя из сервиса если он вошел в аккаунт*/
   private _initialGetCurrentUser() {
-    this._unGetCurrentUser = this.userService.getCurrentUser.subscribe((data: IUser | null) => {
+    this._unGetCurrentUser = this.userService.getCurrentUser$.subscribe((data: IUser | null) => {
       if (data) {
         console.log(data.adverts);
         this._currentUser = data;
@@ -118,20 +119,11 @@ export class NewItemPageComponent implements OnInit, OnDestroy {
   private _initialAddress() {
     const address = this.formService.getLocation;
     if (typeof address === "string") {
-      // console.log(address);
       this._address = address;
     }
   }
   //** Активируем форму */
   private _initialForm() {
-    // let name = "";
-    // let cost = +"";
-    // let description = "";
-    // if (data) {
-    //   name = data.name;
-    //   cost = data.cost;
-    //   description = data.description;
-    // }
     this.advertForm = new FormGroup<IAdvertForm>({
       categoryId: new FormArray([
         new FormGroup({
@@ -353,20 +345,21 @@ export class NewItemPageComponent implements OnInit, OnDestroy {
     console.log(this.advertForm);
     // const a = this._createNewAdvert();
     // console.log(a);
-    if (this.isEdit) this._updateAdvert();
-    else this._addNewAdvert();
+    // if (this.isEdit) this._updateAdvert();
+    // else
+    this._addNewAdvert();
     console.log(this.advertForm.errors);
   }
-  private _updateAdvert() {
-    this._deleteImageById();
-    // this.advertService
-    //   .updateAdvert(this._advert.id, this._createNewAdvert())
-    //   .subscribe((data: IAdvertUser | null) => {
-    //     console.log(data);
-    //     this._resetForm();
-    //     if (data) this._updateCurrentUser(data);
-    //   });
-  }
+  // private _updateAdvert() {
+  //   this._deleteImageById();
+  //   // this.advertService
+  //   //   .updateAdvert(this._advert.id, this._createNewAdvert())
+  //   //   .subscribe((data: IAdvertUser | null) => {
+  //   //     console.log(data);
+  //   //     this._resetForm();
+  //   //     if (data) this._updateCurrentUser(data);
+  //   //   });
+  // }
   private _addNewAdvert() {
     this.advertService
       .addNewAdvert(this._createNewAdvert())
@@ -434,8 +427,14 @@ export class NewItemPageComponent implements OnInit, OnDestroy {
   //** Добавить новое объявление в массив пользовательских объявлений и заносим данные пользователя в сервис */
   private _updateCurrentUser(data: IAdvertUser) {
     this.userService.setCurrentUser(this._currentUser);
-    if (this.isEdit) return;
     this._currentUser.adverts.unshift(data);
+    this._isAddAdvert();
+  }
+  private _isAddAdvert() {
+    this.isAddAdvert = true;
+    setTimeout(() => {
+      this.isAddAdvert = false;
+    }, 5000);
   }
   //** Получаем данные о статусе 'ResetDropdown' из дочернего компонента */
   onIsResetDropdown(props: boolean) {

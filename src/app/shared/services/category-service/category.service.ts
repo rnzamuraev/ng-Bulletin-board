@@ -18,14 +18,13 @@ export class CategoryService {
   constructor(private http: HttpClient, private localStorage: LocalStorageService) {}
 
   //**? HTTP запросы */
-  //** Получить массив всех категорий и под категорий */
+  //** Получить массив всех категорий и под категорий пока есть вложенность (массив не пустой) */
   fetchCategories(): Observable<ICategoryChild[]> {
     return this.http.get<ICategory[]>("categories").pipe(
       map((categories: ICategory[]) => {
         let newCategories: ICategoryChild[] = [];
         this._copyAndExtendsCategory(categories, newCategories);
         newCategories = newCategories.filter(el => el.name.toLowerCase() !== "default");
-        // console.log(newCategories);
         this._setCategories(categories, newCategories);
         return newCategories.filter(el => el.childs.length > 0);
       }),
@@ -35,6 +34,7 @@ export class CategoryService {
       })
     );
   }
+  //** Копируем и расширяем категорию добавляя новое поле ко всем категориям */
   private _copyAndExtendsCategory(categories: ICategory[], newCategories: ICategoryChild[]) {
     categories.forEach(el => {
       // console.log(el);
@@ -44,13 +44,12 @@ export class CategoryService {
           ...el,
           childs: [],
         };
-        // console.log(item);
         newCategories.push(item);
       }
     });
   }
+  //** Создаем условие для окончания итерации */
   private _isIter(categories: ICategory[], item: ICategory): boolean {
-    // console.log(item);
     let isIter = false;
     categories.forEach(elem => {
       if (item.parentId === elem.id && elem.name.toLowerCase() !== "default") {
@@ -58,9 +57,9 @@ export class CategoryService {
         return;
       }
     });
-    // console.log(isIter);
     return isIter;
   }
+
   private _setCategories(categories: ICategory[], newCategories: ICategoryChild[]) {
     // console.log(newCategories);
     newCategories.forEach((elem: ICategoryChild) => {
@@ -92,15 +91,12 @@ export class CategoryService {
   }
   // ** поиск категорий по 'ID' получаем категорию с массивом категорий которые она содержит *
   fetchCategoryChildByParentId(id: string = ""): Observable<ICategory[]> {
-    console.log(id);
     let parentId = this._defaultId;
-    console.log(id);
-    if (id) {
-      if (id !== "") {
-        parentId = id;
-      }
-      console.log(id);
+    // if (id) {
+    if (id !== "") {
+      parentId = id;
     }
+    // }
     return this.http.get<ICategoryChild>(`categories/${parentId}`).pipe(
       map((data: ICategoryChild) => {
         console.log(data);
@@ -118,24 +114,23 @@ export class CategoryService {
   }
   //** Сохранить список категорий в сервисе */
   setCategoryChildList(data: ICategoryChild[]): void {
-    console.log(data);
     this._categoryChildList$.next(data);
   }
-  //** Получить сохраненный список категорий 'Breadcrumbs' */
-  get getCategoriesForLink$(): Observable<ICategory[]> {
-    return this._categoriesForLink$.asObservable();
-  }
-  //** Сохранить список категорий 'Breadcrumbs' в сервисе */
-  setCategoriesForLink(data: ICategory[]): void {
-    this._categoriesForLink$.next(data);
-  }
+  // //**! Получить сохраненный список категорий 'Breadcrumbs' */
+  // get getCategoriesForLink$(): Observable<ICategory[]> {
+  //   return this._categoriesForLink$.asObservable();
+  // }
+  // //** Сохранить список категорий 'Breadcrumbs' в сервисе */
+  // setCategoriesForLink(data: ICategory[]): void {
+  //   this._categoriesForLink$.next(data);
+  // }
   //** Получить список 'ID' категории по которым кликал пользователь */
   get getCategoriesId(): string[] {
     const categories: string[] = this.localStorage.get("__analytics__");
     if (categories) return categories;
     else return [];
   }
-  //** Сохранить 'ID' категории по которым кликал пользователь */
+  //** Сохранить 'ID' категории по которым кликал пользователь предварительно отфильтровав от повторений*/
   saveCategoryId(id: string) {
     const categories: string[] = this.getCategoriesId;
     if (categories.filter((elem: string) => elem === id).length === 1) return;
@@ -150,17 +145,4 @@ export class CategoryService {
   get getDefaultId(): string {
     return this._defaultId;
   }
-  // getCat(): Observable<any[]> {
-  //   return this.http.get<any[]>("http://194.87.237.48:5000/swagger/v1/categories").pipe(
-  //     tap(p => {
-  //       console.log(p);
-  //     })
-  //   );
-  // }
-  // search(term: string): { params: HttpParams } | { params?: undefined } {
-  //   term = term.trim();
-
-  //   const options = term ? { params: new HttpParams().set("search", term) } : {};
-  //   return options;
-  // }
 }

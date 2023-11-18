@@ -60,8 +60,14 @@
   // input[type="number"] {
   //   -moz-appearance: textfield;
   // }
-  &__footer {
+  &__btn {
     width: 285px;
     padding-top: 24px;
+    margin-right: 30px;
+  }
+  &__success {
+    margin-top: 24px;
+    padding: 12px 24px;
+    height: fit-content;
   }
 }

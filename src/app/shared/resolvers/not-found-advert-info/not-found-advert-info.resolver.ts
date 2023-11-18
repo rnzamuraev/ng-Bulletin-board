@@ -2,15 +2,9 @@ import { inject } from "@angular/core";
 import { ResolveFn } from "@angular/router";
 import { Observable, map } from "rxjs";
 import { AdvertService } from "../../services/adverts-service/advert.service";
-// import { CategoryService } from "../../services/category-service/category.service";
 import { ErrorMessageService } from "../../services/error-message-service/error-message.service";
 import { QueryParamsService } from "../../services/query-params-service/query-params.service";
 import { IAdvertById } from "../../types/adverts.interface";
-// import { ICategoryChild } from "../../types/category.interface";
-// import { BreadcrumbsService } from "../../services/breadcrumbs-service/breadcrumbs.service";
-import { ICategory } from "../../types/category.interface";
-// import { IBreadcrumbs } from '../../types/breadcrumbs.interface'
-// import { CategoryService } from '../../services/category-service/category.service'
 
 export const notFoundAdvertInfoResolver: ResolveFn<Observable<boolean>> = (
   route,

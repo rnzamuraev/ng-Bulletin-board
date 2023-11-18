@@ -9,11 +9,8 @@ export class OpenService {
   private _openAuth$ = new Subject<IOpenAuth>();
   private _openPhone$ = new BehaviorSubject<boolean>(false);
 
-  constructor() {}
-
-  //**! обычные методы */
   //** Получить состояние формы Регистрации/Авторизации */
-  get showAuth(): Observable<IOpenAuth> {
+  get showAuth$(): Observable<IOpenAuth> {
     return this._openAuth$.asObservable();
   }
   //** Открыть форму Авторизации */
@@ -27,7 +24,7 @@ export class OpenService {
     this.toggleScrolling(false);
   }
   //** Получить состояние формы Регистрации/Авторизации */
-  get showPhone(): Observable<boolean> {
+  get showPhone$(): Observable<boolean> {
     return this._openPhone$.asObservable();
   }
   //** Показать телефон */
