@@ -34,12 +34,6 @@ export class LoginComponent implements OnInit {
   @Output()
   formValue = new EventEmitter<IAuthLogin>();
 
-  @Input("isUserProps")
-  set isUser(props: boolean) {
-    if (props) {
-      this._resetForm();
-    }
-  }
   @Input("errorMessageProps")
   set errorMessage(props: string[] | null) {
     if (props) {
@@ -56,7 +50,6 @@ export class LoginComponent implements OnInit {
 
   @HostListener("window:keydown", ["$event"])
   keyboardEvent(e: KeyboardEvent) {
-    console.log(e);
     this.formService.keydown(e, this.form, this.loginInput, this.passInput);
     if (e.key === "Enter" && this.form?.valid && !this.isSubmitting) this.onSubmitLogin();
   }
@@ -104,7 +97,6 @@ export class LoginComponent implements OnInit {
       control,
       value
     );
-    console.log(errorMessage);
     if (control === "login") this.errorMessageLogin = errorMessage;
     if (control === "password") this.errorMessagePass = errorMessage;
   }
@@ -127,10 +119,6 @@ export class LoginComponent implements OnInit {
   //** Передать объект с параметрами для авторизации */
   private _passFormValue() {
     this.formValue.emit(this.form.value);
-  }
-  //** Очищаем форму */
-  private _resetForm() {
-    this.form.reset();
   }
   onClose() {
     this.openService.closeAuth(null);

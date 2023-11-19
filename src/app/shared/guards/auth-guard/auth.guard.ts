@@ -21,10 +21,14 @@ export const authGuard: CanActivateFn = (_route, state): Observable<boolean> => 
   console.log(isLoading);
 
   // return userService.getCurrentUser$.pipe(
-  //   map((data: IUser | null) => {
-  //     if (data) return true;
-  //     else return false;
+  //   switchMap((data: IUser | null) => {
+  //     if (data) return of(data);
+  //     else return userService.fetchCurrentUser();
   //   }),
+  // map((data: IUser | null) => {
+  //   if (data) return true;
+  //   else return false;
+  // }),
   //   switchMap(isData => {
   //     if (isData) {
   //       console.log("User true");
@@ -36,7 +40,8 @@ export const authGuard: CanActivateFn = (_route, state): Observable<boolean> => 
       if (data) {
         console.log("user");
         userService.setCurrentUser(data);
-        advertService.setIsEdit(false);
+        // advertService.setIsEdit(false);
+        queryParamsService.setIsLoadingApp(false);
         openService.closeAuth(null);
         return true;
       }
@@ -48,9 +53,8 @@ export const authGuard: CanActivateFn = (_route, state): Observable<boolean> => 
       }
       console.log("openAuth");
       openService.openAuth(state.url);
+      queryParamsService.setIsLoadingApp(false);
       return false;
     })
   );
-  //     })
-  //   );
 };

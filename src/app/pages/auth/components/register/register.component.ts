@@ -35,12 +35,6 @@ export class RegisterComponent implements OnInit {
   @Output()
   formValue = new EventEmitter<IAuthRegister>();
 
-  @Input("isUserProps")
-  set isUser(props: boolean) {
-    if (props) {
-      this._resetForm();
-    }
-  }
   @Input("errorMessageProps")
   set errorMessage(props: string[] | null) {
     if (props) {
@@ -66,12 +60,12 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._initializeForm();
-    this._initializeValidationForm();
+    this._initialForm();
+    this._initialValidationForm();
   }
 
   //** Создаем форму, задаем параметры */
-  private _initializeForm(): void {
+  private _initialForm(): void {
     this.form = new FormGroup({
       name: new FormControl("", [
         Validators.required,
@@ -89,7 +83,7 @@ export class RegisterComponent implements OnInit {
     });
   }
   //** Подписываемся на изменения значений в форме */
-  private _initializeValidationForm() {
+  private _initialValidationForm() {
     this.form.valueChanges.subscribe((data: IAuthRegister) => {
       if (data.name) {
         this.errorMessageName = this.errorMessageService.validationControl(
@@ -141,19 +135,15 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this._setIsSubmitting();
-    this._passNewUser(this.form.value);
+    this._passNewUser();
   }
   //** Передать параметры нового пользователя в родительский компонент */
-  private _passNewUser(user: IAuthRegister) {
-    this.formValue.emit(user);
+  private _passNewUser() {
+    this.formValue.emit(this.form.value);
   }
   //** Включить/Отключить кнопку во время отправки формы */
   private _setIsSubmitting() {
     this.isSubmitting = !this.isSubmitting;
-  }
-  //** Очистить форму */
-  private _resetForm() {
-    this.form.reset();
   }
   //** Закрыть форму */
   onClose() {

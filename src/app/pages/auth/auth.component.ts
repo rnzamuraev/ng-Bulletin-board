@@ -98,6 +98,10 @@ export class AuthComponent implements OnInit {
       this.errorMessage = null;
       return;
     }
+    if (typeof data === "string") {
+      this.errorMessage = null;
+      return;
+    }
     if (typeof data !== "string") {
       this.errorMessage = this.errorMessageService.setBackErrorMessage(data.error);
       return;
