@@ -1,0 +1,35 @@
+<div *ngIf="!isNotFoundPage; else notFound">
+  <app-breadcrumbs></app-breadcrumbs>
+  <h4 *ngIf="!term || term && term.length === 0; else terms">{{titlePage}}</h4>
+  <ng-template #terms>
+    <h4>Объявления по запросу «{{term}}»</h4>
+  </ng-template>
+  <router-outlet></router-outlet>
+  <div class="wrap">
+    <app-filter-sidebar [categoriesProps]="categoriesSideBar" [activeCategoryProps]="activeCategory"
+      [activeItemProps]="activeItem" [activeSubcategoryProps]="activeSubcategory" [searchParamsProps]="{min, max}"
+      (routerLink)="onGetRouterLinkProps($event)" (submitFormFilter)="onSubmitFormFilterProps($event)">
+    </app-filter-sidebar>
+    <div class="body-page">
+      <app-sort [quantityProps]="adverts.length" [sortProps]="sort"
+        (selectCategory)="onGetValueProps($event)"></app-sort>
+      <div *ngIf="isErrorMessage && adverts.length === 0">
+        <h6>Ничего не найдено в выбранной области поиска</h6>
+        <p class="mt-12">Выберите другую область поиска</p>
+        <p>Задайте запрос по-другому или установите более мягкие ограничения.</p>
+      </div>
+      <app-loading *ngIf="term && adverts.length === 0 && !isErrorMessage"></app-loading>
+      <ul *ngIf="adverts.length > 0" class="card-list">
+        <li *ngFor="let advert of adverts">
+          <app-card-product [advertProps]="advert"></app-card-product>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<ng-template #notFound>
+  <app-not-found></app-not-found>
+</ng-template>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

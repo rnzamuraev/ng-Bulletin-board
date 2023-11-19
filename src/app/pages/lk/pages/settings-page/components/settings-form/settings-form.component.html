@@ -1,0 +1,81 @@
+<form *ngIf="form" [formGroup]="form" class="settings-form pb-24" (ngSubmit)="onSubmitSettingsSave()">
+  <!-- <form class="settings-form" (ngSubmit)="onSubmitSetSettings()"> -->
+  <h4 class="pb-24">Настройки</h4>
+  <div class="settings-form__body">
+    <div class="d-flex gap-24">
+      <div class="settings-form__field">
+        <label>
+          <div class="mb-8">Имя</div>
+          <input id="settings-name" class="input input-settings" type="text" formControlName="name" autocomplete="on"
+            placeholder="Ваше имя">
+        </label>
+        <app-input-field-error [controlsStringProps]="form.controls['name']" [errorMessageProps]="errorMessageName">
+        </app-input-field-error>
+      </div>
+      <div class="settings-form__field input-settings">
+        <label>
+          <div class="mb-8">Номер телефона</div>
+          <!-- <input id="settings-phone" class="input input-settings mt-8" type="text" formControlName="login" autocomplete="on"
+            placeholder="Ваш телефон"> -->
+          <app-input-login [controlsProps]="form.controls['login']" [errorMessageProps]="errorMessageLogin"
+            [phoneProps]="newCurrentUserProps.phone" (loginInput)="onGetLoginInputProps($event)"
+            (phoneNumber)="onGetPhoneNumberProps($event)" (isSavePhone)="onIsSavePhoneProps($event)">
+          </app-input-login>
+        </label>
+      </div>
+    </div>
+
+    <div class="settings-form__field">
+      <label>
+        <div class="mb-8">
+          Адрес <span class="text-secondary">(будет указываться в объявлениях по умолчанию)</span>
+        </div>
+        <input id="settings-address" class="input" type="text" formControlName="location" autocomplete="off"
+          placeholder="Не указан" (input)="onSearchAddress()">
+        <!-- <ngx-dadata formControlName="currentAddress" [config]="config"
+          (selected)="onAddressSelected($event)"></ngx-dadata> -->
+      </label>
+      <app-input-field-error [controlsStringProps]="form.controls['location']"
+        [errorMessageProps]="errorMessageLocation">
+      </app-input-field-error>
+    </div>
+    <!-- <div class="d-flex gap-24">
+      <div class="settings-form__field">
+        <label>
+          <div class="mb-8">
+            Ваш город <span class="text-secondary"></span>
+          </div>
+          <input id="settings-city" class="input input-settings" type="text" formControlName="city" autocomplete="off"
+            placeholder="Не указан" (input)="onSearchAddress()">
+        </label>
+        <app-input-field-error [controlsStringProps]="form.controls['location']"
+          [errorMessageProps]="errorMessageLocation">
+        </app-input-field-error>
+      </div>
+      <div class="settings-form__field">
+        <label>
+          <div class="mb-8">
+            Адрес <span class="text-secondary">(будет указываться в объявлениях по умолчанию)</span>
+          </div>
+          <input id="settings-address" class="input input-settings" type="text" formControlName="location"
+            autocomplete="off" placeholder="Не указан" (input)="onSearchAddress()">
+        </label>
+        <app-input-field-error [controlsStringProps]="form.controls['location']"
+          [errorMessageProps]="errorMessageLocation">
+        </app-input-field-error>
+      </div>
+    </div> -->
+  </div>
+  <div class="settings-form__footer">
+    <!-- <button class="btn" type="button" [disabled]="advertForm.invalid" [class.disabled]="advertForm.invalid"> -->
+    <button class="btn" type="submit" [disabled]="form.invalid || isSubmittingProps || isSubmitSettings()"
+      [class.disabled]="form.invalid || isSubmittingProps || isSubmitSettings()">
+      Сохранить
+    </button>
+  </div>
+</form>
+<!-- <ng-template #error>
+  <div class="d-flex py-24">
+    <h3>{{errorMessage}}</h3>
+  </div>
+</ng-template> -->

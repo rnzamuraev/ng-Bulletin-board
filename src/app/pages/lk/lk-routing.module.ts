@@ -5,12 +5,12 @@ import { RouterModule, Routes } from "@angular/router";
 const routes: Routes = [
   {
     path: "lk",
-    pathMatch: "full",
-    redirectTo: "/",
-  },
-  {
-    path: "lk",
     children: [
+      {
+        path: "",
+        pathMatch: "full",
+        redirectTo: "/",
+      },
       {
         path: "my-items",
         title: "Мои объявления",
@@ -31,6 +31,11 @@ const routes: Routes = [
       },
     ],
   },
+  // {
+  //   path: "lk",
+  //   pathMatch: "full",
+  //   redirectTo: "/",
+  // },
 ];
 
 @NgModule({

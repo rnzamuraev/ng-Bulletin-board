@@ -1,4 +1,4 @@
-import { ICategoryMenu } from "src/app/shared/types/category.interface";
+import { ICategoryMenu } from "./types/category.interface";
 
 export class ApiData {
   static category: ICategoryMenu[] = [

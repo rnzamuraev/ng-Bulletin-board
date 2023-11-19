@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgForm } from "@angular/forms";
 
 @Component({
@@ -8,9 +8,32 @@ import { NgForm } from "@angular/forms";
 })
 export class SearchInputComponent {
   @Output()
-  getSearchText = new EventEmitter<string>();
+  term = new EventEmitter<string>();
+  @Output()
+  closeMenu = new EventEmitter<boolean>();
 
-  onSubmitSearchText(data: NgForm): void {
-    this.getSearchText.emit(data.value.search);
+  @Input()
+  termProps!: string;
+
+  onSubmitTerm(e: Event, data: NgForm): void {
+    // console.log(e);
+    // console.log(e.target);
+    const target = e.target as HTMLInputElement;
+    if (data.value.search === this.termProps) return;
+    if (e.type === "blur") {
+      if (data.value.search !== this.termProps) {
+        setTimeout(() => {
+          if (e.type === "submit") return;
+          target.value = this.termProps;
+        }, 500);
+      }
+      return;
+    }
+    // console.log(data.value.search);
+    this._closeMenu();
+    this.term.emit(data.value.search);
+  }
+  private _closeMenu() {
+    this.closeMenu.emit(false);
   }
 }

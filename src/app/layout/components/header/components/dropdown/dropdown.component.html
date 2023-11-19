@@ -1,0 +1,13 @@
+<div class="relative mr-24">
+  <button class="btn icon icon-left icon-auth icon-right icon-arrow-down" type="button" (click)="onDropdownToggle()">
+    <!-- [ngClass]="{'icon-right': isUser, 'icon-arrow-down': isUser}" (click)="onDropdownToggle()"> -->
+    {{currentUserLoginProps}}
+  </button>
+  <ul *ngIf="isOpenDropdownProps" class="dropdown bg-color-white shadow-black">
+    <li *ngFor="let item of dropdownItemsProps" class="dropdown-item pointer text-sm"
+      [ngClass]="{'text-danger': item.color === 'red', 'text-dark': item.color === 'dark'}"
+      (click)="onGetClickItem(item)" (click)="onDropdownToggle()">
+      {{item.label}}</li>
+    <!-- (click)="onGoTo(item.link)" (click)="onDropdownToggle()">{{item.label}}</li> -->
+  </ul>
+</div>

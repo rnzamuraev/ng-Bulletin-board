@@ -1,0 +1,5 @@
+<input class="input" type="text" placeholder="Номер телефона" #login name="login" (blur)="onInputMask($event)"
+  (focus)="onInputMask($event)" (input)="onInputMask($event)" />
+<span class="error" *ngIf="controlsProps?.invalid && isBlur && login.value.length > 2">
+  {{errorMessageProps}}
+</span>

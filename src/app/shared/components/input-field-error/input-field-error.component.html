@@ -1,0 +1,22 @@
+<!-- <div *ngIf="errorsProps.length && errorsProps.length > 0" class="error mb-8"> -->
+<ul *ngIf="errorsMessageProps && errorsMessageProps.length > 0; else controls" class="mb-8">
+  <li *ngFor="let error of errorsMessageProps">
+    <span class="error">
+      {{error}}
+    </span>
+  </li>
+</ul>
+<ng-template #controls>
+  <span
+    *ngIf="controlsStringProps && controlsStringProps.invalid && controlsStringProps.value?.length > 0 && controlsStringProps.touched; else number"
+    class="error">
+    {{errorMessageProps}}
+  </span>
+  <ng-template #number>
+    <span
+      *ngIf="controlsNumberProps?.invalid && controlsNumberProps.value?.toString()?.length !== 0 && controlsNumberProps.touched"
+      class="error">
+      {{errorMessageProps}}
+    </span>
+  </ng-template>
+</ng-template>

@@ -1,4 +1,4 @@
 export interface IFormFilter {
-  from: number;
-  to: number;
+  min: string;
+  max: string;
 }

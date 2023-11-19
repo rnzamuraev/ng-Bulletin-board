@@ -1,1 +1,96 @@
-<p>new-item-page works!</p>
+<h4>Новое объявление</h4>
+<form [formGroup]="advertForm" class="advert-form" #form (ngSubmit)="onSubmitAddNewAdvert()">
+  <ul class="advert-form__field" formArrayName="categoryId">
+    <span>Выберите категорию <span class="text-danger">*</span></span>
+    <li *ngFor="let child of getCategory(); let i = index" formGroupName="{{i}}" class="d-flex col">
+      <app-form-dropdown [categoryProps]="{categories, i}" [isResetDropdownProps]="isResetDropdown"
+        (isResetDropdown)="onIsResetDropdown($event)"
+        (selectCategory)="onSelectedCategoryProps($event, i)"></app-form-dropdown>
+    </li>
+  </ul>
+  <div class="advert-form__field">
+    <span>Название объявления <span class="text-danger">*</span></span>
+    <input class="input mt-8" type="text" formControlName="name" placeholder="Что хотите продать?">
+    <app-input-field-error [controlsStringProps]="advertForm.controls['name']" [errorMessageProps]="errorMessageName">
+    </app-input-field-error>
+  </div>
+  <div class="advert-form__field">
+    <span>Описание</span>
+    <textarea class="textarea mt-8" formControlName="description"
+      placeholder="Расскажите подробнее о товаре или услуге"></textarea>
+    <app-input-field-error [controlsStringProps]="advertForm.controls['description']"
+      [errorMessageProps]="errorMessageDescr">
+    </app-input-field-error>
+  </div>
+  <div class="advert-form__field">
+    <span>Адрес (место проведения сделки) <span class="text-danger">*</span></span>
+    <input class="input mt-8" type="text" formControlName="location" placeholder="Начните вводить адрес">
+    <app-input-field-error [controlsStringProps]="advertForm.controls['location']"
+      [errorMessageProps]="errorMessageLoc">
+    </app-input-field-error>
+  </div>
+  <div class="advert-form__field br-base">
+    <div class="advert-form__add-img d-flex content-start">
+      <label for="file" class="pointer mr-16">
+        <span class="btn btn-img text-md events-none">
+          <svg class="mr-8" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M5.62744 11.25C6.12472 11.25 6.60164 11.0525 6.95327 10.7008C7.3049 10.3492 7.50244 9.87228 7.50244 9.375C7.50244 8.87772 7.3049 8.40081 6.95327 8.04917C6.60164 7.69754 6.12472 7.5 5.62744 7.5C5.13016 7.5 4.65325 7.69754 4.30162 8.04917C3.94999 8.40081 3.75244 8.87772 3.75244 9.375C3.75244 9.87228 3.94999 10.3492 4.30162 10.7008C4.65325 11.0525 5.13016 11.25 5.62744 11.25Z"
+              fill="white" />
+            <path
+              d="M17.5024 16.25C17.5024 16.913 17.239 17.5489 16.7702 18.0178C16.3014 18.4866 15.6655 18.75 15.0024 18.75H2.50244C1.8394 18.75 1.20352 18.4866 0.734674 18.0178C0.265834 17.5489 0.00244141 16.913 0.00244141 16.25V6.25C0.00244107 5.58739 0.26549 4.95189 0.73379 4.48312C1.20209 4.01435 1.83733 3.75066 2.49994 3.75C2.49994 3.08696 2.76333 2.45107 3.23217 1.98223C3.70102 1.51339 4.3369 1.25 4.99994 1.25H17.4999C18.163 1.25 18.7989 1.51339 19.2677 1.98223C19.7365 2.45107 19.9999 3.08696 19.9999 3.75V13.75C19.9999 14.4126 19.7369 15.0481 19.2686 15.5169C18.8003 15.9857 18.165 16.2493 17.5024 16.25ZM17.4999 2.5H4.99994C4.66842 2.5 4.35048 2.6317 4.11606 2.86612C3.88164 3.10054 3.74994 3.41848 3.74994 3.75H15.0024C15.6655 3.75 16.3014 4.01339 16.7702 4.48223C17.239 4.95107 17.5024 5.58696 17.5024 6.25V15C17.8335 14.9993 18.1508 14.8673 18.3847 14.633C18.6186 14.3987 18.7499 14.0811 18.7499 13.75V3.75C18.7499 3.41848 18.6182 3.10054 18.3838 2.86612C18.1494 2.6317 17.8315 2.5 17.4999 2.5ZM2.50244 5C2.17092 5 1.85298 5.1317 1.61856 5.36612C1.38414 5.60054 1.25244 5.91848 1.25244 6.25V16.25L4.55994 13.3075C4.66211 13.2057 4.79634 13.1424 4.93986 13.1283C5.08339 13.1141 5.22739 13.1501 5.34744 13.23L8.67244 15.4463L13.3099 10.8088C13.4026 10.716 13.5222 10.6547 13.6516 10.6336C13.781 10.6125 13.9138 10.6327 14.0312 10.6913L16.2524 13.125V6.25C16.2524 5.91848 16.1207 5.60054 15.8863 5.36612C15.6519 5.1317 15.334 5 15.0024 5H2.50244Z"
+              fill="white" />
+          </svg>
+          Добавить картинки
+        </span>
+        <input id="file" type="file" accept=".jpeg,.png,.heic," multiple formControlName="images"
+          (change)="onLoadImage($event)">
+      </label>
+      <div>
+        <p class="text-sm">Максимум 10 картинок в формате jpeg, png или heic</p>
+        <p *ngIf="arrayImage.length === 10" class="text-sm text-danger">
+          Достигнут максимальный лимит загружаемых картинок
+        </p>
+      </div>
+    </div>
+    <ul *ngIf="arrayImage.length > 0" class="advert-form__img-lis px-16 pt-16 br-t-base">
+      <li *ngFor="let img of arrayImage; let i = index" class="d-flex mb-16">
+        <div class="advert-form__img">
+          <img [src]="img.url" [alt]="img.name">
+        </div>
+        <div class="advert-form__img-descr">
+          <p>{{img.name}}</p>
+          <span>{{img.size}}</span>
+          <span class="btn-icon btn-icon-br" (click)="onDeleteImage(img)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M5.80764 5.8074C5.8657 5.74919 5.93467 5.70301 6.0106 5.67151C6.08653 5.64 6.16793 5.62378 6.25014 5.62378C6.33235 5.62378 6.41375 5.64 6.48968 5.67151C6.56561 5.70301 6.63458 5.74919 6.69264 5.8074L10.0001 9.11615L13.3076 5.8074C13.3658 5.74929 13.4347 5.70319 13.5107 5.67174C13.5866 5.64029 13.668 5.62411 13.7501 5.62411C13.8323 5.62411 13.9137 5.64029 13.9896 5.67174C14.0655 5.70319 14.1345 5.74929 14.1926 5.8074C14.2508 5.86551 14.2968 5.93449 14.3283 6.01042C14.3597 6.08634 14.3759 6.16772 14.3759 6.2499C14.3759 6.33208 14.3597 6.41345 14.3283 6.48938C14.2968 6.5653 14.2508 6.63429 14.1926 6.6924L10.8839 9.9999L14.1926 13.3074C14.2508 13.3655 14.2968 13.4345 14.3283 13.5104C14.3597 13.5863 14.3759 13.6677 14.3759 13.7499C14.3759 13.8321 14.3597 13.9135 14.3283 13.9894C14.2968 14.0653 14.2508 14.1343 14.1926 14.1924C14.1345 14.2505 14.0655 14.2966 13.9896 14.3281C13.9137 14.3595 13.8323 14.3757 13.7501 14.3757C13.668 14.3757 13.5866 14.3595 13.5107 14.3281C13.4347 14.2966 13.3658 14.2505 13.3076 14.1924L10.0001 10.8836L6.69264 14.1924C6.63453 14.2505 6.56554 14.2966 6.48962 14.3281C6.4137 14.3595 6.33232 14.3757 6.25014 14.3757C6.16796 14.3757 6.08659 14.3595 6.01066 14.3281C5.93474 14.2966 5.86575 14.2505 5.80764 14.1924C5.74953 14.1343 5.70343 14.0653 5.67199 13.9894C5.64054 13.9135 5.62435 13.8321 5.62435 13.7499C5.62435 13.6677 5.64054 13.5863 5.67199 13.5104C5.70343 13.4345 5.74953 13.3655 5.80764 13.3074L9.11639 9.9999L5.80764 6.6924C5.74944 6.63434 5.70326 6.56537 5.67175 6.48944C5.64024 6.41351 5.62402 6.33211 5.62402 6.2499C5.62402 6.16769 5.64024 6.08629 5.67175 6.01035C5.70326 5.93442 5.74944 5.86545 5.80764 5.8074Z"
+                fill="#3B82F6" />
+            </svg>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="advert-form__field">
+    <span>Цена <span class="text-danger">*</span></span>
+    <app-input-number [controlsProps]="advertForm.controls['cost']" [costProps]="cost"
+      [errorMessageProps]="errorMessageCost" placeholderProps="0 ₽" (cost)="onGetCostProps($event)">
+    </app-input-number>
+  </div>
+  <div class="d-flex">
+    <div class="advert-form__btn">
+      <button class="btn" type="submit" [disabled]="advertForm.invalid" [class.disabled]="advertForm.invalid">
+        <h5 *ngIf="!isEdit; else edit">Разместить объявление</h5>
+        <ng-template #edit>
+          <h5>Сохранить изменения</h5>
+        </ng-template>
+      </button>
+      <p class="text-sm mt-8">
+        Нажимая кнопку «Разместить объявление»
+        Вы соглашаетесь с <span class="link" (click)="onGoTo('rules')">правилами площадки</span>
+      </p>
+    </div>
+    <div *ngIf="isAddAdvert" class="advert-form__success br-base bg-color-white-dark">Объявление успешно добавлено</div>
+  </div>
+</form>

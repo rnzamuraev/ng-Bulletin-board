@@ -1,0 +1,15 @@
+.menu-item {
+  margin-bottom: 2px;
+  padding: 8px 2px;
+  font-size: $text-md;
+  line-height: $lh-md;
+  // color: $dark;
+  // background-color: $white;
+  border-radius: 4px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &:hover {
+    background-color: $white-dark;
+  }
+}

@@ -1,12 +1,27 @@
+// export interface ICat {
+//   id: number;
+//   category: string;
+// }
+
+// export interface ICategoryMenu extends ICat {
+//   body: ISubCategoryMenu[];
+// }
+
+// export interface ISubCategoryMenu extends ICat {
+//   body: ICat[] | null;
+// }
 export interface ICategory {
-  id: number;
-  category: string;
+  id: string;
+  parentId: string;
+  name: string;
+  childs?: ICategory[];
 }
-
-export interface ICategoryMenu extends ICategory {
-  body: ISubCategoryMenu[];
+// export interface IChildsCategory extends ICategory {
+//   childs: ICategory[];
+// }
+export interface ICategoryChild extends ICategory {
+  childs: ICategoryChild[];
 }
-
-export interface ISubCategoryMenu extends ICategory {
-  body: ICategory[] | null;
-}
+// export interface ICategoryChild extends ICategory {
+//   childs: ICategoryChild[];
+// }
