@@ -1,0 +1,88 @@
+// @import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+// @import "primeng/resources/themes/vela-blue/theme.css";
+// @import "primeng/resources/themes/arya-blue/theme.css";
+// @import "primeng/resources/themes/luna-blue/theme.css";
+.p-button {
+  padding: 0.5rem 0.75rem;
+  font-size: $text-sm;
+  border-radius: 4px;
+  line-height: $lh-sm;
+  outline: none;
+  &-label {
+    font-weight: $fw-sm;
+  }
+  // &::after {
+  //   content: "";
+  //   margin-left: 4px;
+  //   width: 20px;
+  //   height: 20px;
+  //   display: inline-block;
+  //   // background: center / contain no-repeat url("../../img/icons/plus.svg");
+  // }
+  // &-plus {
+  //   &::after {
+  //     content: "";
+  //     margin-left: 4px;
+  //     width: 20px;
+  //     height: 20px;
+  //     display: inline-block;
+  //     background: center / contain no-repeat url("../../img/icons/plus.svg");
+  //   }
+  // }
+}
+.b-icon-right {
+  &::before {
+    content: "";
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+  }
+  &__plus {
+    &::before {
+      background: center / contain no-repeat url("../../img/icons/plus.svg");
+    }
+  }
+  &__auth {
+    margin-right: 24px;
+    padding: 8px 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    &:hover {
+      background-color: transparent;
+    }
+    &::before {
+      background: center / contain no-repeat url("../../img/icons/person.svg");
+    }
+  }
+}
+.b-icon-left {
+  &::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+  }
+  &__plus {
+    &::after {
+      margin-left: 4px;
+      background: center / contain no-repeat url("../../img/icons/plus.svg");
+    }
+  }
+  &__auth {
+    margin-right: 24px;
+    padding: 8px 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    &::after {
+      margin-right: 8px;
+      background: center / contain no-repeat url("../../img/icons/person.svg");
+    }
+  }
+}
+// .p-button .p-button-label {
+//   font-weight: $fw-sm;
+// }

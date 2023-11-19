@@ -1,0 +1,25 @@
+:host {
+  // width: 300px;
+  .menu-card {
+    break-inside: avoid-column;
+    white-space: normal;
+    height: 100%;
+    padding-top: 24px;
+  }
+  .menu-card-nav {
+    margin-top: 8px;
+    li {
+      margin-bottom: 6px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .menu-card-no-break {
+    break-after: avoid-column;
+  }
+  .menu-card-break {
+    // break-after: inherit;
+    break-after: column;
+  }
+}

@@ -1,0 +1,4 @@
+<input class="input mt-8" type="text" [placeholder]="placeholderProps" #cost name="cost" (input)="onInputMask()" />
+<span class="error" *ngIf="controlsProps?.invalid">
+  {{errorMessageProps}}
+</span>

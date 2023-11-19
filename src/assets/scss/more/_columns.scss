@@ -1,0 +1,52 @@
+.col {
+  display: flex;
+  flex-direction: column;
+  // &-2 {
+  //   width: 50%;
+  // }
+  &-3 {
+    width: 33.333%;
+  }
+  &-4 {
+    width: 25%;
+  }
+  // &-5 {
+  //   width: 20%;
+  // }
+  // &-6 {
+  //   width: 16.666%;
+  // }
+  // &-7 {
+  //   width: 14.285%;
+  // }
+  // &-8 {
+  //   width: 12.5%;
+  // }
+  // &-9 {
+  //   width: 11.111%;
+  // }
+  // &-10 {
+  //   width: 10%;
+  // }
+  // &-11 {
+  //   width: 9.09%;
+  // }
+  // &-12 {
+  //   width: 8.333%;
+  // }
+}
+@media (max-width: $media-lg) {
+  .col {
+    &-4 {
+      width: 50%;
+    }
+  }
+}
+@media (max-width: $media-xs) {
+  .col {
+    // flex-wrap: wrap;
+    &-4 {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,278 @@
+.btn {
+  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  font-size: $text-sm;
+  font-weight: 500;
+  line-height: $lh-sm;
+  color: $white;
+  background-color: $primary;
+  border: none;
+  border-radius: 4px;
+  transition: $animate;
+  outline: none;
+  white-space: nowrap;
+  cursor: pointer;
+  // &:hover {
+  //   background-color: $primary-dark;
+  // }
+  &-form {
+    padding: 12px 40px;
+  }
+  &-filter {
+    padding: 12px;
+    width: 100%;
+  }
+  &-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &-phone {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: $text-xl;
+    line-height: $lh-xl;
+    font-weight: $fw-xs;
+  }
+  // &-plus {
+  //   &::after {
+  //     content: "";
+  //     margin-left: 4px;
+  //     width: 20px;
+  //     height: 20px;
+  //     display: inline-block;
+  //     background: center / contain no-repeat url("../../img/icons/plus.svg");
+  //   }
+  // }
+  // &-search {
+  //   // padding: 8px 12px;
+  //   margin-left: -1px;
+  //   border-radius: 0 4px 4px 0;
+  //   &::after {
+  //     content: "";
+  //     margin-left: 8px;
+  //     width: 16px;
+  //     height: 16px;
+  //     display: inline-block;
+  //     background: center / contain no-repeat url("../../img/icons/search.svg");
+  //   }
+  // }
+  // &-white {
+  //   padding: 8px 12px;
+  //   color: $primary;
+  //   background-color: $white;
+  //   border: 1px solid $primary;
+  //   &:hover {
+  //     background-color: $white-dark;
+  //   }
+  //   &::before {
+  //     content: "";
+  //     margin-right: 8px;
+  //     width: 20px;
+  //     height: 20px;
+  //     display: inline-block;
+  //     background: center / contain no-repeat url("../../img/icons/list-nested.svg");
+  //   }
+  // }
+  // &-auth {
+  //   margin-right: 24px;
+  //   padding: 8px 0;
+  //   color: $white;
+  //   background-color: transparent;
+  //   border: none;
+  //   border-radius: none;
+  //   &:hover {
+  //     background-color: transparent;
+  //   }
+  //   &::before {
+  //     content: "";
+  //     margin-right: 8px;
+  //     width: 20px;
+  //     height: 20px;
+  //     display: inline-block;
+  //     background: center / contain no-repeat url("../../img/icons/person.svg");
+  //   }
+  // }
+  // &__icon::before {
+  //   content: "";
+  //   margin-right: 8px;
+  //   width: 20px;
+  //   height: 20px;
+  //   display: inline-block;
+  //   background: center / contain no-repeat url("../img/icons/person.svg");
+  // }
+  // &__icon::after {
+  //   content: "";
+  //   margin-left: 8px;
+  //   width: 10px;
+  //   height: 10px;
+  //   display: inline-block;
+  //   background: center / contain no-repeat url("../../img/icons/chevron-down.svg");
+  // }
+  // &__icon-arrow-down::after {
+  //   content: "";
+  //   margin-left: 8px;
+  //   width: 10px;
+  //   height: 10px;
+  //   display: inline-block;
+  //   background: center / contain no-repeat url("../../img/icons/chevron-down.svg");
+  // }
+}
+
+// .btn-icon {
+//   // display: flex;
+//   // justify-content: center;
+//   // align-items: center;
+//   border: none;
+//   overflow: hidden;
+//   &-pass {
+//     font-size: 18px;
+//     line-height: 18px;
+//     color: $secondary;
+//     position: absolute;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     right: 10px;
+//     z-index: 10;
+//   }
+//   &-close {
+//     &::after {
+//       background: center / contain no-repeat url("../../img/icons/list-nested.svg");
+//     }
+//   }
+// }
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 20px;
+  background-color: transparent;
+  border: none;
+  transition: $animate;
+  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  // * {
+  //   font-size: 20px;
+  //   line-height: 20px;
+  // }
+  &-visibility {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    z-index: 10;
+    overflow: hidden;
+  }
+  &-select {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 22px;
+    right: 12px;
+    pointer-events: none;
+    z-index: 10;
+  }
+  &-clear {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 40px;
+    z-index: 10;
+  }
+  &-br {
+    border: 2px solid $primary;
+  }
+}
+
+// ********************************
+
+// .icon {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   &-left {
+//     &::before {
+//       content: "";
+//       margin-right: 8px;
+//       width: 20px;
+//       height: 20px;
+//       display: inline-block;
+//       // background: center / contain no-repeat url("../../img/icons/list-nested.svg");
+//     }
+//   }
+//   &-phone {
+//     width: 100%;
+//     padding: 20px 12;
+//     font-size: $text-xl;
+//     line-height: $lh-xl;
+//     &::before {
+//       background: center / contain no-repeat url("../../img/icons/phone.svg");
+//     }
+//   }
+//   &-white {
+//     padding: 8px 12px;
+//     color: $primary;
+//     background-color: $white;
+//     border: 1px solid $primary;
+//     &:hover {
+//       background-color: $white-dark;
+//     }
+//     &::before {
+//       background: center / contain no-repeat url("../../img/icons/list-nested.svg");
+//     }
+//   }
+//   &-auth {
+//     margin-right: 24px;
+//     padding: 8px 0;
+//     font-weight: $fw-xs;
+//     color: $white;
+//     background-color: transparent;
+//     border: none;
+//     border-radius: none;
+//     &:hover {
+//       background-color: transparent;
+//     }
+//     &::before {
+//       background: center / contain no-repeat url("../../img/icons/person.svg");
+//     }
+//   }
+//   &-right {
+//     &::after {
+//       content: "";
+//       margin-left: 4px;
+//       width: 20px;
+//       height: 20px;
+//       display: inline-block;
+//       // background: center / contain no-repeat url("../../img/icons/plus.svg");
+//     }
+//   }
+//   &-plus {
+//     &::after {
+//       content: "";
+//       margin-left: 4px;
+//       width: 20px;
+//       height: 20px;
+//       display: inline-block;
+//       background: center / contain no-repeat url("../../img/icons/plus.svg");
+//     }
+//   }
+//   &-search {
+//     // padding: 8px 12px;
+//     margin-left: -1px;
+//     border-radius: 0 4px 4px 0;
+//     &::after {
+//       content: "";
+//       margin-left: 8px;
+//       width: 16px;
+//       height: 16px;
+//       display: inline-block;
+//       background: center / contain no-repeat url("../../img/icons/search.svg");
+//     }
+//   }
+// }

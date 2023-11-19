@@ -1,0 +1,21 @@
+<!-- <ul> -->
+<!-- <ul class="d-flex" *ngIf="!breadcrumbs.length; else loading"> -->
+<ul class="d-flex mb-8">
+  <li class="d-flex content-start">
+    <span class="pointer text-secondary" routerLink="/" (click)="onGoTo(null)">Главная</span>
+  </li>
+  <li *ngFor="let item of breadcrumbsProps; let last = last" class="d-flex content-start">
+    <div class="circle bg-color-secondary"></div>
+    <span *ngIf="!last; else not" class="pointer text-secondary" (click)="onGoTo(item)">{{item.label}}</span>
+    <ng-template #not>
+      <span *ngIf="!isProductInfoProps">{{item.label}}</span>
+    </ng-template>
+  </li>
+</ul>
+<!-- <ng-template #loading>
+  <ul class="d-flex">
+    <li *ngFor="let item of breadcrumbs">
+      {{item}} <span>></span>
+    </li>
+  </ul>
+</ng-template> -->

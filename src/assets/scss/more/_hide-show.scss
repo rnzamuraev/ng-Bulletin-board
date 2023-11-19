@@ -1,0 +1,15 @@
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+
+@media (max-width: $media-xs) {
+  .show-xs {
+    display: block;
+  }
+  .hide-xs {
+    display: none;
+  }
+}

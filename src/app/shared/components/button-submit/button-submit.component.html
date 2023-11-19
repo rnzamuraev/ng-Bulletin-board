@@ -1,0 +1,4 @@
+<button class="btn" type="submit" [disabled]="formProps.invalid || isSubmittingProps"
+  [class.disabled]="formProps.invalid || isSubmittingProps" (click)="onSubmit()">
+  {{contentProps}}
+</button>

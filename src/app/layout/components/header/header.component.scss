@@ -1,0 +1,21 @@
+.header {
+  &__top {
+    padding: 8px 0;
+  }
+  &__bottom {
+    padding: 24px 0;
+    display: grid;
+    grid-template-columns: 293px 150px 1fr;
+    column-gap: 12px;
+    // position:relative;
+  }
+  &__wrap {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  &__menu {
+    width: 100%;
+    position: relative;
+  }
+}

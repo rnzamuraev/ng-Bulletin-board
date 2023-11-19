@@ -1,0 +1,10 @@
+:host {
+  .wrap {
+    display: grid;
+    grid-template-columns: 306px 1fr;
+    column-gap: 24px;
+  }
+  .card-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -1,0 +1,59 @@
+// font
+.text-xs {
+  font-size: $text-xs;
+  line-height: $lh-xs;
+}
+.text-sm {
+  font-size: $text-sm;
+  line-height: $lh-sm;
+}
+.text-md {
+  font-size: $text-md;
+  line-height: $lh-md;
+}
+.text-lg {
+  font-size: $text-lg;
+  line-height: $lh-lg;
+}
+.text-xl {
+  font-size: $text-xl;
+  line-height: $lh-xl;
+}
+.font-weight-bold {
+  font-weight: $fw-lg;
+}
+// color
+.text-white {
+  color: $white;
+}
+.text-white-dark {
+  color: $white-dark;
+}
+.text-dark {
+  color: $dark;
+}
+.text-secondary {
+  color: $secondary;
+}
+.text-primary {
+  color: $primary;
+}
+.text-danger {
+  color: $danger;
+}
+// position
+.text-center {
+  text-align: center;
+}
+.text-end {
+  text-align: right;
+}
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

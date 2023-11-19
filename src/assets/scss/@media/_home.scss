@@ -1,0 +1,45 @@
+.home {
+  padding: 32px 0 80px;
+}
+@media (max-width: $media-xl) {
+  .home {
+    h4 {
+      font-size: $h5;
+      line-height: $lh-h5;
+    }
+  }
+}
+// @media (max-width: $media-lg) {
+//   .card-product {
+//     &__top {
+//       width: 217px;
+//       // height: 170px;
+//     }
+//   }
+// }
+// @media (max-width: $media-md) {
+//   .card-list {
+//     grid-template-columns: repeat(3, 1fr);
+//   }
+//   &__top {
+//     width: 223px;
+//     // height: 170px;
+//   }
+// }
+// @media (max-width: $media-sm) {
+//   .card-list {
+//     grid-template-columns: repeat(2, 1fr);
+//   }
+//   &__top {
+//     width: 258px;
+//     // height: 170px;
+//   }
+// }
+// @media (max-width: $media-xs) {
+//   .card-product {
+//     &__top {
+//       // @include SizePx("height", 170, 100, 500, 280);
+//       @include SizePx("width", 258, 137, 575, 320);
+//     }
+//   }
+// }

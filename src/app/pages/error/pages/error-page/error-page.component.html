@@ -1,0 +1,15 @@
+<div class="error min-vh-100">
+  <div class="container">
+    <h6>Ошибка {{errors}}</h6>
+    <div class="error__wrap">
+      <h3>Такой страницы нe существует</h3>
+      <p class="mt-16">Одно из двух: или кто-то её удалил, или в ссылке опечатка.</p>
+      <a class="btn mt-16" (click)="onGoTo('back')">Назад</a>
+      <a class="btn mt-16" (click)="onGoTo('')">На главную</a>
+    </div>
+  </div>
+</div>
+
+<ng-template>
+
+</ng-template>

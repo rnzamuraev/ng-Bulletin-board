@@ -1,0 +1,10 @@
+.link {
+  color: $primary;
+  cursor: pointer;
+}
+.menu-link {
+  cursor: pointer;
+  &:hover {
+    color: $primary;
+  }
+}

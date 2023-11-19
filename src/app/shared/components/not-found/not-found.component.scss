@@ -1,0 +1,9 @@
+.not-found {
+  min-height: calc(100vh - 139px - 60px - 111px);
+  display: flex;
+  align-items: center;
+  &__wrap {
+    margin: 0 auto;
+    max-width: 500px;
+  }
+}
